@@ -1,0 +1,8 @@
+{
+  "name": "socket_chat_game",
+  "version": "0.0.2",
+  "description": "Socket for a chat and a game and yea",
+  "dependencies": {
+    "socket.io": "^1.4.5"
+  }
+}

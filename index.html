@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+    </style>
+  </head>
+  <body>
+    <ul id="messages"></ul>
+	
+    <form action="">
+		<input id="n" autocomplete="off" placeholder='Username'/>
+		<input id="m" autocomplete="off" placeholder='Nachricht'/>
+		<button>Send</button>
+    </form>
+
+    <script>
+	function strip(string)
+	{
+		var regex = /(<([^>]+)>)/ig;
+		var body = string;
+		var result = body.replace(regex, "");
+		return result;
+	}
+      var socket = io();
+	  var message, name;
+      $('form').submit(function(){
+		message = $('#m').val();
+		name = $('#n').val();
+	
+		if (message.length != 0 && name.lenght != 0)
+		{
+			var msg = {chat:message, username:name};
+			socket.emit('message', msg);
+			$('#messages').append('<li><font color="blue">' + strip(msg.username) + ':</font> ' + strip(msg.chat) + "</li>");
+			$('#m').val('');
+		}
+        return false;
+      });
+      socket.on('message', function(response){
+        $('#messages').append('<li><font color="blue">' + response.username + ':</font> ' + response.chat	 + "</li>");
+      });
+    </script>
+  </body>
+</html>

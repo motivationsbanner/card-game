@@ -3,8 +3,10 @@ var http = require('http'),
     // NEVER use a Sync function except at start-up!
     index = fs.readFileSync(__dirname + '/index.html'),
 	functions = require('functions.js'),
-	game_function = require('game_functions.js');
+	game_function = require('game_function.js');
+	
 var ppl = 0;
+
 // Send index.html to all requests
 var app = http.createServer(function(req, res) {
     res.writeHead(200, {'Content-Type': 'text/html'});
@@ -45,15 +47,14 @@ io.on('connection', function(socket)
 		ppl--;
 	});
 	
-	socket.on('draw Cards', function()
+	socket.on('draw_Cards', function()
 	{
-		socket.emit('draw Cards', game_function.drawCard());
-	}
+		socket.emit('draw_Cards', game_function.drawCard());
+	});
 });
 
-
-app.listen(8080, function(){
-  console.log('listening on *:3000');
+app.listen(8000, function(){
+  console.log('listening on *:8080');
 });
 
 function strip(string)
@@ -62,4 +63,4 @@ function strip(string)
 		var body = string;
 		var result = body.replace(regex, "");
 		return result;
-	}
+	};

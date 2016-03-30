@@ -76,7 +76,7 @@ io.on('connection', function(socket)
 
 
 // Creates a new Player
-// true if successfull; false if not
+// true if successful; false if not
 function newPlayer (id)
 {
 	if (game.player1.getID() == 0)

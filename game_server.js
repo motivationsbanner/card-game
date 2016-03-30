@@ -7,12 +7,13 @@ var http = require('http'),
 	functions = require('functions.js'),
 	game_function = require('game_function.js')
 	
-	games = new Array();
+// Games array
+games = game_function.game();
 
 // Some cool variables
 var ppl = 0;
 var am_zug, nicht_am_zug;
-var game = game_function.game();
+games.push(game_function.game());
 
 // Send index.html to all requests
 var app = http.createServer(function(req, res) {
@@ -28,11 +29,11 @@ app.listen(8000, function(){
 
 io.on('connection', function(socket)
 {	
-
 	ppl++;
 
 	// Check whether or not we can create a new active Player
 	// Parameter: socket, so we know who we're talking to:)
+	// sidenote: atm there is no need for that check.
 	if (!newPlayer(socket))
 		socket.emit('system', 'Game full atm.  ¯\\_(ツ)_/¯  We are sorry.');
 	else
@@ -89,6 +90,9 @@ function newPlayer (id)
 		game.player2.setID(id);
 		nicht_am_zug = game.player2;
 		return true;
+	} else {
+		createGame();
+		newPlayer (id);
 	}
 	return false;
 
@@ -97,7 +101,7 @@ function newPlayer (id)
 // Checks if there are 2 player waiting for a game
 function checkGame()
 {
-	return (am_zug == game.player1 && nicht_am_zug == game.player2) ? true : false;
+	return (am_zug == games[getGameByPlayer(am_zug)].player1 && nicht_am_zug == games[getGameByPlayer(nicht_am_zug)].player2) ? true : false;
 }
 
 // Starts the game by giving each player 3 cards
@@ -107,7 +111,7 @@ function startGame()
 	system_message('THE GAME HAS BEGUN!');
 	nicht_am_zug.socket.emit('draw', nicht_am_zug.draw(3));
 	am_zug.socket.emit('draw', am_zug.draw(3));
-}
+}	
 
 // HTMLSPECIALCHAR
 function strip(string)
@@ -124,4 +128,21 @@ function system_message(message)
 	io.emit('system', message);
 }
 
+// Creates a new Game Object, puts it in the game array and returns the gameID;
+function createEmptyGame()
+{
+	games.push(game_function.game());
+	return games.length - 1;
+}
 
+
+function getGameByPlayer(player)
+{
+	return player.gameID;
+}
+
+// Still need to implement this
+function getEmptyGameId()
+{
+	// some code
+}

@@ -1,19 +1,18 @@
 var http = require('http'),
     fs = require('fs'),
     // NEVER use a Sync function except at start-up!
-    index = fs.readFileSync(__dirname + '/index.html'),
+    index = fs.readFileSync(__dirname + '/index.html');
 	
 	//Load Modules 
-	functions = require('functions.js'),
-	game_function = require('game_function.js')
+var functions = require('functions.js'),
+	game_function = require('game_function.js');
 	
 // Games and Players Array
-games = game_function.GameMethods("games");
-players = game_function.GameMethods("players");
+var games = game_function.GameMethods("games"),
+	players = game_function.GameMethods("players");
 
-// Some cool variables
+// Some cool variables that are kinda outdated
 var ppl = 0;
-var am_zug, nicht_am_zug;
 
 // Send index.html to all requests
 var app = http.createServer(function(req, res) {
@@ -29,39 +28,26 @@ app.listen(8000, function(){
 
 io.sockets.on('connection', function(client)
 {	
-	var game;
+	// OUTDATED I COULD DO THAT DIFFERENTLY
 	ppl++;
-	players.add(client);
-	// Check if there are enough players waiting
-	game = players.checkRdy();
 	
+	// Add Client to Player Array
+	players.add(client);
+	
+	// Check if there are enough players waiting
+	var game = players.checkRdy();
 	if (game != false)
 		startGame(game);
 	else
 		client.emit('system', 'Waiting for another Player.  ¯\\_(ツ)_/¯  We are sorry.');
 	
-	/*
-	// Check whether or not we can create a new active Player
-	// Parameter: client, so we know who we're talking to:)
-	// sidenote: atm there is no need for that check.
-	if (!newPlayer(client))
-		client.emit('system', 'Game full atm.  ¯\\_(ツ)_/¯  We are sorry.');
-	else
-	{
-		// Checks if there are 2 players waiting
-		if (checkGame())
-			startGame(); // The Game just got full -> we can start playing
-		else
-			client.emit('system', 'Waiting for another Player ┗(＾0＾)┓ ');
-	}
-	*/
-	
-	
+		
 	// We could just comment the 'message' block out.. but lets leave it here.
+	// Used for the chat
 	client.on('message', function(msg)
 	{
-		msg.username = strip(msg.username);
-		msg.chat = strip(msg.chat);
+		msg.username = htmlspecialchar(msg.username);
+		msg.chat = htmlspecialchar(msg.chat);
 		
 		console.log(msg.username + " " + msg.chat);
 		client.broadcast.emit('message', msg);
@@ -82,88 +68,93 @@ io.sockets.on('connection', function(client)
 
 	client.on('disconnect', function()
 	{
-		client.broadcast.emit('system', 'Someone disconnected');
 		if ( players.players.indexOf( client ) != -1 )
 			players.players.splice( players.players.indexOf( client ), 1);
 		else
-			clean ( getGameByClient(client) , client );
+			clean ( getGameIndexByClient ( client ) , client );
 		ppl--;
 	});
 });
-/*
-io.sockets.on('connection', function (socket) {
-    socket.on('disconnect', function () {
-        console.log(socket.id);
-    });
-});
-*/
 
-function clean (gameID, client)
+// Removes the Game that is empty and adds the other player in the Queue (Player Array)
+// Starts a new Game if there is another Player waiting
+function clean (gameIndex, client)
 {
-	players.add( getLastPlayerInGame( getGameByClient(client) , client ) ); 
-	games.remove( getGameByClient (client) );
+	var lastPlayer = getLastPlayerInGame( getGameIndexByClient(client) , client );
+	lastPlayer.emit('system', 'Your Opponent left the Game, we are starting a new game though!');
+	players.add( lastPlayer ); 
+	games.remove( gameIndex );
 	
 	var game = players.checkRdy();
 	
 	if (game != false)
 		startGame(game);
 	else
-		client.emit('system', 'Waiting for another Player.  ¯\\_(ツ)_/¯  We are sorry.');
+		client.emit('system', 'Your Opponent left the Game, waiting for a new Player.  ¯\\_(ツ)_/¯  We are sorry.');
 }
 
-// Creates a new Player
-// true if successful; false if not
-function newPlayer (id)
-{
-	if (game.player1.getID() == 0)
-	{
-		game.player1.setID(id);
-		am_zug = game.player1;
-		return true;
-	} else if (game.player2.getID() == 0)
-	{
-		game.player2.setID(id);
-		nicht_am_zug = game.player2;
-		return true;
-	} else {
-		createGame();
-		newPlayer (id);
-	}
-	return false;
-
-}
-
-// Checks if there are 2 player waiting for a game
-// Outdated
-function checkGame()
-{
-	return (am_zug == games[getGameByPlayer(am_zug)].player1 && nicht_am_zug == games[getGameByPlayer(nicht_am_zug)].player2) ? true : false;
-}
-
-// Starts the game by giving each player 3 cards
-// TODO: Telling player1 that his turn stards now.
+// Starts the new Game
+// -> Sends 3 Cards to each Player and tells Player am_zug that it is his turn
 function startGame(game)
 {
-	// OLD CODE
-	/*
-	system_message('THE GAME HAS BEGUN!');
-	nicht_am_zug.client.emit('draw', nicht_am_zug.draw(3));
-	am_zug.client.emit('draw', am_zug.draw(3));
-	*/
-
+	// Add the Game to the Games Array
 	games.add(game);
-	console.log(games.games.length);
-	system_message("Start game");
+	
+	// Send a message to the Players of the Game
+	var message = "Start Game: Game NR. " + ( games.games.length);
+	game_message( game , message );
+	
+	// Give 3 cards to each player
+	game.nicht_am_zug.client.emit('draw', game.nicht_am_zug.draw(3));
+	game.am_zug.client.emit('draw', game.am_zug.draw(3));
+	
+	// it's am_zugs turn:)
+	game.am_zug.client.emit('begin_turn', "ROFL UR TURN M8 KEK");
 }	
 
-// HTMLSPECIALCHAR
-function strip(string)
-	{
-		var regex = /(<([^>]+)>)/ig;
-		var body = string;
-		var result = body.replace(regex, "");
-		return result;
-	};
+// Returns  the Player that is in a Game
+// Player = Player that left
+function getLastPlayerInGame(gameIndex, player)
+{
+	// p1 & p2 are both Clients
+	var p1 = games.games[gameIndex].player1.getClient();
+	var p2 = games.games[gameIndex].player2.getClient();
+	
+	// Return the Player that did not leave 
+	if ( p1 == player )
+		return p2;
+	if ( p2 == player )
+		return p1;
+}
+
+// Loop through all Games in the Game Array
+// Returns the index of the Game in that the Client is playing
+function getGameIndexByClient(client)
+{
+	for ( i = 0; i < games.games.length; i++ )
+	{	
+		var game = games.games[i];
+		if ( game.player1.getClient() == client )
+		{
+			return i;
+			break;
+		}
+		if ( game.player2.getClient() == client )
+		{
+			return i;
+			break;
+		}
+	}
+}
+
+// -- MESSAGE FUNCTIONS -- //
+
+// Sends a message to the players of a game
+function game_message( game, message ) 
+{
+	game.player1.client.emit('system', message);
+	game.player2.client.emit('system', message);
+}
 
 // Sends a Systemmessage to all connected clients.
 function system_message(message)
@@ -171,46 +162,13 @@ function system_message(message)
 	io.emit('system', message);
 }
 
-// Creates a new Game Object, puts it in the game array and returns the gameID;
-function createEmptyGame()
-{
-	games.push(game_function.game());
-	return games.length - 1;
-}
+// -- OTHER FUNCTIONS -- //
 
-
-function getLastPlayerInGame(gameID, player)
-{
-	console.log("getLastPlayerInGame gameID: " + gameID);
-	var p1 = games.games[gameID].player1.getClientID();
-	var p2 = games.games[gameID].player2.getClientID();
-	if ( p1 == player )
-		return p2;
-	if ( p2 == player )
-		return p1;
-}	
-function getGameByPlayer(player)
-{
-	return player.gameID;
-}
-
-function getGameByClient(client)
-{
-	for ( i = 0; i < games.games.length; i++ )
-	{	
-		var game = games.games[i];
-		console.log(game);
-		if ( game.player1.getClientID() == client )
-		{
-			return i;
-			break;
-		}
-		if ( game.player2.getClientID() == client )
-		{
-			return i;
-			break;
-		}
-		console.log("getGameByClient Loop : " + i);
-	}
-	return -1;
-}
+// HTMLSPECIALCHAR
+function htmlspecialchar(string)
+	{
+		var regex = /(<([^>]+)>)/ig;
+		var body = string;
+		var result = body.replace(regex, "");
+		return result;
+	};

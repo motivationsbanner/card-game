@@ -68,8 +68,9 @@ io.sockets.on('connection', function(client)
 
 	client.on('disconnect', function()
 	{
+		
 		if ( players.players.indexOf( client ) != -1 )
-			players.players.splice( players.players.indexOf( client ), 1);
+			players.players.splice( players.players.indexOf( client ), 1); // Remove waiting player
 		else
 			clean ( getGameIndexByClient ( client ) , client );
 		ppl--;
@@ -80,17 +81,24 @@ io.sockets.on('connection', function(client)
 // Starts a new Game if there is another Player waiting
 function clean (gameIndex, client)
 {
-	var lastPlayer = getLastPlayerInGame( getGameIndexByClient(client) , client );
-	lastPlayer.emit('system', 'Your Opponent left the Game, we are starting a new game though!');
-	players.add( lastPlayer ); 
+	var lastPlayer = getLastPlayerInGame( gameIndex , client );
 	games.remove( gameIndex );
+	if (lastPlayer != -1)
+	{
+		lastPlayer.emit('system', 'Your Opponent left the Game, we are starting a new one though!');
+		players.add( lastPlayer ); 
+		
+		var game = players.checkRdy();
+		
+		if (game != false)
+			startGame(game);
+		else
+			lastPlayer.emit('system', 'Your Opponent left the Game, waiting for a new Player.  ¯\\_(ツ)_/¯  We are sorry.');
+	} else 
+	{
+		players.players.splice( players.players.indexOf( client ), 1);
+	}
 	
-	var game = players.checkRdy();
-	
-	if (game != false)
-		startGame(game);
-	else
-		client.emit('system', 'Your Opponent left the Game, waiting for a new Player.  ¯\\_(ツ)_/¯  We are sorry.');
 }
 
 // Starts the new Game
@@ -116,15 +124,24 @@ function startGame(game)
 // Player = Player that left
 function getLastPlayerInGame(gameIndex, player)
 {
-	// p1 & p2 are both Clients
-	var p1 = games.games[gameIndex].player1.getClient();
-	var p2 = games.games[gameIndex].player2.getClient();
+	try 
+	{
+		// p1 & p2 are both Clients
+		var p1 = games.games[gameIndex].player1.getClient();
+		var p2 = games.games[gameIndex].player2.getClient();
+		
+		// Return the Player that did not leave 
+		if ( p1 == player )
+			return p2;
+		if ( p2 == player )
+			return p1;
+	}
+	// if there is an error, this means that there is no game anymore and someone is waiting in queue that shouldn't be.
+	catch (err)
+	{
+		return -1;
+	}
 	
-	// Return the Player that did not leave 
-	if ( p1 == player )
-		return p2;
-	if ( p2 == player )
-		return p1;
 }
 
 // Loop through all Games in the Game Array

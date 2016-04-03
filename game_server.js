@@ -21,8 +21,13 @@ var app = http.createServer(function(req, res) {
 
 var io = require('socket.io').listen(app);
 
-app.listen(8000, function(){
-  console.log('listening on *:8000');
+var port = 8000;
+if(process.argv.length == 3 && !isNaN(process.argv[2])) {
+	port = parseInt(process.argv[2]);
+}
+
+app.listen(port, function(){
+  console.log('listening on *:' + port);
 });
 
 io.sockets.on('connection', function(client)

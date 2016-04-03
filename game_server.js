@@ -1,6 +1,5 @@
 var http = require('http'),
     fs = require('fs'),
-    // NEVER use a Sync function except at start-up!
     index = fs.readFileSync(__dirname + '/index.html');
 	
 	//Load Modules 
@@ -28,7 +27,6 @@ app.listen(8000, function(){
 
 io.sockets.on('connection', function(client)
 {	
-	// OUTDATED I COULD DO THAT DIFFERENTLY
 	ppl++;
 	
 	// Add Client to Player Array
@@ -85,6 +83,10 @@ function clean (gameIndex, client)
 	games.remove( gameIndex );
 	if (lastPlayer != -1)
 	{
+		
+		 
+		
+		/*
 		lastPlayer.emit('system', 'Your Opponent left the Game, we are starting a new one though!');
 		players.add( lastPlayer ); 
 		
@@ -94,6 +96,7 @@ function clean (gameIndex, client)
 			startGame(game);
 		else
 			lastPlayer.emit('system', 'Your Opponent left the Game, waiting for a new Player.  ¯\\_(ツ)_/¯  We are sorry.');
+		*/
 	} else 
 	{
 		players.players.splice( players.players.indexOf( client ), 1);

@@ -84,6 +84,7 @@ function clean (gameIndex, client)
 	if (lastPlayer != -1)
 	{
 		
+		lastPlayer.emit('system', 'Your Opponent left, please reload to start a new game');
 		 
 		
 		/*

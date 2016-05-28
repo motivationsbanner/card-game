@@ -12,6 +12,7 @@ class Players {
 	constructor ()
 	{
 		this.players = new Array();
+		this.client;
 	}
 	
 	add(client)
@@ -19,6 +20,11 @@ class Players {
 		this.players.push(client);
 	}
 	
+	setClient(client)
+	{
+		this.client = client;
+		client.emit('system', "test");
+	}
 	rdy()
 	{
 		if ( this.players.length >= 2 )

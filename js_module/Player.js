@@ -6,14 +6,17 @@
 
 "use strict";
 
+var field = require('../js_module/Field.js');
+var deck = require('../js_module/Deck.js');
+
 class Player {
 	constructor ()
 	{
 		this.client;
 		this.hp = 30;
-		// this.meeles = new Field();
-		// this.ranges = new Field();
-		// this.hand = new Deck();
+		this.melees = field('melee');
+		this.ranges = field('range');
+		this.deck = deck();
 	}
 	
 	getClient() {
@@ -22,6 +25,25 @@ class Player {
 	
 	setClient(client) {
 		this.client = client;
+	}
+	
+	draw(amount) {
+		var cards = new Array();
+		for (var i = 1; i <= amount; i++)
+		{
+			cards.push(this.deck.draw());
+		}
+		this.sendCommandMessage({command: "draw", cards});
+	}
+	
+	sendSystemMessage(message)
+	{
+		this.client.emit('system', message);
+	}
+	
+	sendCommandMessage(data)
+	{
+		this.client.emit('command', data);
 	}
 }
 

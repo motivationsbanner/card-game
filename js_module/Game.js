@@ -35,6 +35,22 @@ class Game {
 	{
 		this.p2.setClient(client);
 	}
+	
+	sendMessage(message)
+	{
+		this.p1.sendSystemMessage(message);
+		this.p2.sendSystemMessage(message);
+	}
+	
+	start()
+	{
+		p1.draw(3);
+		p2.draw(3);
+		p2.sendCommandMessage({command: "end_turn"});
+		p1.sendCommandMessage({command: "begin_turn"});
+		p1.draw(1);
+		
+	}
 }
 
 module.exports = function game()

@@ -36,7 +36,7 @@ io.sockets.on('connection', function(client)
 {	
 	// Add Client to Player Array
 	players.add(client);
-	
+	players.setClient(client);
 	// Check if there are enough players waiting
 	var game = players.rdy();
 	if (game != false)
@@ -67,27 +67,12 @@ function startGame(game)
 	
 	// Send a message to the Players of the Game
 	var message = "Start Game: Game NR. " + ( games.getLength());
-	game_message( game , message );
-	
-	// Give 3 cards to each player
-	// game.nicht_am_zug.client.emit('command', game.nicht_am_zug.draw(3));
-	// game.am_zug.client.emit('command', game.am_zug.draw(3));
-	
-	// it's am_zugs turn:)
-	// game.am_zug.client.emit('begin_turn', "ROFL UR TURN M8 KEK");
+	game.sendMessage(message);
+	game.start();
 }	
 
 
-
-
 // -- MESSAGE FUNCTIONS -- //
-
-// Sends a message to the players of a game
-function game_message( game, message ) 
-{
-	game.p1.getClient().emit('system', message);
-	game.p2.getClient().emit('system', message);
-}
 
 // Sends a Systemmessage to all connected clients.
 function system_message(message)

@@ -59,6 +59,9 @@
 		$('#messages').append('<li>' + response + "</li>");
 	});
 	
+	socket.on('command', function(response){
+		$('#messages').append('<li>' + response + "</li>");
+	});
 	
     socket.on('message', function(response){
 		$('#messages').append('<li><font color="blue">' + response.username + ':</font> ' + response.chat +"</li>");

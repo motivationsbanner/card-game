@@ -36,7 +36,6 @@ io.sockets.on('connection', function(client)
 {	
 	// Add Client to Player Array
 	players.add(client);
-	players.setClient(client);
 	// Check if there are enough players waiting
 	var game = players.rdy();
 	if (game != false)

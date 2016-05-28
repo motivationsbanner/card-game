@@ -44,11 +44,11 @@ class Game {
 	
 	start()
 	{
-		p1.draw(3);
-		p2.draw(3);
-		p2.sendCommandMessage({command: "end_turn"});
-		p1.sendCommandMessage({command: "begin_turn"});
-		p1.draw(1);
+		this.p1.draw(3);
+		this.p2.draw(3);
+		this.p2.sendCommandMessage({command: "end_turn"});
+		this.p1.sendCommandMessage({command: "begin_turn"});
+		this.p1.draw(1);
 		
 	}
 }

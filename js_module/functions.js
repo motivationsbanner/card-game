@@ -1,3 +1,9 @@
+/**
+ * card game
+ * client: https://github.com/cravay/card-game
+ * server: https://github.com/ceoy/Nodejs
+ */
+
 (function() {
 	var commands = [ "!people", "!kick" ];
 	module.exports = {

@@ -15,21 +15,31 @@ class Games {
 	{
 		this.games.push(game);
 	}
+	
 	remove(game)
 	{
 		this.games.splice(this.getGameID(game), 1);
 	}
+	
 	getGameID(game)
 	{
 		return this.games.indexOf(game);
 	}
+	
 	getLength()
 	{
 		return this.games.length;
 	}
+	
 	getGame(index)
 	{
 		return this.games[index];
+	}
+	
+	getGameByClient(client)
+	{
+		var gamesID = this.getGameIndexByClient(client);
+		return this.getGame(gamesID);
 	}
 	
 	// Loop through all Games in the Game Array

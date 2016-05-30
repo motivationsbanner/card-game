@@ -12,7 +12,6 @@ class Deck {
 		this.deck = new Array();
 		this.deck = [0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,6,6,6,6,0,0];
 		this.shuffle();
-		//console.log("Deck: " + this.deck);
 		this.hand = new Array();
 	}
 	

@@ -60,7 +60,13 @@
 	});
 	
 	socket.on('command', function(response){
-		$('#messages').append('<li>' + response + "</li>");
+		$('#messages').append('<li>' + response.command + "</li>");
+	});
+	
+	socket.on('trigger', function(response)
+	{
+		console.log(response);
+		socket.emit('command', {command:response});
 	});
 	
     socket.on('message', function(response){

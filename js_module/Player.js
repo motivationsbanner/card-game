@@ -19,21 +19,29 @@ class Player {
 		this.deck = deck();
 	}
 	
-	getClient() {
+	getClient()
+	{
 		return this.client;
 	}
 	
-	setClient(client) {
+	setClient(client)
+	{
 		this.client = client;
 	}
 	
-	draw(amount) {
+	draw(amount)
+	{
 		var cards = new Array();
 		for (var i = 1; i <= amount; i++)
 		{
 			cards.push(this.deck.draw());
 		}
 		this.sendCommandMessage({command: "draw", cards});
+	}
+	
+	enemyDraw(amount)
+	{
+		this.sendCommandMessage({command: "draw", amount});
 	}
 	
 	sendSystemMessage(message)
@@ -44,6 +52,12 @@ class Player {
 	sendCommandMessage(data)
 	{
 		this.client.emit('command', data);
+	}
+	
+	// This sexy little beast is for testing :)
+	sendTriggerMessage(message)
+	{
+		this.client.emit('trigger', message);
 	}
 }
 

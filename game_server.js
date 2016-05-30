@@ -55,6 +55,17 @@ io.sockets.on('connection', function(client)
 				lp.emit('system', 'Your Opponent disconnected. ¯\\_(ツ)_/¯ Please Reload to start a new Game');
 		}
 	});
+	
+	client.on('command', function (data)
+	{
+		try 
+		{
+			games.getGameByClient(client).doCommand(data, client);		
+		} catch (error) { 
+			console.log(error);
+		}
+	
+	});
 });
 
 // Starts the new Game

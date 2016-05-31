@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!--
+	card game
+	2016
+
+	Sven Abbühl - Idee
+	Tim Frey - Kartendesign
+	Tim Jahn - Server
+	Michael Schertenleib - Client
+-->
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>card game</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+				font-size: 0;
+			}
+
+			body {
+				background-color: #38B253;
+			}
+
+			canvas {
+				background-color: #965E41;
+				border: 8px solid #7A4E36;
+				width: 640px;
+				display: block;
+				margin: 20px auto;
+			}
+
+			#info {
+				width: 640px;
+				margin: 40px auto;
+				font: 12px monospace;
+				padding: 6px;
+				background-color: lightblue;
+				border: 2px solid darkblue;
+			}
+		</style>
+		<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>		
+		<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+		<script src="dist/cardgame.min.js"></script>		
+	</head>
+	<body>		
+		<canvas id="stage" width="640" height="480"></canvas>
+		<div id="info" hidden></div>
+	</body>
+</html>

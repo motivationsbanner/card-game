@@ -29,9 +29,48 @@ class Field {
 		}
 	}
 	
+	getCardOnPos(pos)
+	{
+		var row = pos.row,
+			index = pos.index;
+			
+		if (row == 'PlayerMelee')
+			return this.field.melee[index];
+		if (row == 'PlayerRange')
+			return this.field.range[index];
+	}
 	getHand()
 	{
 		return this.field.hand;
+	}
+	
+	setCardPos(pos, card)
+	{
+		var row = pos.row,
+			index = pos.index;
+		
+		if (row == 'PlayerMelee')
+			this.field.melee[index] = card;
+		if (row == 'PlayerRange')
+			this.field.range[index] = card;
+	}
+	getCard(pos)
+	{
+		var card = -1;
+		if (pos.row == 'PlayerMelee') 
+		{
+			card = this.field.melee[pos.index];
+		}
+		if (pos.row == 'PlayerRange')
+		{
+			card = this.field.range[pos.index];
+		}
+		
+		if (card == -1)
+		{
+			console.log('cheat?');
+		}
+		return card;
 	}
 	
 	// The Hardcore kek code.....:'(
@@ -73,8 +112,10 @@ class Field {
 			
 			return fields;
 		}
-		
 	}
+	
+	
+	
 }
 
 module.exports = function field()

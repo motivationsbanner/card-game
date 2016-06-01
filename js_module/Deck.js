@@ -5,7 +5,6 @@
  */
  
 "use strict";
-var Card = require('../js_module/Card.js');
 
 class Deck {
 	constructor ()
@@ -32,7 +31,6 @@ class Deck {
 	{
 		var l = this.deck.length - 1;
 		var id = this.deck[l];
-		var card = Card(id);
 		this.deck.splice(l, 1);
 		return id;
 	}

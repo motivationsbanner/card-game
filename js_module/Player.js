@@ -8,6 +8,7 @@
 
 var field = require('../js_module/Field.js');
 var deck = require('../js_module/Deck.js');
+var Card = require('../js_module/Card.js');
 
 class Player {
 	constructor ()
@@ -15,6 +16,7 @@ class Player {
 		this.client;
 		this.hp = 30;
 		this.field = field();
+		this.enemyField = field();
 		this.deck = deck();
 		this.selected_card = -1;
 	}
@@ -74,8 +76,19 @@ class Player {
 	{
 		if (this.selected_card != -1)
 		{
-			// Get Things if a card is chosen
+			// A Card in your hand is chosen
+			if (this.selected_card.row == 'PlayerHand')
+			{
+				var card = Card( this.field.getHandCard(this.selected_card.index) );
+				return card.isPlayable(this.field);
+			}
 			
+			// A Card on the field is chosen
+			if (this.selected_card.row != 'PlayerHand')
+			{
+				var card = this.getCard(this.selected_card);
+				card.isPlayable(this.field);
+			}
 			
 		} else {
 			// Get Things if no card is chosen
@@ -98,7 +111,11 @@ class Player {
 	
 	currentCardActivate(pos)
 	{
-		
+		if (this.selected_card.row == 'PlayerHand')
+			{
+				var card = Card( this.field.getHandCard(this.selected_card.index) );
+				return card.play(pos, this.field);
+			}
 	}
 }
 

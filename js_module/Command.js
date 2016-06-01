@@ -12,8 +12,9 @@ function change_turnCommand(data, game)
 	// Actions happening after turn change here:
 	game.getOnTurn().draw(1);
 	game.getNotOnTurn().enemyDraw(1);
+	
 	// send new possible cards.
-	game.getOnTurn().getPlayOptions();
+	game.playOptions();
 }
 
 
@@ -24,7 +25,14 @@ function select_optionCommand(data, game)
 	if ( game.getOnTurn().getSelectedCard() != -1 )
 	{
 		// Do Card Action
-		game.getOnTun().currentCardActivate(data.pos);
+		// That'll never work...^^
+		game.getOnTurn().currentCardActivate(data.pos);
+		
+		var senderPos = game.getOnTurn().getSelectedCard(),
+			toPos = data.pos,
+			cardid = game.getOnTurn().field.getCardPos(toPos);
+		var command = {command: 'play_card', sender: senderPos, to: toPos, cardID: cardid};
+		game.getOnTurn().sendCommandMessage(command);
 		game.getOnTurn().setSelectedCard(-1);
 	} else {
 		game.getOnTurn().setSelectedCard(data.pos);

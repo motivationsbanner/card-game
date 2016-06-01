@@ -4,6 +4,8 @@
  * server: https://github.com/ceoy/Nodejs
  */
 
+"use strict";
+
 var cardTypes = [
 	{name: "Armbrustschütze", imageName: "armbrustschütze.png", text: "", type: "minion", data: {"attack": 1, "health": 1, type: "ranged"}},
 	{name: "Bauer", imageName: "bauer.png", text: "", type: "minion", data: {"attack": 1, "health": 1, type: "melee"}},

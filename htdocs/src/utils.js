@@ -4,6 +4,8 @@
  * server: https://github.com/ceoy/Nodejs
  */
 
+"use strict";
+
 var infoDiv;
 
 function showInfo(info)

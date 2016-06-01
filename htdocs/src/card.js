@@ -4,6 +4,8 @@
  * server: https://github.com/ceoy/Nodejs
  */
 
+"use strict";
+
 class Card {
 	constructor(cardType) {
 		this.cardType = cardType;

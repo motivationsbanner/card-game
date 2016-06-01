@@ -4,6 +4,8 @@
  * server: https://github.com/ceoy/Nodejs
  */
 
+"use strict";
+
 function start() {
 	var socket = io();
 	showInfo("Connecting to the server ...");

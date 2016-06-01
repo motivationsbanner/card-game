@@ -4,6 +4,8 @@
  * server: https://github.com/ceoy/Nodejs
  */
 
+"use strict";
+
 var width = 5; // width of board
 var gap = 6; // gap between fields
 var largeCardDimensions = {width: 125, height: 175};

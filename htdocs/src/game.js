@@ -4,6 +4,8 @@
  * server: https://github.com/ceoy/Nodejs
  */
 
+"use strict";
+
 var playerHand = []; // array of cards
 var enemyHand = []; // array of Shapes
 var previewCard = null;

@@ -15,11 +15,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
 	prepare(function() {
 		// TODO: read card dimensions here instead of hardcoding them
 
-		if(document.location.search == "?noserver") {
-			test();
-		} else {
-			start();
-		}
+		start();
 	});
 });
 

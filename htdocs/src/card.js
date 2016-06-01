@@ -68,6 +68,7 @@ class Minion extends Card {
 		this.hideBorder("red");
 		this.container.removeAllEventListeners("click");		
 	}
+
 	play(callback) {
 		var card = this;
 

@@ -6,6 +6,16 @@
 
 "use strict";
 
+var rows = {
+		EnemyHand : 0,
+		EnemyRange: 1,
+		EnemyMelee: 2,
+		PlayerMelee: 3,
+		PlayerRange: 4,
+		PlayerHand: 5
+	};
+
+
 var playerHand = []; // array of cards
 var enemyHand = []; // array of Shapes
 var previewCard = null;
@@ -64,16 +74,11 @@ function enemyDrawCard() {
 	});
 }
 
-function startPlayerTurn() {
-	waitForAction();
-}
-
 function waitForAction() {
 	playerHand.forEach(function(card) {
 		if(card.isPlayable()) {
 		card.showBorder("white");
 			card.container.on("click", function() {
-				removeAllActionOptions();
 				card.play(function() {
 					// TODO: update hand
 					waitForAction();
@@ -83,15 +88,29 @@ function waitForAction() {
 	});
 }
 
+function setPlayOptions(positions) {
+	for(var i = 0; i < positions.length; i ++) {
+		if(positions[i].row == "PlayerHand") {
+			var card = playerHand[positions[i].index];
+			card.showBorder("white");
+
+			card.container.on("click", function() {
+				removeAllActionOptions();
+				
+				window.sendCommand({
+					command: "select_option",
+					pos: {row: "PlayerHand", index: i}
+				});
+			});
+		}
+	}
+}
+
 function removeAllActionOptions() {
 	playerHand.forEach(function(card) {
 		card.hideBorder("white");
 		card.container.removeAllEventListeners("click");
 	});
-}
-
-function startEnemyTurn() {
-	// TODO
 }
 
 function setPreviewCard(card) {

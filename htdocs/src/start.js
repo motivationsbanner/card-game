@@ -18,6 +18,11 @@ function start() {
 					enemyDrawCards(data.amount);
 				}
 				break;
+			case "play_options":
+				setPlayOptions(data.options);
+				break;
+			case "play_card":
+				break;
 			default:
 				console.warn(data.command + " command not (yet) implemented");
 		}
@@ -47,5 +52,8 @@ function start() {
 		socket.on("reconnect_attempt", function(data) {
 			showInfo("Failed to connect, trying again ...");
 		});
+	} else {
+		// suppress error
+		window.sendCommand = function(){};
 	}
 }

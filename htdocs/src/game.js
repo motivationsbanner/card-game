@@ -36,7 +36,7 @@ function playerDrawCard(id) {
 	playerHand.push(card);
 
 	playerHand.forEach(function(card) {
-		card.container.x += (card.container.getBounds().width + gap) / 2;
+		card.container.x += (smallCardDimensions.width + gap) / 2;
 	});
 
 	card.container.set({

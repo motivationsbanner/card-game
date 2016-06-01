@@ -12,7 +12,7 @@
     "uglify-js": "^2.6.2"
   },
   "scripts": {
-	"prebabel": "mkdir htdocs/dist",
+	"prebabel": "mkdir htdocs/dist || true",
     "babel": "babel --presets es2015 htdocs/src --out-file htdocs/dist/cardgame.min.js --source-maps",
     "preminify": "npm run babel",
     "minify": "uglifyjs htdocs/dist/cardgame.min.js --enclose --compress --mangle --output htdocs/dist/cardgame.min.js --source-map htdocs/dist/cardgame.min.js.map --in-source-map htdocs/dist/cardgame.min.js.map --source-map-url cardgame.min.js.map",

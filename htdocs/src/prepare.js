@@ -10,10 +10,6 @@ var stage;
 var borderImages = [];
 var cardBack;
 var fields = [];
-var width = 5; // width of board
-var gap = 6; // gap between fields
-var largeCardDimensions = {width: 125, height: 175};
-var smallCardDimensions = {width: 50, height: 70};
 
 function prepare(callback) {
 	var basePath = "images/";

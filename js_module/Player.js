@@ -79,6 +79,7 @@ class Player {
 			// A Card in your hand is chosen
 			if (this.selected_card.row == 'PlayerHand')
 			{
+				console.log(this.selected_card.index);
 				var card = Card( this.field.getHandCard(this.selected_card.index) );
 				return card.isPlayable(this.field);
 			}

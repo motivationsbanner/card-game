@@ -142,6 +142,7 @@ function minionFactory(cardType) {
 module.exports = function card(id)
 {
 	var cardType = cardTypes[id];
+	console.log(id);
 	
 	return cardFactory(cardType);
 }

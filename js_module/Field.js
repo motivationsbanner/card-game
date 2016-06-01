@@ -44,6 +44,10 @@ class Field {
 		return this.field.hand;
 	}
 	
+	getHandCard(index)
+	{
+		return this.field.hand[index];
+	}
 	setCardPos(pos, card)
 	{
 		var row = pos.row,

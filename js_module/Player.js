@@ -19,6 +19,15 @@ class Player {
 		this.selected_card = -1;
 	}
 	
+	getSelectedCard()
+	{
+		return this.selected_card;
+	}
+	
+	setSelectedCard(cardPos)
+	{
+		this.selected_card = cardPos;
+	}
 	getClient()
 	{
 		return this.client;
@@ -70,8 +79,26 @@ class Player {
 			
 		} else {
 			// Get Things if no card is chosen
+			var playable = new Array();
+			var hand = this.field.getHand();
+			var fieldWithCard = this.field.getFieldsWithCards(true);
 			
+			for ( var i = 0; i < hand.length; i++)
+			{
+				playable.push( {row: 'PlayerHand', index: i} );
+			}
+			
+			for ( var i2 = 0; i2 < fieldWithCard; i2++)
+			{
+				playable.push( fieldWithCard[i2] );
+			}
+			return playable;
 		}
+	}
+	
+	currentCardActivate(pos)
+	{
+		
 	}
 }
 

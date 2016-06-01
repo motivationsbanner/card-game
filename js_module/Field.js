@@ -23,10 +23,57 @@ class Field {
 	
 	setHand(cards)
 	{
-		for ( var index = 0; index < cards.length - 1; index ++ )
+		for ( var index = 0; index < cards.length; index ++ )
 		{
 			this.field.hand.push( cards[index] );
 		}
+	}
+	
+	getHand()
+	{
+		return this.field.hand;
+	}
+	
+	// The Hardcore kek code.....:'(
+	getFieldsWithCards(friendly)
+	{
+		var fields = new Array();
+		
+		if (friendly)
+		{
+			for ( var i = 0; i < this.field.melee.length; i++)
+			{
+				if (this.field.melee[i] != -1)
+					fields.push( {row: 'PlayerMelee', index: i} );
+			}
+			
+			for ( var i2 = 0; i2 < this.field.range.length; i2++)
+			{
+				if (this.field.range[i2] != -1)
+					fields.push({row: 'PlayerRange', index: i2} ) ;
+			}
+			
+			return fields;
+		}
+		
+		if (!friendly)
+		{
+			
+			for ( var i = 0; i < this.field.melee.length; i++)
+			{
+				if (this.field.melee[i] != -1)
+					fields.push( {row: 'EnemyMelee', index: i} );
+			}
+			
+			for ( var i2 = 0; i2 < this.field.range.length; i2++)
+			{
+				if (this.field.range[i2] != -1)
+					fields.push( {row: 'EnemyRange', index: i2} );
+			}
+			
+			return fields;
+		}
+		
 	}
 }
 

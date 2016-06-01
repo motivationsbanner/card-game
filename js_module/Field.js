@@ -9,12 +9,28 @@
 class Field {
 	constructor (type)
 	{
-		this.field = [-1, -1, -1, -1, -1];
-		this.type = type;
+		var playerMelee = [-1, -1, -1, -1, -1];
+		var playerRange = [-1, -1, -1, -1, -1];
+		var playerHand = new Array();
+		
+		this.field = [playerMelee, playerRange, playerHand];
+	}
+	
+	getField()
+	{
+		return this.field;
+	}
+	
+	setHand(cards)
+	{
+		for ( var index = 0, index < cards.length - 1; index ++ )
+		{
+			this.playerHand.push( cards[index] );
+		}
 	}
 }
 
-module.exports = function field(type)
+module.exports = function field()
 {
-	return new Field(type);
+	return new Field();
 }

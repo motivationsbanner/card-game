@@ -14,9 +14,9 @@ class Player {
 	{
 		this.client;
 		this.hp = 30;
-		this.melees = field('melee');
-		this.ranges = field('range');
+		this.field = field();
 		this.deck = deck();
+		this.selected_card = -1;
 	}
 	
 	getClient()
@@ -58,6 +58,19 @@ class Player {
 	sendTriggerMessage(message)
 	{
 		this.client.emit('trigger', message);
+	}
+	
+	getPlayOptions()
+	{
+		if (this.selected_card != -1)
+		{
+			// Get Things if a card is chosen
+			
+			
+		} else {
+			// Get Things if no card is chosen
+			
+		}
 	}
 }
 

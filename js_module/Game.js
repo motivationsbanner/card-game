@@ -16,6 +16,7 @@ class Game {
 		this.on_turn = this.p1;
 		this.not_turn = this.p2;
 		this.rounds = 0;
+		//this.playField = Field(); // Field for p1
 	}
 	
 	getP1()
@@ -78,12 +79,12 @@ class Game {
 		this.p2.draw(3);
 		this.p1.enemyDraw(3);
 		
-		this.p1.sendCommandMessage({command: "begin_turn"});
-		this.p2.sendCommandMessage({command: "end_turn"});
+		this.p1.sendCommandMessage( {command: "play_options"} );
+		
+		// , options: p1.getOptions()
 		
 		this.p1.draw(1);
 		this.p2.enemyDraw(1);
-		
 	}
 	
 	getPlayerByClient(client)
@@ -96,6 +97,14 @@ class Game {
 	doCommand(data, client)
 	{
 		commandInterpreter(data, this.getPlayerByClient(client), this);
+	}
+	
+	// From which side you are looking at
+	// 1 = p1
+	// 2 = p2
+	getField(view)
+	{
+		
 	}
 }
 

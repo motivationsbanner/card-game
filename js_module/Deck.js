@@ -6,13 +6,13 @@
  
 "use strict";
 var Card = require('../js_module/Card.js');
+
 class Deck {
 	constructor ()
 	{
 		this.deck = new Array();
 		this.deck = [0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,6,6,6,6,0,0];
 		this.shuffle();
-		this.hand = new Array();
 	}
 	
 	// http://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array-in-javascript

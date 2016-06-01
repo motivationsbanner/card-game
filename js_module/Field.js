@@ -13,7 +13,7 @@ class Field {
 		var playerRange = [-1, -1, -1, -1, -1];
 		var playerHand = new Array();
 		
-		this.field = [playerMelee, playerRange, playerHand];
+		this.field = {melee: playerMelee, range: playerRange, hand: playerHand};
 	}
 	
 	getField()
@@ -23,9 +23,9 @@ class Field {
 	
 	setHand(cards)
 	{
-		for ( var index = 0, index < cards.length - 1; index ++ )
+		for ( var index = 0; index < cards.length - 1; index ++ )
 		{
-			this.playerHand.push( cards[index] );
+			this.field.hand.push( cards[index] );
 		}
 	}
 }

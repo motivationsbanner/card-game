@@ -33,7 +33,6 @@ class Deck {
 		var l = this.deck.length - 1;
 		var id = this.deck[l];
 		var card = Card(id);
-		this.hand.push(card);
 		this.deck.splice(l, 1);
 		return id;
 	}

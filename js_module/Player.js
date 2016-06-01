@@ -36,6 +36,7 @@ class Player {
 		{
 			cards.push(this.deck.draw());
 		}
+		this.field.setHand(cards);
 		this.sendCommandMessage({command: "draw", cards});
 	}
 	

@@ -6,7 +6,7 @@ game_command:
 		{command: "draw", cards: [...]}
 			{command: "draw", cards: [...]}	-> player
 			{command: "draw", amount: int} 	-> enemy
-		{command: "play_options", options: [{row, index}]}
+		{command: "play_options", options: [{row, index}], abort: {row, index} }
 		
 		{command: "attack", attacker: ..., target: ...}
 		{command: "damage", target: ..., damage: ...}

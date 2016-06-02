@@ -31,6 +31,7 @@ function select_optionCommand(data, game)
 		var senderPos = game.getOnTurn().getSelectedCard(),
 			toPos = data.pos,
 			cardid = game.getOnTurn().field.getCardPos(toPos);
+			
 		var command = {command: 'play_card', sender: senderPos, to: toPos, cardID: cardid};
 		game.getOnTurn().sendCommandMessage(command);
 		game.getOnTurn().setSelectedCard(-1);

@@ -8,7 +8,7 @@
 
 var field = require('../js_module/Field.js');
 var deck = require('../js_module/Deck.js');
-var Card = require('../js_module/Card.js');
+var Card = require('../js_module/cards/cards.js');
 
 class Player {
 	constructor ()

@@ -70,7 +70,8 @@ class Game {
 	playOptions()
 	{
 		var options = this.on_turn.getPlayOptions();
-		var command = {command: "play_options", options}
+		var abortPos = this.on_turn.getSelectedCard();
+		var command = {command: "play_options", options, abort: abortPos};
 		this.on_turn.sendCommandMessage( command );
 	}
 	

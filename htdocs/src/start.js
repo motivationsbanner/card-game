@@ -9,7 +9,7 @@
 function start() {
 
 	window.recieveCommand = function(data) {
-		
+		console.info("recieved command: " + JSON.stringify(data));
 		switch(data.command) {
 			case "draw":
 				if(data.cards) {
@@ -35,6 +35,7 @@ function start() {
 
 		window.sendCommand = function(data) {
 			socket.emit("command", data);
+			console.info("sent command: " + JSON.stringify(data));
 		}
 
 		socket.on("connect", function() {

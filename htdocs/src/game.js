@@ -44,12 +44,13 @@ function playerDrawCard(id) {
 	playerHand.push(card);
 
 	playerHand.forEach(function(card) {
-		card.container.x += (smallCardDimensions.width + gap) / 2;
+		card.container.x -= (smallCardDimensions.width + gap) / 2;
 	});
 
 	card.container.set({
 		y: 480 - smallCardDimensions.height,
-		x: boardCenterX - (smallCardDimensions.width + gap) / 2 * playerHand.length
+		x: boardCenterX + (playerHand.length - 2) * (smallCardDimensions.width / 2)
+			+ (playerHand.length - 1) * (gap / 2) 
 	});
 }
 
@@ -94,14 +95,14 @@ function setPlayOptions(positions) {
 			var card = playerHand[positions[i].index];
 			card.showBorder("white");
 
-			card.container.on("click", function() {
+			card.container.on("click", (function(i) {
 				removeAllActionOptions();
 				
 				window.sendCommand({
 					command: "select_option",
 					pos: {row: "PlayerHand", index: i}
 				});
-			});
+			}).bind(this, i));
 		}
 	}
 }

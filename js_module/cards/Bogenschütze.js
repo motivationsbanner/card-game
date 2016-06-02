@@ -3,9 +3,10 @@
 var RangeMinion = require(__dirname + '/RangedMinion.js');
 
 var bogenschütze = class Bogenschütze extends RangeMinion {
-	constructor (cardType)
+	constructor (cardType, id)
 	{
-		super(cardType);
+		super(cardType, "Bogenschütze");
+		this.id = id;
 	}
 }
 

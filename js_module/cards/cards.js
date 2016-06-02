@@ -23,19 +23,19 @@ var gc = function getCard(id)
 	var cardType = cardTypes[id];
 	
 	if (cardType.name == "Soldat")
-		return new Soldier(cardType);
+		return new Soldier(cardType, id);
 	if (cardType.name == "Bauer")
-		return new Bauer(cardType);
+		return new Bauer(cardType, id);
 	if (cardType.name == "Bogenschütze")
-		return new Bogenschütze(cardType)
+		return new Bogenschütze(cardType, id);
 	if (cardType.name == "Kavallerist")
-		return new Kavallerist(cardType)
+		return new Kavallerist(cardType, id);
 	if (cardType.name == "Krieger")
-		return new Krieger(cardType)
+		return new Krieger(cardType, id);
 	if (cardType.name == "Schwertkämpfer")
-		return new Schwertkämpfer(cardType)
+		return new Schwertkämpfer(cardType, id);
 	if (cardType.name == "Armbrustschütze")
-		return new Armbrustschütze(cardType)
+		return new Armbrustschütze(cardType, id);
 }
 
 module.exports = gc;

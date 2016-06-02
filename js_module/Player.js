@@ -16,7 +16,6 @@ class Player {
 		this.client;
 		this.hp = 30;
 		this.field = field();
-		this.enemyField = field();
 		this.deck = deck();
 		this.selected_card = -1;
 	}
@@ -79,7 +78,6 @@ class Player {
 			// A Card in your hand is chosen
 			if (this.selected_card.row == 'PlayerHand')
 			{
-				console.log(this.selected_card.index);
 				var card = Card( this.field.getHandCard(this.selected_card.index) );
 				return card.isPlayable(this.field);
 			}
@@ -110,13 +108,47 @@ class Player {
 		}
 	}
 	
-	currentCardActivate(pos)
+	currentCardActivate(pos, game)
 	{
 		if (this.selected_card.row == 'PlayerHand')
-			{
-				var card = Card( this.field.getHandCard(this.selected_card.index) );
-				return card.play(pos, this.field);
-			}
+		{
+			this.playCard(pos, game);
+		}
+	}
+
+	playCard(pos, game)
+	{
+		var card = Card( this.field.getHandCard(this.selected_card.index) );
+		this.field = card.play(pos, this.field);
+		
+
+		var senderPos = this.getSelectedCard(),
+			toPos = pos,
+			card_name = this.field.getCardOnPos(toPos).getName();
+			
+		var command1 = {command: 'play_card', sender: senderPos, to: toPos, card_name: card_name};
+		
+		
+		game.getOnTurn().sendCommandMessage(command1);
+		
+		var enemySenderPos = this.field.translate(senderPos, this.field.getRow(senderPos.row).length),
+			enemyToPos = this.field.translate(pos, this.field.getRow(pos.row).length);
+		
+		game.getNotOnTurn().setCard( {pos: enemyToPos, cardname: card.getId()} );
+		var commandEnemy = {command: 'play_card', sender: enemySenderPos, to: enemyToPos, card_name: card_name};
+		game.getNotOnTurn().sendCommandMessage(commandEnemy);
+		game.getOnTurn().removeHandCard(senderPos);
+	}
+	
+	setCard(info)
+	{
+		var card = Card ( info.cardname);
+		card.play(info.pos, this.field);
+	}
+	
+	removeHandCard(pos)
+	{
+		this.field = this.field.removeCard(pos);
 	}
 }
 

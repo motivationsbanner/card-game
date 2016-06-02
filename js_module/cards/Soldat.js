@@ -3,9 +3,10 @@
 var MeleeMinion = require(__dirname + '/MeleeMinion.js');
 
 var soldat = class Soldat extends MeleeMinion {
-	constructor (cardType)
+	constructor (cardType, id)
 	{
-		super(cardType);
+		super(cardType, "Soldat");
+		this.id = id;
 	}
 }
 

@@ -4,9 +4,9 @@ var Card = require(__dirname + '/Card.js');
 
 
 var minion = class Minion extends Card {
-	constructor (cardType)
+	constructor (cardType, id)
 	{
-		super( cardType );
+		super( cardType, id);
 		this.attack = cardType.data.attack;
 		this.health = cardType.data.health;
 	}

@@ -3,9 +3,9 @@
 var Card = require(__dirname + '/Card.js');
 
 var spell = class Spell extends Card {
-	constructor (cardType)
+	constructor (cardType, id)
 	{
-		super( cardType );
+		super( cardType, "Spell");
 	}
 }
 

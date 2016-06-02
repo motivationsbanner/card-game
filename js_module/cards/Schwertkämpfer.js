@@ -3,9 +3,10 @@
 var MeleeMinion = require(__dirname + '/MeleeMinion.js');
 
 var schwertkämpfer = class Schwertkämpfer extends MeleeMinion {
-	constructor (cardType)
+	constructor (cardType, id)
 	{
-		super(cardType);
+		super(cardType, "Schwertkämpfer");
+		this.id = id;
 	}
 }
 

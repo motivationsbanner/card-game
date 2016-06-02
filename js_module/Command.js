@@ -23,17 +23,8 @@ function change_turnCommand(data, game)
 function select_optionCommand(data, game)
 {
 	if ( game.getOnTurn().getSelectedCard() != -1 )
-	{
-		// Do Card Action
-		// That'll never work...^^
-		game.getOnTurn().currentCardActivate(data.pos);
-		
-		var senderPos = game.getOnTurn().getSelectedCard(),
-			toPos = data.pos,
-			cardid = game.getOnTurn().field.getCardPos(toPos);
-			
-		var command = {command: 'play_card', sender: senderPos, to: toPos, cardID: cardid};
-		game.getOnTurn().sendCommandMessage(command);
+	{	// Do Card Action
+		game.getOnTurn().currentCardActivate(data.pos, game);
 		game.getOnTurn().setSelectedCard(-1);
 	} else {
 		game.getOnTurn().setSelectedCard(data.pos);

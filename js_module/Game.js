@@ -59,14 +59,6 @@ class Game {
 		commandInterpreter(data, this.getPlayerByClient(client), this);
 	}
 	
-	// From which side you are looking at
-	// 1 = p1
-	// 2 = p2
-	getField(view)
-	{
-		
-	}
-	
 	playOptions()
 	{
 		var options = this.on_turn.getPlayOptions();

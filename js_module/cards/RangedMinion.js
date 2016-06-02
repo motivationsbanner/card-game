@@ -3,9 +3,9 @@
 var Minion = require(__dirname + '/Minion.js');
 
 var rangedMinion = class RangedMinion extends Minion {
-	constructor (cardType)
+	constructor (cardType, id)
 	{
-		super(cardType)
+		super(cardType, id)
 	}
 	
 	isPlayable(field)
@@ -20,7 +20,7 @@ var rangedMinion = class RangedMinion extends Minion {
 			for (var i = 0; i < f.length; i++)
 			{
 				if (f[i] == -1)
-					playable.push( {row: 'PlayerRange', index: f[i]} );
+					playable.push( {row: 'PlayerRange', index: i} );
 			}	
 			return playable;
 		}

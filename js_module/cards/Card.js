@@ -1,10 +1,17 @@
 "use strict";
 
 var card = class Card {
-	constructor (cardType)
+	constructor (cardType, id)
 	{
 		this.cardType = cardType;
 		this.isOnField = false;
+		this.name = id;
+		this.id = -1;
+	}
+	
+	getId()
+	{
+		return this.id;
 	}
 	
 	getType()
@@ -21,11 +28,17 @@ var card = class Card {
 	{
 		var row = pos.row,
 			index = pos.index;
+		this.isOnField = true;
 		if (field.getCardOnPos(pos) == -1)
 		{
 			field.setCardPos(pos, this);
+			return field;
 		}
-		this.isOnField = true;
+		return field;
+	}
+	getName()
+	{
+		return this.name;
 	}
 }
 

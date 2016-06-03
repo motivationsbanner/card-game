@@ -17,40 +17,9 @@ class Card {
 		
 		stage.addChildAt(this.container, 0);
 
-		// example: {red: createjs.Bitmap, white: createjs.Bitmap}
-		this.borders = {};
-
 		this.container.on("mouseover", function() {
 			setPreviewCard(this);
 		}, this);
-	}	
-	
-
-	hideBorder(color) {
-		this.borders[color].set({"visible": false});
-	}
-
-	showBorder(color) {
-		if(!this.borders[color]) {
-			this.borders[color] = new createjs.Bitmap(borderImages[color]);
-
-			this.borders[color].set({
-				x: - 6,
-				y: - 6
-			});
-		
-			this.container.addChild(this.borders[color]);
-		}
-		
-		this.borders[color].visible = true;
-	}
-
-	isPlayable() {
-		 return true;
-	}
-
-	play(callback) {
-		callback();
 	}
 	
 	render() {
@@ -64,51 +33,11 @@ class Minion extends Card {
 		this.attack = cardType.data.attack;
 		this.health = cardType.data.health;
 	}
-	deselect() {
-		this.hideBorder("red");
-		this.container.removeAllEventListeners("click");		
-	}
-
-	play(callback) {
-		var card = this;
-
-		card.showBorder("red");
-		
-		card.container.on("click", function() {
-			card.deselect();
-			removeAllTargetOptions();
-			callback();
-		});
-
-		card.getPossibleTargets().forEach(function(target) {
-			var field = fields[target.y][target.x];
-			field.border.visible = true;
-
-			field.image.on("click", function() {
-				card.deselect();
-				field.card = card;
-				playerHand.splice(playerHand.indexOf(card), 1);
-				removeAllTargetOptions();
-				stage.setChildIndex(card.container, stage.numChildren - 1);
-
-				createjs.Tween.get(card.container)
-					.to({
-						x: field.image.x,
-						y: field.image.y
-					}, 500)
-					.call(callback);
-			});
-		});
-	}
 }
 
 class RangedMinion extends Minion {
 	constructor(cardType) {
 		super(cardType);
-	}
-	
-	getPossibleTargets() {
-		return getEmptyFieldsInRow(3);
 	}
 }
 
@@ -116,22 +45,6 @@ class MeleeMinion extends Minion {
 	constructor(cardType) {
 		super(cardType);
 	}
-
-	getPossibleTargets() {
-		return getEmptyFieldsInRow(2);
-	}
-}
-
-function getEmptyFieldsInRow(row) {
-	var possibleTargets = [];
-	
-	for(var x = 0; x < width; x ++) {
-		if(!fields[row][x].card) {
-			possibleTargets.push({x: x, y: row});
-		}
-	}
-
-	return possibleTargets;
 }
 
 class Spell extends Card {

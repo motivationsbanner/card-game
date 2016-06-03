@@ -11,3 +11,11 @@ var gap = 6; // gap between fields
 var largeCardDimensions = {width: 125, height: 175};
 var smallCardDimensions = {width: 50, height: 70};
 
+var rowNames = [
+	"EnemyHand",
+	"EnemyRange",
+	"EnemyMelee",
+	"PlayerMelee",
+	"PlayerRange",
+	"PlayerHand"
+];

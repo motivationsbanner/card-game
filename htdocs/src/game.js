@@ -6,52 +6,40 @@
 
 "use strict";
 
-var rows = {
-		EnemyHand : 0,
-		EnemyRange: 1,
-		EnemyMelee: 2,
-		PlayerMelee: 3,
-		PlayerRange: 4,
-		PlayerHand: 5
-	};
-
-
-var playerHand = []; // array of cards
 var enemyHand = []; // array of Shapes
 var previewCard = null;
 var boardCenterX = largeCardDimensions.width + (640 - largeCardDimensions.width) / 2 + 4 * gap;
 
-document.addEventListener("DOMContentLoaded", function(e) {
-	prepare(function() {
-		// TODO: read card dimensions here instead of hardcoding them
-
-		start();
-	});
+document.addEventListener("DOMContentLoaded", function() {
+	prepare(start);
 });
 
-function playerDrawCards(cards)
-{
+function playerDrawCards(cards) {
 	cards.forEach(function(card) {
 		playerDrawCard(card);
 	});
 }
 
 function playerDrawCard(id) {
+	// TODO: animate
+	rows["PlayerHand"].forEach(function(field) {
+		field.x -= (smallCardDimensions.width + gap) / 2;
+	});
+
 	var cardType = cardTypes[id];
-
 	var card = cardFactory(cardType);
+	var x =  boardCenterX + (rows["PlayerHand"].length - 2 + 1) * (smallCardDimensions.width / 2)
+		+ (rows["PlayerHand"].length - 1 + 1) * (gap / 2);
+	var y = 480 - smallCardDimensions.height;
 
-	playerHand.push(card);
+	var field = new Field(x, y, card);
 
-	playerHand.forEach(function(card) {
-		card.container.x -= (smallCardDimensions.width + gap) / 2;
-	});
+	rows["PlayerHand"].push(field);
 
-	card.container.set({
-		y: 480 - smallCardDimensions.height,
-		x: boardCenterX + (playerHand.length - 2) * (smallCardDimensions.width / 2)
-			+ (playerHand.length - 1) * (gap / 2) 
-	});
+	card.x = x;
+	card.y = y;
+
+	stage.addChild(card.container);
 }
 
 function enemyDrawCards(amount) {
@@ -75,43 +63,30 @@ function enemyDrawCard() {
 	});
 }
 
-function waitForAction() {
-	playerHand.forEach(function(card) {
-		if(card.isPlayable()) {
-		card.showBorder("white");
-			card.container.on("click", function() {
-				card.play(function() {
-					// TODO: update hand
-					waitForAction();
-				});
-			});
-		}
-	});
-}
-
 function setPlayOptions(positions) {
 	for(var i = 0; i < positions.length; i ++) {
-		if(positions[i].row == "PlayerHand") {
-			var card = playerHand[positions[i].index];
-			card.showBorder("white");
+		var field = rows[positions[i].row][positions[i].index];
 
-			card.container.on("click", (function(i) {
-				removeAllActionOptions();
-				
-				window.sendCommand({
-					command: "select_option",
-					pos: {row: "PlayerHand", index: i}
-				});
-			}).bind(this, i));
-		}
+		field.showBorder("white");
+		
+		field.container.on("click", (function(row, index) {
+			removeAllActionOptions();
+
+			window.sendCommand({
+				command: "select_option",
+				pos: {row: row, index: index}
+			});
+		}).bind(this, positions[i].row, positions[i].index));
 	}
 }
 
 function removeAllActionOptions() {
-	playerHand.forEach(function(card) {
-		card.hideBorder("white");
-		card.container.removeAllEventListeners("click");
-	});
+	for(var name in rows) {
+		for(var field of rows[name]) {
+			field.hideBorder("white");
+			field.container.removeAllEventListeners("click");
+		}
+	}
 }
 
 function setPreviewCard(card) {

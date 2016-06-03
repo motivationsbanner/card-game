@@ -65,7 +65,7 @@ function enemyDrawCard() {
 
 function setPlayOptions(positions) {
 	for(var i = 0; i < positions.length; i ++) {
-		var field = rows[positions[i].row][positions[i].index];
+		var field = getField(positions[i]);
 
 		field.showBorder("white");
 		
@@ -78,6 +78,26 @@ function setPlayOptions(positions) {
 			});
 		}).bind(this, positions[i].row, positions[i].index));
 	}
+}
+
+function playCard(from, to) {
+	getField(from).card.goToField(getField(to), function() {
+		// TODO: animate
+
+		for(var i = 0; i < from.index; i ++) {
+			rows.PlayerHand[i].x += (smallCardDimensions.width + gap) / 2;
+		}
+		
+		for(var i = from.index + 1; i < rows.PlayerHand.length; i ++) {
+			rows.PlayerHand[i].x -= (smallCardDimensions.width + gap) / 2;
+		}
+		
+			getField(to).card = getField(from).card;
+	
+			rows.PlayerHand.splice(from.index, 1);
+	
+			delete getField(from);
+	});
 }
 
 function removeAllActionOptions() {

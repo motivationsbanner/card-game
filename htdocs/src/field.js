@@ -3,6 +3,8 @@
  * client: https://github.com/cravay/card-game
  * server: https://github.com/ceoy/Nodejs
  */
+
+"use strict";
  
  class Field {
 	constructor(x, y, card) {
@@ -83,4 +85,8 @@ class BoardField extends Field {
 
 		stage.addChild(shape);
 	}
+}
+
+function getField(data) {
+	return rows[data.row][data.index];
 }

@@ -25,6 +25,19 @@ class Card {
 	render() {
 		// can be implemented by child classes
 	}
+	
+	goToField(field, callback) {
+		callback = callback || function(){}
+		
+		stage.setChildIndex(this.container, stage.numChildren - 1);
+		
+		createjs.Tween.get(this.container)
+			.to({
+				x: field.x,
+				y: field.y
+			}, 500)
+			.call(callback);
+	}
 }
 
 class Minion extends Card {

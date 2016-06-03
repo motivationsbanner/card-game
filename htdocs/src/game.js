@@ -63,12 +63,21 @@ function enemyDrawCard() {
 	});
 }
 
-function setPlayOptions(positions) {
+function setPlayOptions(positions, abort) {
+	if(abort instanceof Object) {
+		positions.push(abort);
+		abort = getField(abort);
+	}
+
 	for(var i = 0; i < positions.length; i ++) {
 		var field = getField(positions[i]);
 
-		field.showBorder("white");
-		
+		if(field === abort) {
+			field.showBorder("red");
+		} else {
+			field.showBorder("white")
+		}
+
 		field.container.on("click", (function(row, index) {
 			removeAllActionOptions();
 
@@ -103,6 +112,8 @@ function playCard(from, to) {
 function removeAllActionOptions() {
 	for(var name in rows) {
 		for(var field of rows[name]) {
+			// At least it works
+			field.hideBorder("red");
 			field.hideBorder("white");
 			field.container.removeAllEventListeners("click");
 		}

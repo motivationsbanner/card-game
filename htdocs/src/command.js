@@ -20,7 +20,7 @@ window.recieveCommand = function(data) {
 			}
 			break;
 		case "play_options":
-			setPlayOptions(data.options);
+			setPlayOptions(data.options, data.abort);
 			break;
 		case "play_card":
 			playCard(data.sender, data.to);

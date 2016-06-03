@@ -6,7 +6,7 @@
  
 "use strict";
 
-class Deck {
+var deck = class Deck {
 	constructor ()
 	{
 		this.deck = new Array();
@@ -27,6 +27,8 @@ class Deck {
 		}
 	}
 	
+	// draw a card from the deck
+	// return id
 	draw()
 	{
 		var l = this.deck.length - 1;
@@ -36,7 +38,4 @@ class Deck {
 	}
 }
 
-module.exports = function deck()
-{ 
-	return new Deck(); 
-}
+module.exports = deck;

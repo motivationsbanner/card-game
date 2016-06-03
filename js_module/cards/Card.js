@@ -9,25 +9,11 @@ var card = class Card {
 		this.id = -1;
 	}
 	
-	getId()
-	{
-		return this.id;
-	}
-	
-	getType()
-	{
-		return this.cardType;
-	}
-	
-	isPlayable(field)
-	{
-		return -1;
-	}
-	
 	play(pos, field)
 	{
 		var row = pos.row,
 			index = pos.index;
+		
 		this.isOnField = true;
 		if (field.getCardOnPos(pos) == -1)
 		{
@@ -36,8 +22,20 @@ var card = class Card {
 		}
 		return field;
 	}
-	getName()
-	{
+	
+	getId() {
+		return this.id;
+	}
+	
+	getType() {
+		return this.cardType;
+	}
+	
+	isPlayable(field) {
+		return -1;
+	}
+	
+	getName() {
 		return this.name;
 	}
 }

@@ -14,11 +14,6 @@ class Players {
 		this.players = new Array();
 	}
 	
-	add(client)
-	{
-		this.players.push(client);
-	}
-	
 	rdy()
 	{
 		if ( this.players.length >= 2 )
@@ -32,13 +27,16 @@ class Players {
 		return false;
 	}
 	
-	remove(client)
-	{
+	remove(client) {
 		this.players.splice(this.getIndex(client), 1);
 	}
 	
 	getIndex(client) {
 		return this.players.indexOf(client);
+	}
+	
+	add(client) {
+		this.players.push(client);
 	}
 }
 

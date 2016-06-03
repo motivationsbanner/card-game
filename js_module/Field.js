@@ -6,7 +6,7 @@
  
 "use strict";
 
-class Field {
+var field = class Field {
 	constructor (type)
 	{
 		var playerMelee = [-1, -1, -1, -1, -1];
@@ -17,15 +17,17 @@ class Field {
 		var eRange = [-1, -1, -1, -1, -1];
 		var eHand = new Array();
 		
-		this.field = {melee: playerMelee, range: playerRange, hand: playerHand, enemyMelee: eMelee, enemyHand: eHand, enemyRange: eRange };
+		this.field = {
+			melee: playerMelee,
+			range: playerRange,
+			hand: playerHand,
+			enemyMelee: eMelee,
+			enemyHand: eHand,
+			enemyRange: eRange
+		};
 	}
 	
-	getField()
-	{
-		return this.field;
-	}
-	
-	setHand(cards)
+	addHand(cards)
 	{
 		for ( var index = 0; index < cards.length; index ++ )
 		{
@@ -69,15 +71,7 @@ class Field {
 		if (row == 'EnemyRange')
 			return this.field.enemyRange[index];
 	}
-	getHand()
-	{
-		return this.field.hand;
-	}
-	
-	getHandCard(index)
-	{
-		return this.field.hand[index];
-	}
+
 	
 	setCardPos(pos, card)
 	{
@@ -89,22 +83,26 @@ class Field {
 		if (row == 'PlayerRange')
 			this.field.range[index] = card;
 	}
+	
 	getCard(pos)
 	{
 		var card = -1;
-		if (pos.row == 'PlayerMelee') 
+		var row = pos.row,
+			index = pos.index;
+		if (row == 'PlayerMelee') 
 		{
-			card = this.field.melee[pos.index];
+			card = this.field.melee[index];
 		}
-		if (pos.row == 'PlayerRange')
+		if (row == 'PlayerRange')
 		{
-			card = this.field.range[pos.index];
+			card = this.field.range[index];
 		}
 		
 		if (card == -1)
 		{
 			console.log('cheat?');
 		}
+		
 		return card;
 	}
 	
@@ -124,7 +122,7 @@ class Field {
 			for ( var i2 = 0; i2 < this.field.range.length; i2++)
 			{
 				if (this.field.range[i2] != -1)
-					fields.push({row: 'PlayerRange', index: i2} ) ;
+					fields.push( {row: 'PlayerRange', index: i2} );
 			}
 			
 			return fields;
@@ -191,9 +189,19 @@ class Field {
 		return this;
 	}
 	
+	
+	getHand() {
+		return this.field.hand;
+	}
+	
+	getHandCard(index) {
+		return this.field.hand[index];
+	}
+	
+	getField() {
+		return this.field;
+	}
+	
 }
 
-module.exports = function field()
-{
-	return new Field();
-}
+module.exports = field;

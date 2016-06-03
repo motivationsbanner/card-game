@@ -9,13 +9,13 @@ var Schwertkämpfer = require(__dirname + '/Schwertkämpfer.js');
 var Armbrustschütze = require(__dirname + '/Armbrustschütze.js');
 
 var cardTypes = [
-	{name: "Armbrustschütze", text: "", type: "minion", data: {"attack": 1, "health": 1, type: "ranged"}},
-	{name: "Bauer", text: "", type: "minion", data: {"attack": 1, "health": 1, type: "melee"}},
-	{name: "Bogenschütze", text: "", type: "minion", data: {"attack": 1, "health": 1, type: "ranged"}},
-	{name: "Kavallerist", text: "", type: "minion", data: {"attack": 1, "health": 1, type: "melee"}},
-	{name: "Krieger", text: "", type: "minion", data: {"attack": 1, "health": 1, type: "melee"}},
-	{name: "Schwertkämpfer", text: "", type: "minion", data: {"attack": 1, "health": 1, type: "melee"}},
-	{name: "Soldat", text: "", type: "minion", data: {"attack": 1, "health": 1, type: "melee"}}
+	{name: "Armbrustschütze"},
+	{name: "Bauer"},
+	{name: "Bogenschütze"},
+	{name: "Kavallerist"},
+	{name: "Krieger"},
+	{name: "Schwertkämpfer"},
+	{name: "Soldat"}
 ];
 
 var gc = function getCard(id)

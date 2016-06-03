@@ -7,8 +7,8 @@ var minion = class Minion extends Card {
 	constructor (cardType, id)
 	{
 		super( cardType, id);
-		this.attack = cardType.data.attack;
-		this.health = cardType.data.health;
+		this.attack = 1;
+		this.health = 1;
 	}
 }
 

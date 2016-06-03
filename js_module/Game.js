@@ -5,14 +5,14 @@
  */
 
 "use strict";
-var player = require('../js_module/Player.js');
+var Player = require('../js_module/Player.js');
 var commandInterpreter = require('../js_module/Command.js');
 
 class Game {
 	constructor ()
 	{
-		this.p1 = player();
-		this.p2 = player();
+		this.p1 = new Player();
+		this.p2 = new Player();
 		this.on_turn = this.p1;
 		this.not_turn = this.p2;
 		this.rounds = 0;
@@ -53,9 +53,8 @@ class Game {
 		if ( this.getP2Client() == client ) return this.p2;
 		return -1;
 	}
-	
-	doCommand(data, client)
-	{
+		
+	doCommand(data, client) {
 		commandInterpreter(data, this.getPlayerByClient(client), this);
 	}
 	
@@ -67,42 +66,34 @@ class Game {
 		this.on_turn.sendCommandMessage( command );
 	}
 	
-	getP1()
-	{
+	getP1()	{
 		return this.p1;
 	}
 	
-	getP2()
-	{
+	getP2()	{
 		return this.p2;
 	}
 	
-	getP1Client()
-	{
+	getP1Client() {
 		return this.p1.getClient();
 	}
 	
-	getP2Client()
-	{
+	getP2Client() {
 		return this.p2.getClient();
 	}
-	setP1(client)
-	{
+	setP1(client) {
 		this.p1.setClient(client);
 	}
 	
-	setP2(client)
-	{
+	setP2(client) {
 		this.p2.setClient(client);
 	}
 	
-	getOnTurn()
-	{
+	getOnTurn()	{
 		return this.on_turn;
 	}
 	
-	getNotOnTurn()
-	{
+	getNotOnTurn() {
 		return this.not_turn;
 	}
 }

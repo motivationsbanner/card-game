@@ -47,8 +47,7 @@ io.sockets.on('connection', function(client)
 		if ( players.getIndex(client) != -1 )
 		{
 			players.remove(client);	
-		} else
-		{
+		} else {
 			lp = games.clean (client);
 			if (lp != -1)
 				lp.emit('system', 'Your Opponent disconnected. ¯\\_(ツ)_/¯ Please Reload to start a new Game');

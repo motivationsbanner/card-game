@@ -11,31 +11,6 @@ class Games {
 		this.games = new Array();
 	}
 	
-	add(game)
-	{
-		this.games.push(game);
-	}
-	
-	remove(game)
-	{
-		this.games.splice(this.getGameID(game), 1);
-	}
-	
-	getGameID(game)
-	{
-		return this.games.indexOf(game);
-	}
-	
-	getLength()
-	{
-		return this.games.length;
-	}
-	
-	getGame(index)
-	{
-		return this.games[index];
-	}
-	
 	getGameByClient(client)
 	{
 		var gamesID = this.getGameIndexByClient(client);
@@ -62,14 +37,14 @@ class Games {
 		try 
 		{
 			// p1 & p2 are both Clients
-		var p1 = this.getGame(index).getP1().getClient();
-		var p2 = this.getGame(index).getP2().getClient();
-		
-		// Return the Player that did not leave 
-		if ( p1 == player )
-			return p2;
-		if ( p2 == player )
-			return p1;
+			var p1 = this.getGame(index).getP1().getClient();
+			var p2 = this.getGame(index).getP2().getClient();
+			
+			// Return the Player that did not leave 
+			if ( p1 == player )
+				return p2;
+			if ( p2 == player )
+				return p1;
 		}
 		// This error occurs after one player leaves and the other one reloads (or leaves aswell)
 		catch (err)
@@ -86,13 +61,33 @@ class Games {
 		
 		if (lastPlayer != -1)
 			return lastPlayer;
-		else
-		{
+		else {
 			this.remove(index);
 			return -1;
 		}
-		
+	}
+	
+	add(game) {
+		this.games.push(game);
+	}
+	
+	remove(game) {
+		this.games.splice(this.getGameID(game), 1);
+	}
+	
+	getGameID(game)	{
+		return this.games.indexOf(game);
+	}
+	
+	getLength()	{
+		return this.games.length;
+	}
+	
+	getGame(index) {
+		return this.games[index];
 	}
 }
+
+
 
 module.exports = new Games();

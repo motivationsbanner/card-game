@@ -6,37 +6,18 @@
 
 "use strict";
 
-var field = require('../js_module/Field.js');
-var deck = require('../js_module/Deck.js');
+var Field = require('../js_module/Field.js');
+var Deck = require('../js_module/Deck.js');
 var Card = require('../js_module/cards/cards.js');
 
-class Player {
+var player = class Player {
 	constructor ()
 	{
 		this.client;
 		this.hp = 30;
-		this.field = field();
-		this.deck = deck();
+		this.field = new Field();
+		this.deck = new Deck();
 		this.selected_card = -1;
-	}
-	
-	getSelectedCard()
-	{
-		return this.selected_card;
-	}
-	
-	setSelectedCard(cardPos)
-	{
-		this.selected_card = cardPos;
-	}
-	getClient()
-	{
-		return this.client;
-	}
-	
-	setClient(client)
-	{
-		this.client = client;
 	}
 	
 	draw(amount)
@@ -46,29 +27,8 @@ class Player {
 		{
 			cards.push(this.deck.draw());
 		}
-		this.field.setHand(cards);
-		this.sendCommandMessage({command: "draw", cards});
-	}
-	
-	enemyDraw(amount)
-	{
-		this.sendCommandMessage({command: "draw", amount});
-	}
-	
-	sendSystemMessage(message)
-	{
-		this.client.emit('system', message);
-	}
-	
-	sendCommandMessage(data)
-	{
-		this.client.emit('command', data);
-	}
-	
-	// This sexy little beast is for testing :)
-	sendTriggerMessage(message)
-	{
-		this.client.emit('trigger', message);
+		this.field.addHand(cards);
+		this.sendCommandMessage( {command: "draw", cards} );
 	}
 	
 	getPlayOptions()
@@ -118,41 +78,76 @@ class Player {
 
 	playCard(pos, game)
 	{
-		var card = Card( this.field.getHandCard(this.selected_card.index) );
+		// create new card (card in your hand)
+		var card_id = this.field.getHandCard(this.selected_card.index) 
+		var card = Card( card_id );
+		
+		// Play Card on your field
 		this.field = card.play(pos, this.field);
 		
-
+	
 		var senderPos = this.getSelectedCard(),
 			toPos = pos,
 			card_name = this.field.getCardOnPos(toPos).getName();
-			
+		
+		// Send play_card command to player
 		var command1 = {command: 'play_card', sender: senderPos, to: toPos, card_name: card_name};
-		
-		
 		game.getOnTurn().sendCommandMessage(command1);
 		
 		var enemySenderPos = this.field.translate(senderPos, this.field.getRow(senderPos.row).length),
 			enemyToPos = this.field.translate(pos, this.field.getRow(pos.row).length);
 		
-		game.getNotOnTurn().setCard( {pos: enemyToPos, cardname: card.getId()} );
+		// Play Card on enemy field
+		game.getNotOnTurn().setCard( {pos: enemyToPos, cardid: card.getId()} );
+		
+		// Send play_card command to enemy player
 		var commandEnemy = {command: 'play_card', sender: enemySenderPos, to: enemyToPos, card_name: card_name};
 		game.getNotOnTurn().sendCommandMessage(commandEnemy);
+		
+		// Remove card in player hand
 		game.getOnTurn().removeHandCard(senderPos);
 	}
 	
+	// used if the enemy plays a card
 	setCard(info)
 	{
-		var card = Card ( info.cardname);
+		var card = Card ( info.cardid);
 		card.play(info.pos, this.field);
 	}
 	
-	removeHandCard(pos)
-	{
+	removeHandCard(pos) {
 		this.field = this.field.removeCard(pos);
 	}
+	
+	getSelectedCard()
+	{
+		return this.selected_card;
+	}
+	
+	setSelectedCard(cardPos) { 
+		this.selected_card = cardPos;
+	}
+	
+	getClient() {
+		return this.client;
+	}
+	
+	setClient(client) {
+		this.client = client;
+	}
+	
+	enemyDraw(amount) {
+		this.sendCommandMessage( {command: "draw", amount} );
+	}
+	
+	sendSystemMessage(message) {
+		this.client.emit('system', message);
+	}
+	
+	sendCommandMessage(data) {
+		this.client.emit('command', data);
+	}
+	
 }
 
-module.exports = function player() 
-{
-	return new Player();
-}
+module.exports = player;

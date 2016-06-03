@@ -23,10 +23,11 @@ function change_turnCommand(data, game)
 function select_optionCommand(data, game)
 {
 	if ( game.getOnTurn().getSelectedCard() != -1 )
-	{	// Do Card Action
+	{	// Do card chosen yet
 		game.getOnTurn().currentCardActivate(data.pos, game);
 		game.getOnTurn().setSelectedCard(-1);
 	} else {
+		// No card chosen yet
 		game.getOnTurn().setSelectedCard(data.pos);
 		game.playOptions();
 	}

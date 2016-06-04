@@ -23,7 +23,7 @@ window.recieveCommand = function(data) {
 			setPlayOptions(data.options, data.abort);
 			break;
 		case "play_card":
-			playCard(data.sender, data.to);
+			playCard(data.sender, data.to, data.card_name);
 			break;
 		default:
 			console.warn(data.command + " command not (yet) implemented");

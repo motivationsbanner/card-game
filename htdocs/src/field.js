@@ -24,26 +24,18 @@
 
 		stage.addChild(this.container);
 	}
-
-	setPosition(x, y) {
-		this.container.set({x: x, y: y});
-
-		if(this.card) {
-			this.card.container.set({x: x, y: y});
-		}
-	}
 	
 	set x(x) {
 		this.container.x = x;
 		if(this.card) {
-			this.card.container.x = x;
+			this.card.x = x;
 		}
 	}
 	
 	set y(y) {
 		this.container.y = y;
 		if(this.card) {
-			this.card.container.y = y;
+			this.card.y = y;
 		}
 	}
 	

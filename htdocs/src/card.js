@@ -21,22 +21,38 @@ class Card {
 			setPreviewCard(this);
 		}, this);
 	}
-	
+
 	render() {
 		// can be implemented by child classes
 	}
-	
+
 	goToField(field, callback) {
 		callback = callback || function(){}
 		
 		stage.setChildIndex(this.container, stage.numChildren - 1);
 		
-		createjs.Tween.get(this.container)
+		createjs.Tween.get(this)
 			.to({
 				x: field.x,
 				y: field.y
 			}, 500)
 			.call(callback);
+	}
+	
+	get x() {
+		return this.container.x;
+	}
+	
+	get y() {
+		return this.container.y;
+	}
+	
+	set x(x) {
+		this.container.x = x;
+	}
+	
+	set y(y) {
+		this.container.y = y;
 	}
 }
 

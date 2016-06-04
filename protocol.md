@@ -16,9 +16,11 @@ game_command:
 		{command: "cast_spell", target: ...}
 		{command: "buff", target: ..., health: ..., attack: ...}
 		{command: "play_card", sender: pos: {row, index}, to: pos: {row, index}, card_name: name} -> player & enemy (different positions)
+		{command: "all_cards" , minions: {name, attack, health, text}, spells: {name, text} }
 
 	client->server
 		{command: "end_turn"}
 		{command: "select_option", pos: {row, index} *siehe fieldPos.md*}
+		
 		
 ```

@@ -58,9 +58,9 @@ class Games {
 		var index = this.getGameIndexByClient(client);
 		var lastPlayer = this.getLastPlayerInGame(index, client);
 		
-		
-		return lastPlayer;
 		this.remove(index);
+		return lastPlayer;
+		
 		}
 	}
 	

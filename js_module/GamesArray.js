@@ -60,8 +60,6 @@ class Games {
 		
 		this.remove(index);
 		return lastPlayer;
-		
-		}
 	}
 	
 	add(game) {

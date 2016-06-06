@@ -5,12 +5,15 @@
  */
  
 "use strict";
+var fs = require('fs');
 
+	
+	
 var deck = class Deck {
 	constructor ()
 	{
 		this.deck = new Array();
-		this.deck = [0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,6,6,6,6,0,0];
+		this.createDeck();
 		this.shuffle();
 	}
 	
@@ -27,14 +30,25 @@ var deck = class Deck {
 		}
 	}
 	
+	createDeck() {
+		var arr = JSON.parse(fs.readFileSync(__dirname + '/deck/Deck.json', 'utf8'));
+		for (var obj in arr)
+		{
+			var name = arr[obj].card_name;
+			var amount = arr[obj].card_amount;
+			for (var i = 0; i < amount; i++) {
+				this.deck.push(name);
+			}
+		}
+	}
 	// draw a card from the deck
 	// return id
 	draw()
 	{
 		var l = this.deck.length - 1;
-		var id = this.deck[l];
+		var card = this.deck[l];
 		this.deck.splice(l, 1);
-		return id;
+		return card;
 	}
 }
 

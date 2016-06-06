@@ -5,7 +5,6 @@ var card = class Card {
 	{
 		this.cardType = cardType;
 		this.isOnField = false;
-		this.name = id;
 		this.id = -1;
 	}
 	

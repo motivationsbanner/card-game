@@ -1,9 +1,9 @@
-/**
- * card game
- * client: https://github.com/cravay/card-game
- * server: https://github.com/ceoy/Nodejs
- */
-
+var fs=require('fs'),
+    EventEmitter = require('events').EventEmitter,
+    startServer = new EventEmitter(),
+    cards = [],
+	card_names = new Array();
+	
 var http = require('http'),
 	express = require('express');
 
@@ -22,14 +22,30 @@ var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 
 var port = process.env.PORT || 8000;
-
+ 
 if(process.argv.length == 3 && !isNaN(process.argv[2])) {
 	port = parseInt(process.argv[2]);
 }
 
-server.listen(port, function(){
-  console.log('listening on *:' + port);
+fs.readdir(__dirname + '/js_module/cards/objects/', function (error, files)
+{
+	if (error)
+		console.log(error);
+	files.forEach( function(file) {
+		console.log(file);
+		var temp = require(__dirname + '/js_module/cards/objects/'+ file);
+		cards[temp.name] = temp;
+		card_names.push(temp.name);
+	});
+	startServer.emit('cards_ready');
 });
+
+startServer.on('cards_ready', function() {
+	server.listen(port, function(){
+		console.log('listening on *:' + port);
+	});
+});
+		
 
 io.sockets.on('connection', function(client)
 {	
@@ -62,8 +78,21 @@ io.sockets.on('connection', function(client)
 		} catch (error) { 
 			console.log(error);
 		}
-	
 	});
+	
+	client.on('cards', function ()
+	{
+		client.emit('cards', card_names);
+		players.remove(client);
+		lp = games.clean (client);
+		if (lp != -1)
+			lp.emit('system', 'Your Opponent disconnected. ¯\\_(ツ)_/¯ Please Reload to start a new Game');
+});
+	
+	client.on('make_deck', function (data) {
+		makeDeck(data, "Deck", client);
+	});
+	
 });
 
 // Starts the new Game
@@ -98,4 +127,15 @@ function htmlspecialchar(string)
 	var result = body.replace(regex, "");
 	return result;
 };
+
+function makeDeck(data, filename, client) {
+	var outputFile = __dirname + "/js_module/deck/" + filename + ".json";
+	fs.writeFile(outputFile, data, function (err) {
+		if (err) {
+			console.log(err);
+		} else {
+			client.emit('success');
+		}
+	});
+}
 

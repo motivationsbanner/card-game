@@ -3,9 +3,9 @@
 var Minion = require(__dirname + '/Minion');
 
 var meleeMinion = class MeleeMinion extends Minion {
-	constructor (cardType, id)
+	constructor ()
 	{
-		super( cardType, id );
+		super();
 	}
 	
 	isPlayable(field)

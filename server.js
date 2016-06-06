@@ -1,8 +1,8 @@
 var fs=require('fs'),
     EventEmitter = require('events').EventEmitter,
-    startServer = new EventEmitter(),
-    cards = [],
-	card_names = new Array();
+    startServer = new EventEmitter();
+GLOBAL.cards = [];
+var card_names = new Array();
 	
 var http = require('http'),
 	express = require('express');
@@ -32,7 +32,6 @@ fs.readdir(__dirname + '/js_module/cards/objects/', function (error, files)
 	if (error)
 		console.log(error);
 	files.forEach( function(file) {
-		console.log(file);
 		var temp = require(__dirname + '/js_module/cards/objects/'+ file);
 		cards[temp.name] = temp;
 		card_names.push(temp.name);
@@ -74,7 +73,7 @@ io.sockets.on('connection', function(client)
 	{
 		try  
 		{
-			games.getGameByClient(client).doCommand(data, client);		
+			games.getGameByClient(client).doCommand(data, client);	
 		} catch (error) { 
 			console.log(error);
 		}
@@ -87,7 +86,7 @@ io.sockets.on('connection', function(client)
 		lp = games.clean (client);
 		if (lp != -1)
 			lp.emit('system', 'Your Opponent disconnected. ¯\\_(ツ)_/¯ Please Reload to start a new Game');
-});
+	});
 	
 	client.on('make_deck', function (data) {
 		makeDeck(data, "Deck", client);

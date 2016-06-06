@@ -39,6 +39,7 @@ var player = class Player {
 			if (this.selected_card.row == 'PlayerHand')
 			{
 				var card = Card( this.field.getHandCard(this.selected_card.index) );  // CHANGE_NAME
+				console.log(card);
 				return card.isPlayable(this.field);
 			}
 			
@@ -79,7 +80,8 @@ var player = class Player {
 	playCard(pos, game)
 	{
 		// create new card (card in your hand)
-		var card_id = this.field.getHandCard(this.selected_card.index) //Change
+		var card_id = this.field.getHandCard(this.selected_card.index)
+		console.log(card_id);
 		var card = Card( card_id );
 		
 		// Play Card on your field
@@ -88,7 +90,7 @@ var player = class Player {
 	
 		var senderPos = this.getSelectedCard(),
 			toPos = pos,
-			card_name = this.field.getCardOnPos(toPos).getName();
+			card_name = this.field.getCardOnPos(toPos).constructor.name;
 		
 		// Send play_card command to player
 		var command1 = {command: 'play_card', sender: senderPos, to: toPos, card_name: card_name};
@@ -98,7 +100,7 @@ var player = class Player {
 			enemyToPos = this.field.translate(pos, this.field.getRow(pos.row).length);
 		
 		// Play Card on enemy field
-		game.getNotOnTurn().setCard( {pos: enemyToPos, cardid: card.getId()} );
+		game.getNotOnTurn().setCard( {pos: enemyToPos, cardid: card_name } );
 		
 		// Send play_card command to enemy player
 		var commandEnemy = {command: 'play_card', sender: enemySenderPos, to: enemyToPos, card_name: card_name};

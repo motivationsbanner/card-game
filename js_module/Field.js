@@ -27,11 +27,11 @@ var field = class Field {
 		};
 	}
 	
-	addHand(cards)
+	addHand(cardsToAdd)
 	{
-		for ( var index = 0; index < cards.length; index ++ )
+		for ( var index = 0; index < cardsToAdd.length; index ++ )
 		{
-			this.field.hand.push( cards[index] );
+			this.field.hand.push( cardsToAdd[index] );
 		}
 	}
 			

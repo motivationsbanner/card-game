@@ -3,10 +3,9 @@
 var MeleeMinion = require(__dirname + '/../MeleeMinion.js');
 
 var kavallerist = class Kavallerist extends MeleeMinion {
-	constructor (cardType, id)
+	constructor ()
 	{
-		super(cardType, "Kavallerist");
-		this.id = id;
+		super();
 	}
 	
 	static get name() {

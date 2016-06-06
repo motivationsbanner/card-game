@@ -1,11 +1,9 @@
 "use strict";
 
 var card = class Card {
-	constructor (cardType, id)
+	constructor ()
 	{
-		this.cardType = cardType;
 		this.isOnField = false;
-		this.id = -1;
 	}
 	
 	play(pos, field)
@@ -22,9 +20,6 @@ var card = class Card {
 		return field;
 	}
 	
-	getId() {
-		return this.id;
-	}
 	
 	getType() {
 		return this.cardType;
@@ -34,9 +29,7 @@ var card = class Card {
 		return -1;
 	}
 	
-	getName() {
-		return this.name;
-	}
+	get name() { return this.name; }
 }
 
 module.exports = card;

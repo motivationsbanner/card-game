@@ -6,9 +6,6 @@
 
 "use strict";
 
-// TODO: command queue
-var commands = [];
-
 window.recieveCommand = function(data) {
 	console.info("recieved command: " + JSON.stringify(data));
 	switch(data.command) {

@@ -75,7 +75,7 @@ function setPlayOptions(positions, abort) {
 		if(field === abort) {
 			field.showBorder("red");
 		} else {
-			field.showBorder("white")
+			field.showBorder("white");
 		}
 
 		field.container.on("click", (function(row, index) {
@@ -104,23 +104,28 @@ function playCard(from, to, cardName) {
 	if(from.row !== "PlayerHand" && from.row !== "EnemyHand") {
 		throw "a card can only played from a hand";
 	}
-	
+
+	from.field = getField(from);
+	to.field = getField(to);
+
 	if(from.row === "EnemyHand") {
-		revealCard(getField(from), cardName);
+		revealCard(from.field, cardName);
 	}
 	
-	getField(from).card.goToField(getField(to), function() {
+	stage.removeChild(from.field.container);
+	to.field.card = from.field.card;
+	rows[from.row].splice(from.index, 1);
+
+	from.field.card.goToField(to.field, function() {
+		delete from.field;
+		
 		for(var i = 0; i < from.index; i ++) {
 			rows[from.row][i].x += (smallCardDimensions.width + gap) / 2;
 		}
 		
-		for(var i = from.index + 1; i < rows[from.row].length; i ++) {
+		for(var i = from.index; i < rows[from.row].length; i ++) {
 			rows[from.row][i].x -= (smallCardDimensions.width + gap) / 2;
 		}
-			stage.removeChild(getField(from).container);
-			getField(to).card = getField(from).card;
-			rows[from.row].splice(from.index, 1);
-			delete getField(from);
 	});
 }
 

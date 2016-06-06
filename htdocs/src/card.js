@@ -62,17 +62,9 @@ class Minion extends Card {
 		this.attack = cardType.data.attack;
 		this.health = cardType.data.health;
 	}
-}
 
-class RangedMinion extends Minion {
-	constructor(cardType) {
-		super(cardType);
-	}
-}
+	render() {
 
-class MeleeMinion extends Minion {
-	constructor(cardType) {
-		super(cardType);
 	}
 }
 
@@ -85,13 +77,15 @@ class Spell extends Card {
 function cardFactory(cardType) {
 	if(cardType.type == "minion")
 	{
-		return minionFactory(cardType);
+		return new Minion(cardType);
 	}
 
 	if(cardType.type == "spell")
 	{
 		return new Spell(cardType);
 	}
+
+	throw "a card must be either a minion or a spell";
 }
 
 function removeAllTargetOptions() {
@@ -102,16 +96,4 @@ function removeAllTargetOptions() {
 			field.image.removeAllEventListeners("click");
 		}
 	}
-}
-
-function minionFactory(cardType) {
-	if(cardType.data.type == "ranged") {
-		return new RangedMinion(cardType);
-	}
-	
-	if(cardType.data.type == "melee") {
-		return new MeleeMinion(cardType);
-	}
-	
-	throw "minion must be ranged or melee";
 }

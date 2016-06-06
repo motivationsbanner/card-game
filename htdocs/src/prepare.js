@@ -11,7 +11,7 @@ var queue;
 var stage;
 var borderImages = [];
 var cardBack;
-var fields = [];
+var rows = {};
 
 function prepare(callback) {
 	var basePath = "images/";
@@ -45,40 +45,25 @@ function prepare(callback) {
 	queue.loadFile("karte.png");
 }
 
-// Field: {border: ..., image: ..., card: ...}
 function prepareFields() {
+	// Box on the left
 	var shape = new createjs.Shape();
 	shape.graphics.beginFill("#7A4E36").drawRect(0, 0, 
 		largeCardDimensions.width + 4 * gap, 480);
 	stage.addChild(shape);
 	
-
-	for(var i = 0; i < 4;  i ++) {
-		fields[i] = [];
-		for(var ii = 0; ii < width; ii ++) {
-
-			var shape = new createjs.Shape();
-			var border = new createjs.Bitmap(borderImages.white);
-			shape.graphics.beginFill("#C27E5C").drawRect(0, 0, 50, 70);
-			shape.set({
-				x: boardCenterX - ((width * 50 + (width - 1) * gap) / 2) + ii * (50 + gap),
-				y: 240 - (4 * 70 + 3 * gap) / 2 + i * (70 + gap)
-			});
-
-			border.set({
-				x: shape.x - 6,
-				y: shape.y - 6,
-				visible: false
-			});
-
-			stage.addChild(shape);
-			stage.addChild(border);
-
-			fields[i][ii] = {border: border, image: shape, card: null};
-		}
+	for(var i = 0; i < rowNames.length; i ++) {
+		rows[rowNames[i]] = [];
 	}
 
-	fields = fields;
+	for(var i = 0; i < 4;  i ++) {
+		for(var ii = 0; ii < width; ii ++) {
+			var x = boardCenterX - ((width * 50 + (width - 1) * gap) / 2) + ii * (50 + gap);
+			var y = 240 - (4 * 70 + 3 * gap) / 2 + i * (70 + gap);
+
+			rows[rowNames[i + 1]][ii] = new BoardField(x, y, null);
+		}
+	}
 }
 
 function prepareCardback() {

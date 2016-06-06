@@ -72,7 +72,7 @@ io.sockets.on('connection', function(client)
 	
 	client.on('command', function (data)
 	{
-		try 
+		try  
 		{
 			games.getGameByClient(client).doCommand(data, client);		
 		} catch (error) { 

@@ -8,26 +8,6 @@
 
 function start() {
 
-	window.recieveCommand = function(data) {
-		console.info("recieved command: " + JSON.stringify(data));
-		switch(data.command) {
-			case "draw":
-				if(data.cards) {
-					playerDrawCards(data.cards);
-				} else {
-					enemyDrawCards(data.amount);
-				}
-				break;
-			case "play_options":
-				setPlayOptions(data.options);
-				break;
-			case "play_card":
-				break;
-			default:
-				console.warn(data.command + " command not (yet) implemented");
-		}
-	}
-
 	if(document.location.search !== "?noserver") {
 		var socket = io();
 

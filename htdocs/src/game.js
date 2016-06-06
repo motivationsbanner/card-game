@@ -6,52 +6,38 @@
 
 "use strict";
 
-var rows = {
-		EnemyHand : 0,
-		EnemyRange: 1,
-		EnemyMelee: 2,
-		PlayerMelee: 3,
-		PlayerRange: 4,
-		PlayerHand: 5
-	};
-
-
-var playerHand = []; // array of cards
-var enemyHand = []; // array of Shapes
 var previewCard = null;
 var boardCenterX = largeCardDimensions.width + (640 - largeCardDimensions.width) / 2 + 4 * gap;
 
-document.addEventListener("DOMContentLoaded", function(e) {
-	prepare(function() {
-		// TODO: read card dimensions here instead of hardcoding them
-
-		start();
-	});
+document.addEventListener("DOMContentLoaded", function() {
+	prepare(start);
 });
 
-function playerDrawCards(cards)
-{
+function playerDrawCards(cards) {
 	cards.forEach(function(card) {
 		playerDrawCard(card);
 	});
 }
 
-function playerDrawCard(id) {
-	var cardType = cardTypes[id];
+function playerDrawCard(cardName) {
+	rows.PlayerHand.forEach (function(field) {
+		field.x -= (smallCardDimensions.width + gap) / 2;
+	});
 
+	var cardType = cardTypesByName[cardName];
 	var card = cardFactory(cardType);
+	var x =  boardCenterX + (rows.PlayerHand.length - 2 + 1) * (smallCardDimensions.width / 2)
+		+ (rows.PlayerHand.length - 1 + 1) * (gap / 2);
+	var y = 480 - smallCardDimensions.height;
 
-	playerHand.push(card);
+	var field = new Field(x, y, card);
 
-	playerHand.forEach(function(card) {
-		card.container.x -= (smallCardDimensions.width + gap) / 2;
-	});
+	rows.PlayerHand.push(field);
 
-	card.container.set({
-		y: 480 - smallCardDimensions.height,
-		x: boardCenterX + (playerHand.length - 2) * (smallCardDimensions.width / 2)
-			+ (playerHand.length - 1) * (gap / 2) 
-	});
+	card.x = x;
+	card.y = y;
+
+	stage.addChild(card.container);
 }
 
 function enemyDrawCards(amount) {
@@ -62,56 +48,91 @@ function enemyDrawCards(amount) {
 
 function enemyDrawCard() {
 	var card = new createjs.Bitmap(cardBack);
-	enemyHand.push(card);
+
+	rows.EnemyHand.forEach (function(field) {
+		field.x -= (smallCardDimensions.width + gap) / 2;
+	});
+
+	var x =  boardCenterX + (rows.EnemyHand.length - 2 + 1) * (smallCardDimensions.width / 2)
+		+ (rows.EnemyHand.length - 1 + 1) * (gap / 2);
+	var y = 0;
+	
+	var field = new Field(x, y, card);
+	
+	rows.EnemyHand.push(field);
 	stage.addChild(card);
-
-	enemyHand.forEach(function(card) {
-		card.x += (smallCardDimensions.width + gap) / 2;
-	});
-
-	card.set({
-		y: 0,
-		x: boardCenterX - (smallCardDimensions.width + gap) / 2 * enemyHand.length
-	});
 }
 
-function waitForAction() {
-	playerHand.forEach(function(card) {
-		if(card.isPlayable()) {
-		card.showBorder("white");
-			card.container.on("click", function() {
-				card.play(function() {
-					// TODO: update hand
-					waitForAction();
-				});
-			});
-		}
-	});
-}
+function setPlayOptions(positions, abort) {
+	if(abort instanceof Object) {
+		positions.push(abort);
+		abort = getField(abort);
+	}
 
-function setPlayOptions(positions) {
 	for(var i = 0; i < positions.length; i ++) {
-		if(positions[i].row == "PlayerHand") {
-			var card = playerHand[positions[i].index];
-			card.showBorder("white");
+		var field = getField(positions[i]);
 
-			card.container.on("click", (function(i) {
-				removeAllActionOptions();
-				
-				window.sendCommand({
-					command: "select_option",
-					pos: {row: "PlayerHand", index: i}
-				});
-			}).bind(this, i));
+		if(field === abort) {
+			field.showBorder("red");
+		} else {
+			field.showBorder("white")
 		}
+
+		field.container.on("click", (function(row, index) {
+			removeAllActionOptions();
+
+			window.sendCommand({
+				command: "select_option",
+				pos: {row: row, index: index}
+			});
+		}).bind(this, positions[i].row, positions[i].index));
 	}
 }
 
-function removeAllActionOptions() {
-	playerHand.forEach(function(card) {
-		card.hideBorder("white");
-		card.container.removeAllEventListeners("click");
+function revealCard(field, cardName) {
+	var cardType = cardTypesByName[cardName];
+	var card = cardFactory(cardType);
+	card.x = field.x;
+	card.y = field.y;
+
+	stage.addChild(card.container);
+	stage.removeChild(field.card);
+	field.card = card;
+}
+
+function playCard(from, to, cardName) {
+	if(from.row !== "PlayerHand" && from.row !== "EnemyHand") {
+		throw "a card can only played from a hand";
+	}
+	
+	if(from.row === "EnemyHand") {
+		revealCard(getField(from), cardName);
+	}
+	
+	getField(from).card.goToField(getField(to), function() {
+		for(var i = 0; i < from.index; i ++) {
+			rows[from.row][i].x += (smallCardDimensions.width + gap) / 2;
+		}
+		
+		for(var i = from.index + 1; i < rows[from.row].length; i ++) {
+			rows[from.row][i].x -= (smallCardDimensions.width + gap) / 2;
+		}
+			stage.removeChild(getField(from).container);
+			getField(to).card = getField(from).card;
+			rows[from.row].splice(from.index, 1);
+			delete getField(from);
 	});
+}
+
+function removeAllActionOptions() {
+	for(var name in rows) {
+		for(var field of rows[name]) {
+			// At least it works
+			field.hideBorder("red");
+			field.hideBorder("white");
+			field.container.removeAllEventListeners("click");
+		}
+	}
 }
 
 function setPreviewCard(card) {

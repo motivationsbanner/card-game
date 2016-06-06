@@ -96,8 +96,8 @@ var player = class Player {
 		var command1 = {command: 'play_card', sender: senderPos, to: toPos, card_name: card_name};
 		game.getOnTurn().sendCommandMessage(command1);
 		
-		var enemySenderPos = this.field.translate(senderPos, this.field.getRow(senderPos.row).length),
-			enemyToPos = this.field.translate(pos, this.field.getRow(pos.row).length);
+		var enemySenderPos = this.field.translate(senderPos, this.field.getRow(senderPos.row).length -1 ),
+			enemyToPos = this.field.translate(pos, this.field.getRow(pos.row).length -1);
 		
 		// Play Card on enemy field
 		game.getNotOnTurn().setCard( {pos: enemyToPos, cardid: card_name } );

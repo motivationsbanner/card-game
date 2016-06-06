@@ -19,12 +19,12 @@ function playerDrawCards(cards) {
 	});
 }
 
-function playerDrawCard(id) {
+function playerDrawCard(cardName) {
 	rows.PlayerHand.forEach (function(field) {
 		field.x -= (smallCardDimensions.width + gap) / 2;
 	});
 
-	var cardType = cardTypes[id];
+	var cardType = cardTypesByName[cardName];
 	var card = cardFactory(cardType);
 	var x =  boardCenterX + (rows.PlayerHand.length - 2 + 1) * (smallCardDimensions.width / 2)
 		+ (rows.PlayerHand.length - 1 + 1) * (gap / 2);

@@ -24,7 +24,7 @@ function prepare(callback) {
 
 	queue = new createjs.LoadQueue(true, basePath);
 
-	stage.enableMouseOver(10);
+	stage.enableMouseOver();
 
 	createjs.Ticker.timingMode = createjs.Ticker.RAF;
 	createjs.Ticker.addEventListener("tick", onTick);
@@ -51,7 +51,8 @@ function prepareFields() {
 	shape.graphics.beginFill("#7A4E36").drawRect(0, 0, 
 		largeCardDimensions.width + 4 * gap, 480);
 	stage.addChild(shape);
-	
+
+	// Fields on the Board	
 	for(var i = 0; i < rowNames.length; i ++) {
 		rows[rowNames[i]] = [];
 	}
@@ -75,7 +76,7 @@ function prepareCardback() {
 }
 
 function prepareCardImages() {
-
+	// TODO: update to use cardNames
 	for(var i = 0; i < cardTypes.length; i ++) {
 		var container = new createjs.Container();
 		var artworkImage = queue.getResult(cardTypes[i].imageName);
@@ -93,24 +94,13 @@ function prepareCardImages() {
 		container.addChild(text);
 		container.addChild(name);
 
-		// size is 50 * 70
 		container.cache(0, 0,
-			container.getBounds().width,
-			container.getBounds().height,
-			0.2
-		);
+		 	originalCardDimensions.width,
+			originalCardDimensions.height,
+			1
+ 		);
 
-		cardTypes[i].bitmap = container.getCacheDataURL();
-
-		// size is 125 * 175
-		container.cache(0, 0,
-			container.getBounds().width,
-			container.getBounds().height,
-			0.5
-		);
-
-		cardTypes[i].largeBitmap = new createjs.Bitmap(container.getCacheDataURL());
-		cardTypes[i].largeBitmap.set({x: 2 * gap, y: (480 - largeCardDimensions.height) / 2});
+		cardTypes[i].dataURL = container.getCacheDataURL();
 	}
 }
 

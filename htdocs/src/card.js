@@ -10,26 +10,48 @@ class Card {
 	constructor(cardType) {
 		this.cardType = cardType;
 		
-		this.container = new createjs.Container();
-		var image = new createjs.Bitmap(this.cardType.bitmap);
-		
-		this.container.addChild(image);
-		
-		stage.addChildAt(this.container, 0);
+		this.smallCard = new createjs.Bitmap();
+		this.largeCard = new createjs.Container();
 
-		this.container.on("mouseover", function() {
+		this.largeCard.setTransform(
+			2 * gap, 
+			(480 - largeCardDimensions.height) / 2, 
+			0.5, 
+			0.5
+		);
+
+		var largeCardBitmap = new createjs.Bitmap(this.cardType.dataURL);
+		this.largeCard.addChild(largeCardBitmap);
+
+		stage.addChildAt(this.smallCard, 0);
+
+		this.smallCard.on("mouseover", function() {
 			setPreviewCard(this);
 		}, this);
 	}
 
 	render() {
-		// can be implemented by child classes
+		this.largeCard.cache(0, 0,
+			originalCardDimensions.width,
+			originalCardDimensions.height,
+			0.2
+		);
+
+		var image = new Image()
+		image.src = this.largeCard.getCacheDataURL();
+		this.smallCard.image = image;
+
+		this.largeCard.cache(0, 0,
+			originalCardDimensions.width,
+			originalCardDimensions.height,
+			0.5
+		);
 	}
 
 	goToField(field, callback) {
-		callback = callback || function(){}
+		callback = callback || function(){};
 		
-		stage.setChildIndex(this.container, stage.numChildren - 1);
+		stage.setChildIndex(this.smallCard, stage.numChildren - 1);
 		
 		createjs.Tween.get(this)
 			.to({
@@ -40,31 +62,48 @@ class Card {
 	}
 	
 	get x() {
-		return this.container.x;
+		return this.smallCard.x;
 	}
 	
 	get y() {
-		return this.container.y;
+		return this.smallCard.y;
 	}
 	
 	set x(x) {
-		this.container.x = x;
+		this.smallCard.x = x;
 	}
 	
 	set y(y) {
-		this.container.y = y;
+		this.smallCard.y = y;
 	}
 }
 
 class Minion extends Card {
 	constructor(cardType) {
 		super(cardType);
+
 		this.attack = cardType.data.attack;
 		this.health = cardType.data.health;
+
+		var attack = new createjs.Text("", "bold 100px monospace", "gray");
+		var health = new createjs.Text("", "bold 100px monospace", "red");
+
+		attack.name = "attack";
+		health.name = "health";
+
+		// TODO: calculate
+		attack.set({x: 22, y: 240, lineHeight: 18});
+		health.set({x: 150, y: 240, lineHeight: 18});
+
+		this.largeCard.addChild(attack);
+		this.largeCard.addChild(health);
 	}
 
 	render() {
+		this.largeCard.getChildByName("attack").text = this.attack;
+		this.largeCard.getChildByName("health").text = this.health;
 
+		super.render();
 	}
 }
 

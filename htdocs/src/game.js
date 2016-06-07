@@ -37,7 +37,8 @@ function playerDrawCard(cardName) {
 	card.x = x;
 	card.y = y;
 
-	stage.addChild(card.container);
+	card.render();
+	stage.addChild(card.smallCard);
 }
 
 function enemyDrawCards(amount) {
@@ -94,8 +95,9 @@ function revealCard(field, cardName) {
 	var card = cardFactory(cardType);
 	card.x = field.x;
 	card.y = field.y;
+	card.render();
 
-	stage.addChild(card.container);
+	stage.addChild(card.smallCard);
 	stage.removeChild(field.card);
 	field.card = card;
 }
@@ -142,9 +144,9 @@ function removeAllActionOptions() {
 
 function setPreviewCard(card) {
 	if(previewCard) {
-		stage.removeChild(previewCard.cardType.largeBitmap);
+		stage.removeChild(previewCard.largeCard);
 	}
 
-	stage.addChild(card.cardType.largeBitmap);
+	stage.addChild(card.largeCard);
 	previewCard = card;
 }

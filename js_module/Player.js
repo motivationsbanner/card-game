@@ -39,7 +39,6 @@ var player = class Player {
 			if (this.selected_card.row == 'PlayerHand')
 			{
 				var card = Card( this.field.getHandCard(this.selected_card.index) );  // CHANGE_NAME
-				console.log(card);
 				return card.isPlayable(this.field);
 			}
 			
@@ -81,7 +80,6 @@ var player = class Player {
 	{
 		// create new card (card in your hand)
 		var card_id = this.field.getHandCard(this.selected_card.index)
-		console.log(card_id);
 		var card = Card( card_id );
 		
 		// Play Card on your field

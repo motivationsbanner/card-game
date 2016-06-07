@@ -24,6 +24,7 @@ function select_optionCommand(data, game)
 {
 	if ( game.getOnTurn().getSelectedCard() == data.pos)
 	{
+		console.log("yay");
 		game.getOnTurn().setSelectedCard(-1);
 		game.playOptions();
 	}

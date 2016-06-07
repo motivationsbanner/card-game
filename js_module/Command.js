@@ -22,14 +22,18 @@ function change_turnCommand(data, game)
 // Only 1 Select_Option atm (chose and confirm)
 function select_optionCommand(data, game)
 {
-	if ( game.getOnTurn().getSelectedCard() == data.pos)
-	{
-		game.getOnTurn().setSelectedCard(-1);
-		game.playOptions();
-	}
 	
+		
 	if ( game.getOnTurn().getSelectedCard() != -1 )
-	{	// card chosen
+	{
+		if ( game.getOnTurn().getSelectedCard().row === data.pos.row && game.getOnTurn().getSelectedCard().index === data.pos.index)
+		{
+			game.getOnTurn().setSelectedCard(-1);
+			game.playOptions();
+			return;
+		}
+	
+		// card chosen
 		game.getOnTurn().currentCardActivate(data.pos, game);
 		game.getOnTurn().setSelectedCard(-1);
 		game.playOptions();

@@ -7,7 +7,7 @@
 "use strict";
 
 var field = class Field {
-	constructor (type)
+	constructor ()
 	{
 		var playerMelee = [-1, -1, -1, -1, -1];
 		var playerRange = [-1, -1, -1, -1, -1];

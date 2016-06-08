@@ -1,7 +1,6 @@
 ```
 game_command:
 	server->client
-	
 		// Start Turn
 		{command: "draw", cards: [string]} -> player
 		{command: "draw", amount: int} -> enemy
@@ -13,9 +12,15 @@ game_command:
 		{command: "kill", target: position}
 		{command: "cast_spell", target: positoin}
 		{command: "play_card", sender: pos: positionn, to: position, card_name: string}
-		{command: "all_cards" , cards: [{name: string, attack: int, health: int, text: string}]}
 
 	client->server
 		{command: "end_turn"}
 		{command: "select_option", pos: position}
+
+preparation:
+	server->client:
+		emit("cards", [{name: string, attack: int, health: int, text: string}]);
+
+	client->server:
+		emit("start");
 ```

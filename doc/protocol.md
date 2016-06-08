@@ -10,8 +10,8 @@ game_command:
 		{command: "set_attack", target: position, attack: int}
 		{command: "minion_passive", target: position}
 		{command: "kill", target: position}
-		{command: "cast_spell", target: positoin}
-		{command: "play_card", sender: pos: positionn, to: position, card_name: string}
+		{command: "cast_spell", target: position}
+		{command: "play_card", sender: pos: position, to: position, card_name: string}
 
 	client->server
 		{command: "end_turn"}

@@ -170,11 +170,6 @@ function attack(attacker, target) {
 
 	var sword = new createjs.Bitmap(queue.getResult("schwert.png"));
 
-	// TODO: set rotation
-
-
-	console.log(sword.getBounds());
-
 	sword.scaleX = 2;
 	sword.scaleY = 2;
 
@@ -188,6 +183,10 @@ function attack(attacker, target) {
 	stage.addChild(sword);
 
 	sword.rotation = Math.atan((target.x - attacker.x) / (attacker.y - target.y)) / Math.PI * 180;
+
+	if(target.y - attacker.y > 0) {
+		sword.rotation += 180;
+	}
 
 	createjs.Tween.get(sword)
 		.to({

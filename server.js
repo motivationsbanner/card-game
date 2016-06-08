@@ -52,15 +52,21 @@ startServer.on('cards_ready', function() {
 
 io.sockets.on('connection', function(client)
 {	
-	client.emit('command', {command: 'all_cards', cards: all_cards});
+	client.emit('cards', all_cards);
 	// Add Client to Player Array
-	players.add(client);
-	// Check if there are enough players waiting
-	var game = players.rdy();
-	if (game != false)
-		startGame(game);
-	else
-		client.emit('system', 'Waiting for another Player.  ¯\\_(ツ)_/¯  We are sorry.');
+	
+	client.on('start', function() 
+	{
+		// Check if there are enough players waiting
+		players.add(client);
+		
+		var game = players.rdy();
+		if (game != false)
+			startGame(game);
+		else
+			client.emit('system', 'Waiting for another Player.  ¯\\_(ツ)_/¯  We are sorry.');
+		
+	});	
 	
 	client.on('disconnect', function()
 	{

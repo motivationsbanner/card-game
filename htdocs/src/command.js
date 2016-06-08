@@ -33,6 +33,9 @@ window.recieveCommand = function(data) {
 		case "set_attack":
 			setAttack(data.target, data.attack);
 			break;
+		case "kill":
+			kill(data.target);
+			break;
 		default:
 			console.warn(data.command + " command not (yet) implemented");
 	}

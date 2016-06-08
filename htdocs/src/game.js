@@ -60,6 +60,8 @@ function enemyDrawCard() {
 	stage.addChild(card);
 }
 
+
+
 function setPlayOptions(positions, abort) {
 	if(abort instanceof Object) {
 		positions.push(abort);
@@ -114,9 +116,7 @@ function playCard(from, to, cardName) {
 	to.field.card = from.field.card;
 	rows[from.row].splice(from.index, 1);
 
-	from.field.card.goToField(to.field, function() {
-		delete from.field;
-		
+	from.field.card.goToField(to.field, function() {		
 		for(var i = 0; i < from.index; i ++) {
 			rows[from.row][i].x += (smallCardDimensions.width + gap) / 2;
 		}
@@ -153,4 +153,13 @@ function setAttack(field, attack) {
 
 function setHealth(field, health) {
 	getField(field).card.health = health;
+}
+
+function kill(field) {
+	field = getField(field);
+
+	stage.removeChild(field.card.smallCard);
+	stage.removeChild(field.card.largeCard);
+
+	field.card = null;
 }

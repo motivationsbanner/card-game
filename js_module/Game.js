@@ -66,6 +66,12 @@ class Game {
 		this.on_turn.sendCommandMessage( command );
 	}
 	
+	drawCard(amount)
+	{
+		this.on_turn.draw(amount);
+		this.not_turn.enemyDraw(amount);	
+	}
+	
 	getP1()	{
 		return this.p1;
 	}
@@ -96,6 +102,13 @@ class Game {
 	getNotOnTurn() {
 		return this.not_turn;
 	}
+	
+	sendCommand(command) 
+	{
+		this.on_turn.sendCommandMessage(command);
+		this.not_turn.sendCommandMessage(command);
+	}
+	
 }
 
 module.exports = function game()

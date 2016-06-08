@@ -33,6 +33,7 @@ var player = class Player {
 	
 	getPlayOptions()
 	{
+		// Check if there is a selected Card
 		if (this.selected_card != -1)
 		{
 			// A Card in your hand is chosen
@@ -73,7 +74,10 @@ var player = class Player {
 		if (this.selected_card.row == 'PlayerHand')
 		{
 			this.playCard(pos, game);
+			return;
 		}
+		this.field.getCardOnPos(selected_card).activate(pos, game);
+		
 	}
 
 	playCard(pos, game)

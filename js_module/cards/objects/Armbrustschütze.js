@@ -12,6 +12,16 @@ var armbrustschütze = class Armbrustschütze extends RangeMinion {
 		super();
 	}
 	
+	activate(target, game)
+	{
+		var enemyField = game.getNotOnTurn().field;
+		var friendlyField = game.getOnTurn().field;
+	
+	}
+	
+	
+	
+	
 	static get name() {
 		return "Armbrustschütze";
 	}

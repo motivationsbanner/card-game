@@ -6,8 +6,6 @@
  
 "use strict";
 var fs = require('fs');
-
-	
 	
 var deck = class Deck {
 	constructor ()

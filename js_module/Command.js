@@ -23,9 +23,10 @@ function change_turnCommand(data, game)
 function select_optionCommand(data, game)
 {
 	
-		
+	// Check if there is a selected Card
 	if ( game.getOnTurn().getSelectedCard() != -1 )
 	{
+		// Check Abort
 		if ( game.getOnTurn().getSelectedCard().row === data.pos.row && game.getOnTurn().getSelectedCard().index === data.pos.index)
 		{
 			game.getOnTurn().setSelectedCard(-1);
@@ -33,12 +34,12 @@ function select_optionCommand(data, game)
 			return;
 		}
 	
-		// card chosen
+		// Activate selected Card
 		game.getOnTurn().currentCardActivate(data.pos, game);
 		game.getOnTurn().setSelectedCard(-1);
 		game.playOptions();
 	} else {
-		// No card chosen yet
+		// Set Card
 		game.getOnTurn().setSelectedCard(data.pos);
 		game.playOptions();
 	}

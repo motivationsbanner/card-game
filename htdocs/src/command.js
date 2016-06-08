@@ -6,6 +6,11 @@
 
 "use strict";
 
+window.sendCommand = function(data) {
+	socket.emit("command", data);
+	console.info("sent command: " + JSON.stringify(data));
+}
+
 window.recieveCommand = function(data) {
 	console.info("recieved command: " + JSON.stringify(data));
 	switch(data.command) {

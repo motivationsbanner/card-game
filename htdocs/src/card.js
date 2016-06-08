@@ -95,8 +95,8 @@ class Minion extends Card {
 		this.largeCard.addChild(attack);
 		this.largeCard.addChild(health);
 
-		this.health = cardType.data.health;
-		this.attack = cardType.data.attack;
+		this.health = cardType.health;
+		this.attack = cardType.attack;
 	}
 
 	render() {

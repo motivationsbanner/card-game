@@ -9,10 +9,6 @@
 var previewCard = null;
 var boardCenterX = largeCardDimensions.width + (640 - largeCardDimensions.width) / 2 + 4 * gap;
 
-document.addEventListener("DOMContentLoaded", function() {
-	prepare(start);
-});
-
 function playerDrawCards(cards) {
 	cards.forEach(function(card) {
 		playerDrawCard(card);

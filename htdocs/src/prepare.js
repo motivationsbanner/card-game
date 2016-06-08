@@ -12,22 +12,54 @@ var stage;
 var borderImages = [];
 var cardBack;
 var rows = {};
+var socket;
+var cardTypesByName = {};
+
+document.addEventListener("DOMContentLoaded", function() {
+		showInfo("Connecting to the server ...");
+		socket = io();
+
+		socket.on("connect", function() {
+			showInfo("Loading ...");
+		});
+
+		socket.on("system", function(data) {
+			showInfo(data);
+		});
+
+		socket.on("reconnect_attempt", function(data) {
+			showInfo("Failed to connect, trying again ...");
+		});
+
+		socket.on("cards", function(cards) {
+			for(var card of cards) {
+				cardTypesByName[card.name] = card;
+				card.imageName = card.name.toLocaleLowerCase() + ".png"
+
+				// TODO: change
+				card.type = card.health === 0 ? "spell" : "minion";
+			}
+
+			prepare(start);
+		});
+});
 
 function prepare(callback) {
-	var basePath = "images/";
-
 	canvas = document.getElementById("stage");
-
-	showInfo("Loading ...");
-
 	stage = new createjs.Stage("stage");
-
-	queue = new createjs.LoadQueue(true, basePath);
-
 	stage.enableMouseOver();
+
+	var basePath = "images/";
+	queue = new createjs.LoadQueue(true, basePath);
 
 	createjs.Ticker.timingMode = createjs.Ticker.RAF;
 	createjs.Ticker.addEventListener("tick", onTick);
+
+	for(var key in cardTypesByName) {
+		queue.loadFile(cardTypesByName[key].imageName);
+	}
+
+	queue.loadFile("karte.png");
 
 	queue.on("complete", function(event) {
 		prepareCardImages();
@@ -37,12 +69,6 @@ function prepare(callback) {
 		hideInfo();
 		callback();
 	});
-
-	cardTypes.forEach(function(cardType) {
-		queue.loadFile(cardType.imageName);
-	});
-
-	queue.loadFile("karte.png");
 }
 
 function prepareFields() {
@@ -76,15 +102,18 @@ function prepareCardback() {
 }
 
 function prepareCardImages() {
-	// TODO: update to use cardNames
-	for(var i = 0; i < cardTypes.length; i ++) {
+	var cardBorderImage = queue.getResult("karte.png");
+	var cardBorderBitmap = new createjs.Bitmap(cardBorderImage);
+
+	for(var key in cardTypesByName) {
+		var cardType = cardTypesByName[key];
+
 		var container = new createjs.Container();
-		var artworkImage = queue.getResult(cardTypes[i].imageName);
+		var artworkImage = queue.getResult(cardType.imageName);
 		var artworkBitmap = new createjs.Bitmap(artworkImage);
-		var cardBorderImage = queue.getResult("karte.png");
-		var cardBorderBitmap = new createjs.Bitmap(cardBorderImage);
-		var name = new createjs.Text(cardTypes[i].name, "bold 15px monospace", "black");
-		var text = new createjs.Text(cardTypes[i].text, "15px monospace", "black");
+
+		var name = new createjs.Text(cardType.name, "bold 15px monospace", "black");
+		var text = new createjs.Text(cardType.text, "15px monospace", "black");
 
 		name.set({x: 22, y: 215, lineHeight: 18, lineWidth: 214});
 		text.set({x: 22, y: 240, lineHeight: 18, lineWidth: 214});
@@ -100,11 +129,12 @@ function prepareCardImages() {
 			1
  		);
 
-		cardTypes[i].dataURL = container.getCacheDataURL();
+		cardType.dataURL = container.getCacheDataURL();
 	}
 }
 
 // TODO: fix
+// TODO: different sizes
 function prepareBorderImages()
 {
 	var bounds = {x:0, y: 0, width: 50, height: 70};

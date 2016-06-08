@@ -16,7 +16,7 @@ game_command:
 		{command: "cast_spell", target: ...}
 		{command: "buff", target: ..., health: ..., attack: ...}
 		{command: "play_card", sender: pos: {row, index}, to: pos: {row, index}, card_name: name} -> player & enemy (different positions)
-		{command: "all_cards" , cards: {name, attack, health, text} }
+		{command: "all_cards" , cards: [{name, attack, health, text}] }
 
 	client->server
 		{command: "end_turn"}

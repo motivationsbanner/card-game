@@ -7,6 +7,9 @@ var spell = class Spell extends Card {
 	{
 		super();
 	}
+	get text() { return this.text; }
+	
+	set text( text ) { this.text = text; }	
 }
 
 module.exports = spell;

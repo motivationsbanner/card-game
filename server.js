@@ -3,6 +3,7 @@ var fs=require('fs'),
     startServer = new EventEmitter();
 GLOBAL.cards = [];
 var card_names = new Array();
+var all_cards = [];
 	
 var http = require('http'),
 	express = require('express');
@@ -35,9 +36,12 @@ fs.readdir(__dirname + '/js_module/cards/objects/', function (error, files)
 		var temp = require(__dirname + '/js_module/cards/objects/'+ file);
 		cards[temp.name] = temp;
 		card_names.push(temp.name);
+		var obj = {name: temp.name, attack: temp.attack, health: temp.health, text: temp.text};
+		all_cards.push(obj);
 	});
 	startServer.emit('cards_ready');
 });
+
 
 startServer.on('cards_ready', function() {
 	server.listen(port, function(){
@@ -48,6 +52,7 @@ startServer.on('cards_ready', function() {
 
 io.sockets.on('connection', function(client)
 {	
+	client.emit('command', {command: 'all_cards', cards: all_cards});
 	// Add Client to Player Array
 	players.add(client);
 	// Check if there are enough players waiting

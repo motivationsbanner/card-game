@@ -9,12 +9,29 @@ var minion = class Minion extends Card {
 		super();
 	}
 	
-	get attack() { return this.attack; }
+	getAttack() {
+		return this.attack;
+	}
 	
-	get health() { return this.health; }
+	getHealth() {
+		return this.health;
+	}
 	
-	set attack( attack ) { this.attack = attack; }
-	set health( health ) { this.health = health; }
+	setAttack( attack ) {
+		this.attack = attack;
+	}
+	
+	setHealth( health ) {
+		this.health = health;
+	}
+	
+	getText() {
+		return this.text;
+	}
+	
+	setText( text ) {
+		this.text = text;
+	}
 } 
 
 module.exports = minion;

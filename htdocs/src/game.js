@@ -150,3 +150,11 @@ function setPreviewCard(card) {
 	stage.addChild(card.largeCard);
 	previewCard = card;
 }
+
+function setAttack(field, attack) {
+	getField(field).card.attack = attack;
+}
+
+function setHealth(field, health) {
+	getField(field).card.health = health;
+}

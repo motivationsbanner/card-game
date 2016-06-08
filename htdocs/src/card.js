@@ -82,9 +82,6 @@ class Minion extends Card {
 	constructor(cardType) {
 		super(cardType);
 
-		this.attack = cardType.data.attack;
-		this.health = cardType.data.health;
-
 		var attack = new createjs.Text("", "bold 100px monospace", "gray");
 		var health = new createjs.Text("", "bold 100px monospace", "red");
 
@@ -97,13 +94,23 @@ class Minion extends Card {
 
 		this.largeCard.addChild(attack);
 		this.largeCard.addChild(health);
+
+		this.health = cardType.data.health;
+		this.attack = cardType.data.attack;
 	}
 
 	render() {
-		this.largeCard.getChildByName("attack").text = this.attack;
-		this.largeCard.getChildByName("health").text = this.health;
-
 		super.render();
+	}
+
+	set attack(attack) {
+		this.largeCard.getChildByName("attack").text = attack;
+		this.render();
+	}
+
+	set health(health) {
+		this.largeCard.getChildByName("health").text = health;
+		this.render();
 	}
 }
 

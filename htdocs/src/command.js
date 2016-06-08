@@ -22,6 +22,12 @@ window.recieveCommand = function(data) {
 		case "play_card":
 			playCard(data.sender, data.to, data.card_name);
 			break;
+		case "set_health":
+			setHealth(data.target, data.health);
+			break;
+		case "set_attack":
+			setAttack(data.target, data.attack);
+			break;
 		default:
 			console.warn(data.command + " command not (yet) implemented");
 	}

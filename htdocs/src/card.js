@@ -133,13 +133,3 @@ function cardFactory(cardType) {
 
 	throw "a card must be either a minion or a spell";
 }
-
-function removeAllTargetOptions() {
-	for(var x = 0; x < 5; x ++) {
-		for(var y = 0; y < 4; y ++) {
-			var field = fields[y][x];
-			field.border.visible = false;
-			field.image.removeAllEventListeners("click");
-		}
-	}
-}

@@ -37,7 +37,13 @@ document.addEventListener("DOMContentLoaded", function() {
 				card.imageName = card.name.toLocaleLowerCase() + ".png"
 
 				// TODO: change
-				card.type = card.health === 0 ? "spell" : "minion";
+				if(card.health === 0) {
+					card.type = "spell";
+					delete card.health;
+					delete card.attack;
+				} else {
+					card.type = "minion";
+				}
 			}
 
 			prepare(start);
@@ -60,6 +66,7 @@ function prepare(callback) {
 	}
 
 	queue.loadFile("karte.png");
+	queue.loadFile("schwert.png");
 
 	queue.on("complete", function(event) {
 		prepareCardImages();
@@ -139,7 +146,7 @@ function prepareBorderImages()
 {
 	var bounds = {x:0, y: 0, width: 50, height: 70};
 
-	var colors = ["white", "red", "green"];
+	var colors = ["white", "red", "green", "blue"];
 
 	colors.forEach(function(color) {
 		var shape = new createjs.Shape();

@@ -56,10 +56,10 @@
 	showBorder(color) {
 		if(!this.borders[color]) {
 			this.borders[color] = new createjs.Bitmap(borderImages[color]);
-			this.borders[color].set({x: -6,y: -6});
+			this.borders[color].set({x: -6, y: -6});
 			this.container.addChild(this.borders[color]);
 		} else {
-			this.borders[color].set({x: -6,y: -6});
+			this.borders[color].set({x: -6, y: -6});
 		}
 		
 		stage.setChildIndex(this.container, stage.numChildren - 1);

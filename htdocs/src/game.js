@@ -163,3 +163,38 @@ function kill(field) {
 
 	field.card = null;
 }
+
+function attack(attacker, target) {
+	attacker = getField(attacker);
+	target = getField(target);
+
+	var sword = new createjs.Bitmap(queue.getResult("schwert.png"));
+
+	// TODO: set rotation
+
+
+	console.log(sword.getBounds());
+
+	sword.scaleX = 2;
+	sword.scaleY = 2;
+
+	sword.regX = sword.getBounds().height / 2;
+	sword.regY = sword.getBounds().width / 2;
+
+
+	sword.x = attacker.x + smallCardDimensions.width / 2;
+	sword.y = attacker.y + smallCardDimensions.height / 2;
+
+	stage.addChild(sword);
+
+	sword.rotation = Math.atan((target.x - attacker.x) / (attacker.y - target.y)) / Math.PI * 180;
+
+	createjs.Tween.get(sword)
+		.to({
+			x: target.x + smallCardDimensions.width / 2, 
+			y: target.y + smallCardDimensions.height / 2
+		}, 1000)
+		.call(function() {
+			stage.removeChild(sword);
+		});
+}

@@ -18,6 +18,7 @@ $(document).ready(function () {
 		$('#system_message').removeClass("alert-danger");
 		$('#system_message').addClass("alert-success");
 	});
+
 });
 
 function fillCardList(cards)

@@ -2,7 +2,7 @@
 Script for loading all cards.
 */
 var max_cards = 30,
-	actuall_cards = 0;
+	actual_cards = 0;
 var object = [];
 
 var socket; 
@@ -64,12 +64,12 @@ function bindThis() {
 		var amount = parseInt($("#amount").val());
 		var card = $(".cardlist.active").text();
 		
-		if ((actuall_cards + amount) > max_cards) 
+		if ((actual_cards + amount) > max_cards) 
 			{
-				amount = max_cards - actuall_cards;
+				amount = max_cards - actual_cards;
 			}
 		if (amount > 0 && card !== "") {
-			actuall_cards += amount;
+			actual_cards += amount;
 			// check if there is already this card in your deck-list
 			var i = $(".decklist:contains('"+card+"')").text();
 			if (i !== ""){
@@ -78,7 +78,7 @@ function bindThis() {
 				var xCards = amount + parseInt(obj.val());
 				obj.text(card + " " + xCards);
 				obj.val(parseInt(xCards));
-				$('#cards_left').text(max_cards-actuall_cards);
+				$('#cards_left').text(max_cards-actual_cards);
 				return;
 			}
 			$('.decklist').removeClass('active');
@@ -87,7 +87,7 @@ function bindThis() {
 			$(".new").val(amount);
 			$(".new").removeClass("new");
 			$(".empty").remove();
-			$('#cards_left').text(max_cards-actuall_cards);
+			$('#cards_left').text(max_cards-actual_cards);
 		}
 	});
 	
@@ -98,14 +98,14 @@ function bindThis() {
 		
 		if ((card_amount - amount) <= 0) {
 			$('.decklist.active').remove();
-			actuall_cards -= card_amount;
+			actual_cards -= card_amount;
 			
 			if (($('#deck-list').children('.decklist').text()) == "")
 			{
 				string = '<a href="#" class="list-group-item decklist empty">Empty</a>';
 				$("#deck-list").append(string);
 			}
-			$('#cards_left').text(max_cards-actuall_cards);
+			$('#cards_left').text(max_cards-actual_cards);
 			return;
 		}	
 		    
@@ -115,15 +115,15 @@ function bindThis() {
 			card = card.substring(0, card.indexOf(" "));
 			$('.decklist.active').val(newAmount);
 			$('.decklist.active').text(card + " " + newAmount);
-			actuall_cards -= amount;
-			$('#cards_left').text(max_cards-actuall_cards);
+			actual_cards -= amount;
+			$('#cards_left').text(max_cards-actual_cards);
 		}
 		
 	});
 	
 	$("#save").on("click", function() {
 		// check if there are 30 cards in the deck
-		if (actuall_cards != 30) {
+		if (actual_cards != 30) {
 			$('#system_message').addClass("alert alert-danger");
 			$('#system_message').text("You dont have 30 cards in your deck.");
 			return;

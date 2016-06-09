@@ -90,15 +90,6 @@ io.sockets.on('connection', function(client)
 		}
 	});
 	
-	client.on('cards', function ()
-	{
-		client.emit('cards', card_names);
-		players.remove(client);
-		lp = games.clean (client);
-		if (lp != -1)
-			lp.emit('system', 'Your Opponent disconnected. ¯\\_(ツ)_/¯ Please Reload to start a new Game');
-	});
-	
 	client.on('make_deck', function (data) {
 		makeDeck(data, "Deck", client);
 	});

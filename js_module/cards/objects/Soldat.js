@@ -6,27 +6,17 @@ var attack = 2;
 
 var MeleeMinion = require(__dirname + '/../MeleeMinion.js');
 
-var soldat = class Soldat extends MeleeMinion {
+class Soldat extends MeleeMinion {
 	constructor ()
 	{
 		super();
 	}
-	
-	static get name() {
-		return "Soldat";
-	}
-	
-	static get text() {
-		return text;
-	}
-	
-	static get attack() {
-		return attack;
-	}
-	
-	static get health() {
-		return health;
-	}
 }
 
-module.exports = soldat;
+Soldat.nom = "Soldat"
+Soldat.text = text;
+Soldat.health = health;
+Soldat.attack = attack;
+
+
+module.exports = Soldat;

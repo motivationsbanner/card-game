@@ -5,7 +5,7 @@ var attack = 5;
 
 var MeleeMinion = require(__dirname + '/../MeleeMinion.js');
 
-var kavallerist = class Kavallerist extends MeleeMinion {
+class Kavallerist extends MeleeMinion {
 	constructor ()
 	{
 		super();
@@ -13,24 +13,11 @@ var kavallerist = class Kavallerist extends MeleeMinion {
 		console.log(this.text);
 		
 	}
-	
-	static get name() {
-		return "Kavallerist";
-	}
-	
-	static get text() {
-		return text;
-	}
-	
-	static get attack() {
-		return attack;
-	}
-	
-	static get health() {
-		return health;
-	}
-	
 }
 
+Kavallerist.nom = "Kavallerist"
+Kavallerist.text = text;
+Kavallerist.health = health;
+Kavallerist.attack = attack;
 
-module.exports = kavallerist;
+module.exports = Kavallerist;

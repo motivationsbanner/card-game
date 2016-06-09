@@ -74,7 +74,7 @@ var type = require(__dirname + '/../MeleeMinion.js');
 var type = require(__dirname + '/../Spell.js');
 
 
-var classname = class Classname extends type {
+class classname extends type {
 	constructor ()
 	{
 		super();
@@ -90,6 +90,7 @@ var classname = class Classname extends type {
 		
 	}
 	
+	// Remove if you don't want to implement any specifics
 	isPlayable(field)
 	{
 		if (this.isOnField)
@@ -129,4 +130,6 @@ var classname = class Classname extends type {
 	}
 }
 
-module.exports = classname;
+Classname.name = "Arm...";
+
+module.exports = Classname;

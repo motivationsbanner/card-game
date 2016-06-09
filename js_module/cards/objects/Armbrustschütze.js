@@ -6,7 +6,7 @@ var attack = 3;
 
 var RangeMinion = require(__dirname + '/../RangedMinion.js');
 
-var armbrustschütze = class Armbrustschütze extends RangeMinion {
+class Armbrustschütze extends RangeMinion {
 	constructor ()
 	{
 		super();
@@ -18,25 +18,12 @@ var armbrustschütze = class Armbrustschütze extends RangeMinion {
 		var friendlyField = game.getOnTurn().field;
 	
 	}
-	
-	
-	
-	
-	static get name() {
-		return "Armbrustschütze";
-	}
-	
-	static get text() {
-		return text;
-	}
-	
-	static get attack() {
-		return attack;
-	}
-	
-	static get health() {
-		return health;
-	}
 }
 
-module.exports = armbrustschütze;
+Armbrustschütze.nom = "Armbrustschütze";
+Armbrustschütze.text = text;
+Armbrustschütze.health = health;
+Armbrustschütze.attack = attack;
+
+
+module.exports = Armbrustschütze;

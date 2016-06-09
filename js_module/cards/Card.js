@@ -1,6 +1,6 @@
 "use strict";
 
-var card = class Card {
+class Card {
 	constructor ()
 	{
 		this.isOnField = false;
@@ -20,16 +20,9 @@ var card = class Card {
 		return field;
 	}
 	
-	
-	getType() {
-		return this.cardType;
-	}
-	
 	isPlayable(field) {
 		return -1;
 	}
-	
-	get name() { return this.name; }
 }
 
-module.exports = card;
+module.exports = Card;

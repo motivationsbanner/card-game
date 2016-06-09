@@ -18,15 +18,14 @@ $(document).ready(function () {
 		$('#system_message').removeClass("alert-danger");
 		$('#system_message').addClass("alert-success");
 	});
-
-	socket.emit('cards');
 });
 
 function fillCardList(cards)
 {
 	cards.forEach(function (item, index) 
 	{
-		var string = '<a href="#" class="list-group-item cardlist" id="' + index + '">' + item + '</a>';
+		var name = item.name;
+		var string = '<a href="#" class="list-group-item cardlist" id="' + index + '">' + name + '</a>';
 		
 		$('#card-list').append(string);
 		

@@ -6,27 +6,17 @@ var attack = 0;
 
 var spell = require(__dirname + '/../Spell.js');
 
-var motivationsbanner = class Motivationsbanner extends spell {
+class Motivationsbanner extends spell {
 	constructor ()
 	{
 		super();
 	}
-	
-	static get name() {
-		return "Motivationsbanner";
-	}
-	
-	static get text() {
-		return text;
-	}
-	
-	static get attack() {
-		return attack;
-	}
-	
-	static get health() {
-		return health;
-	}
 }
 
-module.exports = motivationsbanner;
+Motivationsbanner.nom = "Motivationsbanner"
+Motivationsbanner.text = text;
+Motivationsbanner.health = health;
+Motivationsbanner.attack = attack;
+
+
+module.exports = Motivationsbanner;

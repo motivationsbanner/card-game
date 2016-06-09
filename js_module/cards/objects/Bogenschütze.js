@@ -6,27 +6,17 @@ var attack = 2;
 
 var RangeMinion = require(__dirname + '/../RangedMinion.js');
 
-var bogenschütze = class Bogenschütze extends RangeMinion {
+class Bogenschütze extends RangeMinion {
 	constructor ()
 	{
 		super();
 	}
-	
-	static get name() {
-		return "Bogenschütze";
-	}
-	
-	static get text() {
-		return text;
-	}
-	
-	static get attack() {
-		return attack;
-	}
-	
-	static get health() {
-		return health;
-	}
 }
 
-module.exports = bogenschütze;
+Bogenschütze.nom = "Bogenschütze"
+Bogenschütze.text = text;
+Bogenschütze.health = health;
+Bogenschütze.attack = attack;
+
+
+module.exports = Bogenschütze;

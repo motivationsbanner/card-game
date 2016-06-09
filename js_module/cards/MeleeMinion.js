@@ -2,7 +2,7 @@
 
 var Minion = require(__dirname + '/Minion');
 
-var meleeMinion = class MeleeMinion extends Minion {
+class MeleeMinion extends Minion {
 	constructor ()
 	{
 		super();
@@ -27,4 +27,4 @@ var meleeMinion = class MeleeMinion extends Minion {
 	}
 }
 
-module.exports = meleeMinion;
+module.exports = MeleeMinion;

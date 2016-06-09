@@ -197,3 +197,9 @@ function attack(attacker, target) {
 			stage.removeChild(sword);
 		});
 }
+
+function glow(target, color) {
+	target = getField(target);
+
+	target.glow(color);
+}

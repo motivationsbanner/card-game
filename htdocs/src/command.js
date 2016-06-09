@@ -39,6 +39,9 @@ window.recieveCommand = function(data) {
 		case "attack":
 			attack(data.attacker, data.target);
 			break;
+		case "glow":
+			glow(data.target, data.color);
+			break;
 		default:
 			console.warn(data.command + " command not (yet) implemented");
 	}

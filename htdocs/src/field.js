@@ -65,6 +65,23 @@
 		stage.setChildIndex(this.container, stage.numChildren - 1);
 		this.borders[color].visible = true;
 	}
+
+	glow(color) {
+		var rect = new createjs.Shape();
+		rect.graphics.beginFill(color)
+			.drawRect(0, 0, smallCardDimensions.width, smallCardDimensions.height);
+
+		this.container.addChild(rect);
+		stage.setChildIndex(this.container, stage.numChildren - 1);
+
+		rect.alpha = 0;
+
+		createjs.Tween.get(rect).to({alpha: 0.5}, 500)
+			.to({alpha: 0}, 500)
+			.call(function() {
+				this.container.removeChild(rect);
+			}, [], this);
+	}
 }
 
 class BoardField extends Field {

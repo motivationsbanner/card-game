@@ -8,9 +8,8 @@ game_command:
 		{command: "attack", attacker: position, target: position}
 		{command: "set_health", target: position, health: int}
 		{command: "set_attack", target: position, attack: int}
-		{command: "minion_passive", target: position}
 		{command: "kill", target: position}
-		{command: "cast_spell", target: position}
+		{command: "glow", target: position, color: string}
 		{command: "play_card", sender: pos: position, to: position, card_name: string}
 
 	client->server

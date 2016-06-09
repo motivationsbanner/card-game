@@ -19,7 +19,6 @@ $(document).ready(function () {
 		$('#system_message').addClass("alert-success");
 	});
 
-	socket.emit('cards');
 });
 
 function fillCardList(cards)

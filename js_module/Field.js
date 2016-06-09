@@ -109,7 +109,7 @@ var field = class Field {
 	// The Hardcore kek code.....:'(
 	getFieldsWithCards(friendly)
 	{
-		var fields = new Array();
+		var fields = [];
 		
 		if (friendly)
 		{

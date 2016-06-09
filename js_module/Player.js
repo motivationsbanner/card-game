@@ -40,14 +40,17 @@ var player = class Player {
 			if (this.selected_card.row == 'PlayerHand')
 			{
 				var card = Card( this.field.getHandCard(this.selected_card.index) );  // CHANGE_NAME
-				return card.getPlayableFields(this.field);
+				if (card.isPlayable(this.field))
+					return card.getPlayableFields(this.field);
+				return;
 			}
 			
 			// A Card on the field is chosen
 			if (this.selected_card.row != 'PlayerHand')
 			{
 				var card = this.field.getCard(this.selected_card);
-				card.isPlayable(this.field);
+				if (card.isPlayable(this.field))
+					return card.getPlayableFields(this.field);
 			}
 			
 		} else {
@@ -58,12 +61,18 @@ var player = class Player {
 			
 			for ( var i = 0; i < hand.length; i++)
 			{
-				playable.push( {row: 'PlayerHand', index: i} );
+				var card = new cards[this.field.getHandCard(i)];
+				if (card.isPlayable(this.field))
+					if (card.getPlayableFields(this.field).length > 0)
+						playable.push( {row: 'PlayerHand', index: i} );
 			}
 			
 			for ( var i2 = 0; i2 < fieldWithCard.length; i2++)
 			{
-				playable.push( {row: fieldWithCard[i2].row, index: fieldWithCard[i2].index } );
+				var card = this.field.getCard(fieldWithCard[i2]);
+				if (card.isPlayable(this.field))
+					if (card.getPlayableFields(this.field).length > 0)
+						playable.push( fieldWithCard[i2] );
 			}
 			
 			return playable;
@@ -77,7 +86,7 @@ var player = class Player {
 			this.playCard(pos, game);
 			return;
 		}
-		this.field.getCardOnPos(selected_card).activate(pos, game);
+		this.field.getCardOnPos(this.selected_card).activate(pos, game);
 		
 	}
 

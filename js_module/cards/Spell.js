@@ -15,7 +15,7 @@ class Spell extends Card {
 	
 	getPlayableFields(field)
 	{
-		
+		return new Array();
 	}
 }
 

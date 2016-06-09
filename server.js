@@ -81,12 +81,7 @@ io.sockets.on('connection', function(client)
 	
 	client.on('command', function (data)
 	{
-		try  
-		{
-			games.getGameByClient(client).doCommand(data, client);	
-		} catch (error) { 
-			console.log("Command Error: " + error);
-		}
+		games.getGameByClient(client).doCommand(data, client);	
 	});
 	
 	client.on('make_deck', function (data) {

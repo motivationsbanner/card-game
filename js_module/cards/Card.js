@@ -23,6 +23,10 @@ class Card {
 	isPlayable(field) {
 		return -1;
 	}
+	
+	activate(pos, game) {
+		return;
+	}
 }
 
 module.exports = Card;

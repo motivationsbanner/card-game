@@ -10,20 +10,19 @@ class RangedMinion extends Minion {
 	
 	isPlayable(field)
 	{
-		if (this.isOnField)
+		return true;
+	}
+	
+	getPlayableFields(field)
+	{
+		var f = field.getField().range;
+		var playable = new Array();
+		for (var i = 0; i < f.length; i++)
 		{
-			// if card is already on the field
-		} else {
-			// if card is in your hand
-			var f = field.getField().range;
-			var playable = new Array();
-			for (var i = 0; i < f.length; i++)
-			{
-				if (f[i] == -1)
-					playable.push( {row: 'PlayerRange', index: i} );
-			}	
-			return playable;
-		}
+			if (f[i] == -1)
+				playable.push( {row: 'PlayerRange', index: i} );
+		}	
+		return playable;
 	}
 }
 

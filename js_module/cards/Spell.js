@@ -7,6 +7,16 @@ class Spell extends Card {
 	{
 		super();
 	}
+	
+	isPlayable(field)
+	{
+		return true;
+	}
+	
+	getPlayableFields(field)
+	{
+		
+	}
 }
 
 

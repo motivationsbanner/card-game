@@ -9,9 +9,6 @@ class Kavallerist extends MeleeMinion {
 	constructor ()
 	{
 		super();
-		this.setText(text);
-		console.log(this.text);
-		
 	}
 }
 

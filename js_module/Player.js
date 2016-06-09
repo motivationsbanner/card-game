@@ -14,7 +14,7 @@ var player = class Player {
 	constructor ()
 	{
 		this.client;
-		this.hp = 30;
+		this.hp = 15;
 		this.field = new Field();
 		this.deck = new Deck();
 		this.selected_card = -1;
@@ -40,13 +40,14 @@ var player = class Player {
 			if (this.selected_card.row == 'PlayerHand')
 			{
 				var card = Card( this.field.getHandCard(this.selected_card.index) );  // CHANGE_NAME
-				return card.isPlayable(this.field);
+				return card.getPlayableFields(this.field);
 			}
 			
 			// A Card on the field is chosen
 			if (this.selected_card.row != 'PlayerHand')
 			{
-				var card = this.getCard(this.selected_card);
+				var card = this.field.getCard(this.selected_card);
+				console.log("Card: " + card);
 				card.isPlayable(this.field);
 			}
 			
@@ -63,8 +64,9 @@ var player = class Player {
 			
 			for ( var i2 = 0; i2 < fieldWithCard; i2++)
 			{
-				playable.push( fieldWithCard[i2] );
+				playable.push( {row: fieldWithCard[i2].row, index: fieldWithCard[i2].index } );
 			}
+			
 			return playable;
 		}
 	}
@@ -119,7 +121,8 @@ var player = class Player {
 		card.play(info.pos, this.field);
 	}
 	
-	removeHandCard(pos) {
+	removeHandCard(pos)
+	{
 		this.field = this.field.removeCard(pos);
 	}
 	

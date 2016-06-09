@@ -31,7 +31,7 @@ if(process.argv.length == 3 && !isNaN(process.argv[2])) {
 fs.readdir(__dirname + '/js_module/cards/objects/', function (error, files)
 {
 	if (error)
-		console.log(error);
+		console.log("readdir error: " + error);
 	files.forEach( function(file) {
 		var temp = require(__dirname + '/js_module/cards/objects/'+ file);
 		cards[temp.nom] = temp;
@@ -85,7 +85,7 @@ io.sockets.on('connection', function(client)
 		{
 			games.getGameByClient(client).doCommand(data, client);	
 		} catch (error) { 
-			console.log(error);
+			console.log("Command Error: " + error);
 		}
 	});
 	
@@ -132,7 +132,7 @@ function makeDeck(data, filename, client) {
 	var outputFile = __dirname + "/js_module/deck/" + filename + ".json";
 	fs.writeFile(outputFile, data, function (err) {
 		if (err) {
-			console.log(err);
+			console.log("MakeDeck Error: " + err);
 		} else {
 			client.emit('success');
 		}

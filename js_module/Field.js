@@ -202,6 +202,50 @@ var field = class Field {
 		return this.field;
 	}
 	
+	getFriendlyMinions()
+	{
+		var melee = this.getRow('PlayerMelee').length;
+		var range = this.getRow('PlayerRange').length;
+		return melee + range;
+	}
+	
+	getEnemyMinions()
+	{
+		var melee = this.getRow('EnemyMelee').length;
+		var range = this.getRow('EnemyRange').length;
+		return melee + range;
+	}
+	
+	getMelee()
+	{
+		var friend = this.getRow('PlayerMelee').length;
+		var enemy = this.getRow('EnemyMelee').length;
+		return friend + enemy;
+	}
+	
+	getRange()
+	{
+		var friend = this.getRow('PlayerRange').length;
+		var enemy = this.getRow('EnemyRange').length;
+		return friend + enemy;
+	}
+	
+	getFriendlyMelee() {
+		return this.getRow('PlayerMelee').length;
+	}
+	
+	getEnemyMelee() {
+		return this.getRow('EnemyMelee').length;
+	}
+	
+	getFriendlyRange() {
+		return this.getRow('PlayerRange').length;
+	}
+	
+	getEnemyRange() {
+		return this.getRow('EnemyRange').length;
+	}
+	
 }
 
 module.exports = field;

@@ -26,7 +26,8 @@ function fillCardList(cards)
 {
 	cards.forEach(function (item, index) 
 	{
-		var string = '<a href="#" class="list-group-item cardlist" id="' + index + '">' + item + '</a>';
+		var name = item.name;
+		var string = '<a href="#" class="list-group-item cardlist" id="' + index + '">' + name + '</a>';
 		
 		$('#card-list').append(string);
 		

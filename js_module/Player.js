@@ -47,7 +47,6 @@ var player = class Player {
 			if (this.selected_card.row != 'PlayerHand')
 			{
 				var card = this.field.getCard(this.selected_card);
-				console.log("Card: " + card);
 				card.isPlayable(this.field);
 			}
 			
@@ -62,7 +61,7 @@ var player = class Player {
 				playable.push( {row: 'PlayerHand', index: i} );
 			}
 			
-			for ( var i2 = 0; i2 < fieldWithCard; i2++)
+			for ( var i2 = 0; i2 < fieldWithCard.length; i2++)
 			{
 				playable.push( {row: fieldWithCard[i2].row, index: fieldWithCard[i2].index } );
 			}

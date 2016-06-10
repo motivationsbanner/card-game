@@ -10,42 +10,24 @@ class Card {
 	constructor(cardType) {
 		this.cardType = cardType;
 		
-		this.smallCard = new createjs.Bitmap();
+		this.smallCard = new createjs.Container();
 		this.largeCard = new createjs.Container();
 
-		this.largeCard.setTransform(
-			2 * gap, 
-			(480 - largeCardDimensions.height) / 2, 
-			0.5, 
-			0.5
+		this.largeCard.setTransform(2 * gap, 
+			(480 - largeCardDimensions.height) / 2
 		);
 
-		var largeCardBitmap = new createjs.Bitmap(this.cardType.dataURL);
+		var largeCardBitmap = new createjs.Bitmap(this.cardType.largeCardDataURL);
 		this.largeCard.addChild(largeCardBitmap);
+
+		var smallCardBitmap = new createjs.Bitmap(this.cardType.smallCardDataURL);
+		this.smallCard.addChild(smallCardBitmap);
 
 		stage.addChildAt(this.smallCard, 0);
 
 		this.smallCard.on("mouseover", function() {
 			setPreviewCard(this);
 		}, this);
-	}
-
-	render() {
-		this.largeCard.cache(0, 0,
-			originalCardDimensions.width,
-			originalCardDimensions.height,
-			0.2
-		);
-
-		var image = new Image()
-		image.src = this.largeCard.getCacheDataURL();
-		this.smallCard.image = image;
-
-		this.largeCard.cache(0, 0,
-			originalCardDimensions.width,
-			originalCardDimensions.height,
-			0.5
-		);
 	}
 
 	goToField(field, callback) {
@@ -82,35 +64,42 @@ class Minion extends Card {
 	constructor(cardType) {
 		super(cardType);
 
-		var attack = new createjs.Text("", "bold 100px monospace", "gray");
-		var health = new createjs.Text("", "bold 100px monospace", "red");
+		// smallCard
+		var smallCardAttack = new createjs.Text(cardType.attack, "bold 15px monospace", "red");
+		var smallCardHealth = new createjs.Text(cardType.health, "bold 15px monospace", "brown");
 
-		attack.name = "attack";
-		health.name = "health";
+		smallCardAttack.set({name: "attack", x: 10, y: 48, textAlign: "center"});
+		smallCardHealth.set({name: "health", x: 39, y: 48, textAlign: "center"});
 
-		// TODO: calculate
-		attack.set({x: 22, y: 240, lineHeight: 18});
-		health.set({x: 150, y: 240, lineHeight: 18});
+		this.smallCard.addChild(smallCardAttack, smallCardHealth);
+		this.smallCard.cache(0, 0, smallCardDimensions.width, smallCardDimensions.height);
 
-		this.largeCard.addChild(attack);
-		this.largeCard.addChild(health);
+		// largeCard
+		var largeCardAttack = new createjs.Text(cardType.attack, "bold 15px monospace", "red");
+		var largeCardHealth = new createjs.Text(cardType.health, "bold 15px monospace", "brown");
 
-		this.health = cardType.health;
-		this.attack = cardType.attack;
-	}
+		largeCardAttack.set({name: "attack", x: 12, y: 272, textAlign: "center"});
+		largeCardHealth.set({name: "health", x: 147, y: 272, textAlign: "center"});
 
-	render() {
-		super.render();
+		this.largeCard.addChild(largeCardAttack, largeCardHealth);
+		this.largeCard.cache(0, 0, largeCardDimensions.width, largeCardDimensions.height);
 	}
 
 	set attack(attack) {
+		this.smallCard.getChildByName("attack").text = attack;
 		this.largeCard.getChildByName("attack").text = attack;
-		this.render();
+		this.updateCache();
 	}
 
 	set health(health) {
+		this.smallCard.getChildByName("health").text = health;
 		this.largeCard.getChildByName("health").text = health;
-		this.render();
+		this.updateCache();
+	}
+
+	updateCache() {
+		this.smallCard.updateCache();
+		this.largeCard.updateCache();
 	}
 }
 

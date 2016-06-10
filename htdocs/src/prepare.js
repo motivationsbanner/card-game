@@ -65,8 +65,12 @@ function prepare(callback) {
 		queue.loadFile(cardTypesByName[key].imageName);
 	}
 
-	queue.loadFile("karte.png");
 	queue.loadFile("schwert.png");
+	queue.loadFile("overlay.png");
+	queue.loadFile("kleines_overlay.png");
+	queue.loadFile("overlay_spell.png");
+	queue.loadFile("kleines_overlay_spell.png");
+	queue.loadFile("held_platzhalter.png");
 
 	queue.on("complete", function(event) {
 		prepareCardImages();
@@ -98,6 +102,10 @@ function prepareFields() {
 			rows[rowNames[i + 1]][ii] = new BoardField(x, y, null);
 		}
 	}
+
+	var player = new createjs.Bitmap(queue.getResult("held_platzhalter.png"))
+	player.setTransform(12, 0, 0.7, 0.7);
+	stage.addChild(player);
 }
 
 function prepareCardback() {
@@ -109,8 +117,17 @@ function prepareCardback() {
 }
 
 function prepareCardImages() {
-	var cardBorderImage = queue.getResult("karte.png");
-	var cardBorderBitmap = new createjs.Bitmap(cardBorderImage);
+	var largeMinionOverlay = queue.getResult("overlay.png");
+	var largeMinionOverlayBitmap = new createjs.Bitmap(largeMinionOverlay);
+
+	var largeSpellOverlay = queue.getResult("overlay_spell.png");
+	var largeSpellOverlayBitmap = new createjs.Bitmap(largeSpellOverlay);
+
+	var smallMinionOverlay = queue.getResult("kleines_overlay.png");
+	var smallMinionOverlayBitmap = new createjs.Bitmap(smallMinionOverlay);
+
+	var smallSpellOverlay = queue.getResult("kleines_overlay_spell.png");
+	var smallSpellOverlayBitmap = new createjs.Bitmap(smallSpellOverlay);
 
 	for(var key in cardTypesByName) {
 		var cardType = cardTypesByName[key];
@@ -118,25 +135,61 @@ function prepareCardImages() {
 		var container = new createjs.Container();
 		var artworkImage = queue.getResult(cardType.imageName);
 		var artworkBitmap = new createjs.Bitmap(artworkImage);
-
-		var name = new createjs.Text(cardType.name, "bold 15px monospace", "black");
-		var text = new createjs.Text(cardType.text, "15px monospace", "black");
-
-		name.set({x: 22, y: 215, lineHeight: 18, lineWidth: 214});
-		text.set({x: 22, y: 240, lineHeight: 18, lineWidth: 214});
-
 		container.addChild(artworkBitmap);
-		container.addChild(cardBorderBitmap);
-		container.addChild(text);
-		container.addChild(name);
+
+		// largeCard
+		var largeCardContainer = new createjs.Container();
 
 		container.cache(0, 0,
-		 	originalCardDimensions.width,
-			originalCardDimensions.height,
+		 	artworkDimensions.width,
+			artworkDimensions.height,
 			1
  		);
 
-		cardType.dataURL = container.getCacheDataURL();
+		var largeCardImageBitmap = new createjs.Bitmap(container.getCacheDataURL());
+		largeCardImageBitmap.set({x: 35, y: 50});
+
+		largeCardContainer.addChild(largeCardImageBitmap);
+
+		if(cardType.type === "spell") {
+			largeCardContainer.addChild(largeSpellOverlayBitmap);
+		} else {
+			largeCardContainer.addChild(largeMinionOverlayBitmap);
+		}
+
+		var name = new createjs.Text(cardType.name, "bold 25px monospace", "white");
+		var text = new createjs.Text(cardType.text, "18px monospace", "white");
+
+		name.set({x: 32, y: 10, lineWidth: 214});
+		text.set({x: 53, y: 407, lineHeight: 20, lineWidth: 210});
+
+		largeCardContainer.addChild(name);
+		largeCardContainer.addChild(text);
+
+		largeCardContainer.cache(0, 0, largeCardContainer.getBounds().width, 
+			largeCardContainer.getBounds().height, 0.5);
+		cardType.largeCardDataURL = largeCardContainer.getCacheDataURL();
+
+		// smallCard
+		var smallCardContainer = new createjs.Container();
+
+		container.cache(0, 0,
+		 	artworkDimensions.width,
+			artworkDimensions.height,
+			0.2
+ 		);
+
+		var smallCardImageBitmap = new createjs.Bitmap(container.getCacheDataURL());
+
+		smallCardContainer.addChild(smallCardImageBitmap);
+
+		if(cardType.type === "spell") {
+			smallCardContainer.addChild(smallSpellOverlayBitmap);
+		} else {
+			smallCardContainer.addChild(smallMinionOverlayBitmap);
+		}
+		smallCardContainer.cache(0, 0, smallCardDimensions.width, smallCardDimensions.height);
+		cardType.smallCardDataURL = smallCardContainer.getCacheDataURL();
 	}
 }
 

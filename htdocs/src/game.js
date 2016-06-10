@@ -33,7 +33,6 @@ function playerDrawCard(cardName) {
 	card.x = x;
 	card.y = y;
 
-	card.render();
 	stage.addChild(card.smallCard);
 }
 
@@ -68,6 +67,7 @@ function setPlayOptions(positions, abort) {
 		abort = getField(abort);
 	}
 
+	// TODO: two loops
 	for(var i = 0; i < positions.length; i ++) {
 		var field = getField(positions[i]);
 
@@ -93,7 +93,6 @@ function revealCard(field, cardName) {
 	var card = cardFactory(cardType);
 	card.x = field.x;
 	card.y = field.y;
-	card.render();
 
 	stage.addChild(card.smallCard);
 	stage.removeChild(field.card);
@@ -182,6 +181,7 @@ function attack(attacker, target) {
 
 	stage.addChild(sword);
 
+	// TODO: redo
 	sword.rotation = Math.atan((target.x - attacker.x) / (attacker.y - target.y)) / Math.PI * 180;
 
 	if(target.y - attacker.y > 0) {

@@ -8,8 +8,8 @@
 
 var width = 5; // width of board
 var gap = 6; // gap between fields
-var originalCardDimensions = {width: 250, height: 350};
-var largeCardDimensions = {width: 125, height: 175};
+var artworkDimensions = {width: 250, height: 350};
+var largeCardDimensions = {width: 160, height: 300};
 var smallCardDimensions = {width: 50, height: 70};
 
 var rowNames = [

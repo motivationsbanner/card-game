@@ -6,6 +6,7 @@
     PlayerMelee
     PlayerRange
     PlayerHand
+	Player // 0 = Enemy, 1 = Player
   
   Index:
     von Links nach Rechts

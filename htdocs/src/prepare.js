@@ -105,10 +105,10 @@ function prepareFields() {
 		}
 	}
 
-	// Player and enemy
-	var player = new createjs.Bitmap(queue.getResult("held_platzhalter.png"))
-	player.setTransform(0, 0, 0.7, 0.7);
-	stage.addChild(player);
+	// Players and
+	var playerLeftBorder = containerBorder.left + largeCardDimensions.width / 2 - playerDimensions.width / 2;
+	rows.Players[0] = new PlayerField(playerLeftBorder, 5);
+	rows.Players[1] = new PlayerField(playerLeftBorder, 480 - playerDimensions.height - 5);	
 }
 
 function prepareCardback() {
@@ -200,21 +200,19 @@ function prepareCardImages() {
 
 // TODO: fix
 // TODO: different sizes
-function prepareBorderImages()
-{
-	var bounds = {x:0, y: 0, width: 50, height: 70};
+function prepareBorderImages() {
+	borderSizes.forEach(function(borderSize) {
+		borderImages[borderSize.width + "x" + borderSize.height] = {};
+		borderColors.forEach(function(color) {
+			var shape = new createjs.Shape();
+			shape.graphics.beginStroke(color);
+			shape.graphics.setStrokeStyle(5);
 
-	var colors = ["white", "red", "green", "blue"];
+			shape.graphics.drawRect(0, 0, borderSize.width, borderSize.height);
+			shape.filters = [new createjs.BlurFilter(3, 3, 2)];
+			shape.cache(0, 0, borderSize.width, borderSize.height);
 
-	colors.forEach(function(color) {
-		var shape = new createjs.Shape();
-		shape.graphics.beginStroke(color);
-		shape.graphics.setStrokeStyle(6);
-
-		shape.graphics.drawRect(0, 0, bounds.width, bounds.height);
-		shape.filters = [new createjs.BlurFilter(4, 4, 2)];
-		shape.cache(0, 0, 50, 70);
-
-		borderImages[color] = shape.getCacheDataURL();
+			borderImages[borderSize.width + "x" + borderSize.height][color] = shape.getCacheDataURL();
+		});
 	});
 }

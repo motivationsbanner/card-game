@@ -112,9 +112,7 @@ function playCard(from, to, cardName, callback) {
 function removeAllActionOptions() {
 	for(var name in rows) {
 		for(var field of rows[name]) {
-			// At least it works
-			field.hideBorder("red");
-			field.hideBorder("white");
+			field.removeBorder();
 			field.container.removeAllEventListeners("click");
 		}
 	}
@@ -134,7 +132,7 @@ function setAttack(field, attack) {
 }
 
 function setHealth(field, health) {
-	getField(field).card.health = health;
+	getField(field).health = health;
 }
 
 function kill(field) {

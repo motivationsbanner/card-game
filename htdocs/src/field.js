@@ -17,9 +17,6 @@ class Field {
 		hit.graphics.beginFill("#000").drawRect(0, 0, this.width, this.height);
 		this.container.hitArea = hit;
 
-		// example: {red: createjs.Bitmap, white: createjs.Bitmap}
-		this.borders = {};
-
 		this.x = x;
 		this.y = y;
 
@@ -42,23 +39,17 @@ class Field {
 		return this.container.y;
 	}
 
-	hideBorder(color) {
-		if(this.borders[color]) {
-			this.borders[color].set({"visible": false});
+	removeBorder() {
+		if(this.border) {
+			this.container.removeChild(this.border);
 		}
 	}
 
 	showBorder(color) {
-		if(!this.borders[color]) {
-			this.borders[color] = new createjs.Bitmap(borderImages[color]);
-			this.borders[color].set({x: -6, y: -6});
-			this.container.addChild(this.borders[color]);
-		} else {
-			this.borders[color].set({x: -6, y: -6});
-		}
-		
+		this.border = new createjs.Bitmap(borderImages[this.width + "x" + this.height][color]);
+		this.border.set({x: -4 , y: -4});
+		this.container.addChild(this.border);
 		stage.setChildIndex(this.container, stage.numChildren - 1);
-		this.borders[color].visible = true;
 	}
 
 	glow(color, callback) {
@@ -80,6 +71,23 @@ class Field {
 	}
 }
 
+class PlayerField extends Field {
+	constructor(x, y) {
+		super(x, y, 105, 70);
+		this.player = new createjs.Bitmap(queue.getResult("held_platzhalter.png"))
+		this.player.setTransform(0, 0, 0.7, 0.7);
+		this.container.addChild(this.player);
+
+		var health = new createjs.Text("15", "bold 15px monospace", "brown");
+		health.set({name: "health", x: 87, y: 36, textAlign: "center"});
+		this.container.addChild(health);
+	}
+
+	set health(health) {
+		this.container.getChildByName("health").text = health;
+	}
+}
+
 class CardField extends Field {
 	constructor(x, y, cardName) {
 		super(x, y, smallCardDimensions.width, smallCardDimensions.height);
@@ -93,7 +101,6 @@ class CardField extends Field {
 	}
 
 	goToField(field, callback) {
-		// why the F*** doesn't this work
 		stage.setChildIndex(this.container, stage.numChildren - 1);
 		
 		createjs.Tween.get(this)
@@ -124,6 +131,10 @@ class CardField extends Field {
 		this.container.on("mouseover", function() {
 			setPreviewCard(this.card);
 		}, this);
+	}
+
+	set health(health) {
+		this.card.health = health;
 	}
 }
 

@@ -61,7 +61,7 @@ class Field {
 		this.borders[color].visible = true;
 	}
 
-	glow(color) {
+	glow(color, callback) {
 		var rect = new createjs.Shape();
 		rect.graphics.beginFill(color)
 			.drawRect(0, 0, this.width, this.height);
@@ -75,6 +75,7 @@ class Field {
 			.to({alpha: 0}, 500)
 			.call(function() {
 				this.container.removeChild(rect);
+				callback();
 			}, [], this);
 	}
 }
@@ -92,8 +93,7 @@ class CardField extends Field {
 	}
 
 	goToField(field, callback) {
-		callback = callback || function(){};
-		
+		// why the F*** doesn't this work
 		stage.setChildIndex(this.container, stage.numChildren - 1);
 		
 		createjs.Tween.get(this)

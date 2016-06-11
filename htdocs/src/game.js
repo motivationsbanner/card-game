@@ -79,7 +79,7 @@ function setPlayOptions(positions, abort) {
 }
 
 
-function playCard(from, to, cardName) {
+function playCard(from, to, cardName, callback) {
 	if(from.row !== "PlayerHand" && from.row !== "EnemyHand") {
 		throw "a card can only played from a hand";
 	}
@@ -104,6 +104,8 @@ function playCard(from, to, cardName) {
 		for(var i = from.index; i < rows[from.row].length; i ++) {
 			rows[from.row][i].x -= (smallCardDimensions.width + gap) / 2;
 		}
+
+		callback();
 	});
 }
 
@@ -140,7 +142,7 @@ function kill(field) {
 	rows[field.row][field.index] = getField(field).backup;
 }
 
-function attack(attacker, target) {
+function attack(attacker, target, callback) {
 	attacker = getField(attacker);
 	target = getField(target);
 
@@ -172,11 +174,12 @@ function attack(attacker, target) {
 		}, 1000)
 		.call(function() {
 			stage.removeChild(sword);
+			callback();
 		});
 }
 
-function glow(target, color) {
+function glow(target, color, callback) {
 	target = getField(target);
 
-	target.glow(color);
+	target.glow(color, callback);
 }

@@ -6,6 +6,8 @@
 
 "use strict";
 
+// TODO: delete this file
+
 function start() {
 	socket.emit("start");
 	hideInfo();

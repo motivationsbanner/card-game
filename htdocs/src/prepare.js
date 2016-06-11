@@ -59,7 +59,9 @@ function prepare(callback) {
 	queue = new createjs.LoadQueue(true, basePath);
 
 	createjs.Ticker.timingMode = createjs.Ticker.RAF;
-	createjs.Ticker.addEventListener("tick", onTick);
+	createjs.Ticker.addEventListener("tick", function() {
+		stage.update();
+	});
 
 	for(var key in cardTypesByName) {
 		queue.loadFile(cardTypesByName[key].imageName);
@@ -86,7 +88,7 @@ function prepareFields() {
 	// Box on the left
 	var shape = new createjs.Shape();
 	shape.graphics.beginFill("#7A4E36").drawRect(0, 0, 
-		largeCardDimensions.width + 4 * gap, 480);
+		largeCardDimensions.width + containerBorder.left + containerBorder.right, 480);
 	stage.addChild(shape);
 
 	// Fields on the Board	
@@ -103,8 +105,9 @@ function prepareFields() {
 		}
 	}
 
+	// Player and enemy
 	var player = new createjs.Bitmap(queue.getResult("held_platzhalter.png"))
-	player.setTransform(12, 0, 0.7, 0.7);
+	player.setTransform(0, 0, 0.7, 0.7);
 	stage.addChild(player);
 }
 
@@ -119,9 +122,11 @@ function prepareCardback() {
 function prepareCardImages() {
 	var largeMinionOverlay = queue.getResult("overlay.png");
 	var largeMinionOverlayBitmap = new createjs.Bitmap(largeMinionOverlay);
+	largeMinionOverlayBitmap.setTransform(0, 0, 0.5, 0.5);
 
 	var largeSpellOverlay = queue.getResult("overlay_spell.png");
 	var largeSpellOverlayBitmap = new createjs.Bitmap(largeSpellOverlay);
+	largeSpellOverlayBitmap.setTransform(0, 0, 0.5, 0.5);
 
 	var smallMinionOverlay = queue.getResult("kleines_overlay.png");
 	var smallMinionOverlayBitmap = new createjs.Bitmap(smallMinionOverlay);
@@ -147,7 +152,7 @@ function prepareCardImages() {
  		);
 
 		var largeCardImageBitmap = new createjs.Bitmap(container.getCacheDataURL());
-		largeCardImageBitmap.set({x: 35, y: 50});
+		largeCardImageBitmap.setTransform(18, 25, 0.5, 0.5);
 
 		largeCardContainer.addChild(largeCardImageBitmap);
 
@@ -157,17 +162,17 @@ function prepareCardImages() {
 			largeCardContainer.addChild(largeMinionOverlayBitmap);
 		}
 
-		var name = new createjs.Text(cardType.name, "bold 25px monospace", "white");
-		var text = new createjs.Text(cardType.text, "18px monospace", "white");
+		var name = new createjs.Text(cardType.name, "bold 12px monospace", "white");
+		var text = new createjs.Text(cardType.text, "10px monospace", "white");
 
-		name.set({x: 32, y: 10, lineWidth: 214});
-		text.set({x: 53, y: 407, lineHeight: 20, lineWidth: 210});
+		name.set({x: 17, y: 5, lineWidth: 107});
+		text.set({x: 26, y: 203, lineHeight: 10, lineWidth: 105});
 
 		largeCardContainer.addChild(name);
 		largeCardContainer.addChild(text);
 
 		largeCardContainer.cache(0, 0, largeCardContainer.getBounds().width, 
-			largeCardContainer.getBounds().height, 0.5);
+			largeCardContainer.getBounds().height, 1);
 		cardType.largeCardDataURL = largeCardContainer.getCacheDataURL();
 
 		// smallCard
@@ -212,9 +217,4 @@ function prepareBorderImages()
 
 		borderImages[color] = shape.getCacheDataURL();
 	});
-}
-
-function onTick()
-{
-	stage.update();
 }

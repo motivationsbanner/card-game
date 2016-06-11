@@ -7,7 +7,7 @@
 "use strict";
 
 var previewCard = null;
-var boardCenterX = largeCardDimensions.width + (640 - largeCardDimensions.width) / 2 + 4 * gap;
+var boardCenterX = largeCardDimensions.width + (640 - largeCardDimensions.width) / 2 + containerBorder.left + containerBorder.right;
 
 function playerDrawCards(cards) {
 	cards.forEach(function(card) {
@@ -20,20 +20,13 @@ function playerDrawCard(cardName) {
 		field.x -= (smallCardDimensions.width + gap) / 2;
 	});
 
-	var cardType = cardTypesByName[cardName];
-	var card = cardFactory(cardType);
 	var x =  boardCenterX + (rows.PlayerHand.length - 2 + 1) * (smallCardDimensions.width / 2)
 		+ (rows.PlayerHand.length - 1 + 1) * (gap / 2);
 	var y = 480 - smallCardDimensions.height;
 
-	var field = new Field(x, y, card);
+	var field = new CardField(x, y, cardName);
 
 	rows.PlayerHand.push(field);
-
-	card.x = x;
-	card.y = y;
-
-	stage.addChild(card.smallCard);
 }
 
 function enemyDrawCards(amount) {
@@ -43,8 +36,6 @@ function enemyDrawCards(amount) {
 }
 
 function enemyDrawCard() {
-	var card = new createjs.Bitmap(cardBack);
-
 	rows.EnemyHand.forEach (function(field) {
 		field.x -= (smallCardDimensions.width + gap) / 2;
 	});
@@ -52,11 +43,10 @@ function enemyDrawCard() {
 	var x =  boardCenterX + (rows.EnemyHand.length - 2 + 1) * (smallCardDimensions.width / 2)
 		+ (rows.EnemyHand.length - 1 + 1) * (gap / 2);
 	var y = 0;
-	
-	var field = new Field(x, y, card);
-	
+
+	var field = new CardField(x, y);
+
 	rows.EnemyHand.push(field);
-	stage.addChild(card);
 }
 
 
@@ -88,16 +78,6 @@ function setPlayOptions(positions, abort) {
 	}
 }
 
-function revealCard(field, cardName) {
-	var cardType = cardTypesByName[cardName];
-	var card = cardFactory(cardType);
-	card.x = field.x;
-	card.y = field.y;
-
-	stage.addChild(card.smallCard);
-	stage.removeChild(field.card);
-	field.card = card;
-}
 
 function playCard(from, to, cardName) {
 	if(from.row !== "PlayerHand" && from.row !== "EnemyHand") {
@@ -108,14 +88,15 @@ function playCard(from, to, cardName) {
 	to.field = getField(to);
 
 	if(from.row === "EnemyHand") {
-		revealCard(from.field, cardName);
+		from.field.setCard(cardName);
+
 	}
 	
-	stage.removeChild(from.field.container);
-	to.field.card = from.field.card;
 	rows[from.row].splice(from.index, 1);
+	from.field.backup = to.field;
+	rows[to.row][to.index] = from.field;
 
-	from.field.card.goToField(to.field, function() {		
+	from.field.goToField(to.field, function() {		
 		for(var i = 0; i < from.index; i ++) {
 			rows[from.row][i].x += (smallCardDimensions.width + gap) / 2;
 		}
@@ -155,12 +136,8 @@ function setHealth(field, health) {
 }
 
 function kill(field) {
-	field = getField(field);
-
-	stage.removeChild(field.card.smallCard);
-	stage.removeChild(field.card.largeCard);
-
-	field.card = null;
+	stage.removeChild(getField(field).container);
+	rows[field.row][field.index] = getField(field).backup;
 }
 
 function attack(attacker, target) {

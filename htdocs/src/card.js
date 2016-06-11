@@ -13,7 +13,7 @@ class Card {
 		this.smallCard = new createjs.Container();
 		this.largeCard = new createjs.Container();
 
-		this.largeCard.setTransform(2 * gap, 
+		this.largeCard.setTransform(containerBorder.left, 
 			(480 - largeCardDimensions.height) / 2
 		);
 
@@ -24,39 +24,6 @@ class Card {
 		this.smallCard.addChild(smallCardBitmap);
 
 		stage.addChildAt(this.smallCard, 0);
-
-		this.smallCard.on("mouseover", function() {
-			setPreviewCard(this);
-		}, this);
-	}
-
-	goToField(field, callback) {
-		callback = callback || function(){};
-		
-		stage.setChildIndex(this.smallCard, stage.numChildren - 1);
-		
-		createjs.Tween.get(this)
-			.to({
-				x: field.x,
-				y: field.y
-			}, 500)
-			.call(callback);
-	}
-	
-	get x() {
-		return this.smallCard.x;
-	}
-	
-	get y() {
-		return this.smallCard.y;
-	}
-	
-	set x(x) {
-		this.smallCard.x = x;
-	}
-	
-	set y(y) {
-		this.smallCard.y = y;
 	}
 }
 

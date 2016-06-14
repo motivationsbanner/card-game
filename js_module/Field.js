@@ -1,9 +1,3 @@
-/**
- * card game
- * client: https://github.com/cravay/card-game
- * server: https://github.com/ceoy/Nodejs
- */
- 
 "use strict";
 
 var field = class Field {
@@ -81,6 +75,11 @@ var field = class Field {
 		if (row == 'PlayerMelee')
 			this.field.melee[index] = card;
 		if (row == 'PlayerRange')
+			this.field.range[index] = card;
+		
+		if (row == 'EnemyMelee')
+			this.field.melee[index] = card;
+		if (row == 'EnemyRange')
 			this.field.range[index] = card;
 	}
 	

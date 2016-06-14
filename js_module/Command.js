@@ -1,7 +1,7 @@
 
 function drawCommand(data, player, game)
 {
-// Ja kek
+// OUI OUI BAGUETTE
 }
 
 function change_turnCommand(data, game)
@@ -48,7 +48,7 @@ function select_optionCommand(data, game)
 
 var commandInterpreter = function (data, player, game)
 {
-	if (player != -1)
+	if (player == game.getOnTurn())
 	{
 		if (data.command == "draw")
 		{

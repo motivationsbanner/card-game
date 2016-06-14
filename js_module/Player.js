@@ -1,9 +1,3 @@
-/**
- * card game
- * client: https://github.com/cravay/card-game
- * server: https://github.com/ceoy/Nodejs
- */
-
 "use strict";
 
 var Field = require('../js_module/Field.js');
@@ -39,7 +33,7 @@ var player = class Player {
 			// A Card in your hand is chosen
 			if (this.selected_card.row == 'PlayerHand')
 			{
-				var card = Card( this.field.getHandCard(this.selected_card.index) );  // CHANGE_NAME
+				var card = new cards[ this.field.getHandCard(this.selected_card.index) ];  // CHANGE_NAME
 				if (card.isPlayable(this.field))
 					return card.getPlayableFields(this.field);
 				return;
@@ -89,19 +83,17 @@ var player = class Player {
 			return;
 		}
 		this.field.getCardOnPos(this.selected_card).activate(pos, game);
-		
 	}
 
 	playCard(pos, game)
 	{
 		// create new card (card in your hand)
-		var card_id = this.field.getHandCard(this.selected_card.index)
-		var card = Card( card_id );
+		var cardname = this.field.getHandCard(this.selected_card.index)
+		var card = new cards[cardname];
 		
 		// Play Card on your field
-		this.field = card.play(pos, this.field);
+		card.play(pos, this.field);
 		
-	
 		var senderPos = this.getSelectedCard(),
 			toPos = pos,
 			card_name = this.field.getCardOnPos(toPos).constructor.name;
@@ -114,7 +106,7 @@ var player = class Player {
 			enemyToPos = this.field.translate(pos, this.field.getRow(pos.row).length -1);
 		
 		// Play Card on enemy field
-		game.getNotOnTurn().setCard( {pos: enemyToPos, cardid: card_name } );
+		game.getNotOnTurn().setCard( {pos: enemyToPos, cardid: card_name} );
 		
 		// Send play_card command to enemy player
 		var commandEnemy = {command: 'play_card', sender: enemySenderPos, to: enemyToPos, card_name: card_name};
@@ -124,10 +116,19 @@ var player = class Player {
 		game.getOnTurn().removeHandCard(senderPos);
 	}
 	
+	endTurn()
+	{
+		var all_cards = this.field.getFieldsWithCards(true);
+		for (var i = 0; i < all_cards.length; i++)
+		{
+			this.field.getCard(all_cards[i]).endTurn();
+		}
+	}
+	
 	// used if the enemy plays a card
 	setCard(info)
 	{
-		var card = Card ( info.cardid);
+		var card = new cards[info.cardid];
 		card.play(info.pos, this.field);
 	}
 	

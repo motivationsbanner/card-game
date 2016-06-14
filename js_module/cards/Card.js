@@ -4,6 +4,7 @@ class Card {
 	constructor ()
 	{
 		this.isOnField = false;
+		this.action_done = false;
 	}
 	
 	play(pos, field)
@@ -11,13 +12,12 @@ class Card {
 		var row = pos.row,
 			index = pos.index;
 		
-		this.isOnField = true;
 		if (field.getCardOnPos(pos) == -1)
 		{
 			field.setCardPos(pos, this);
-			return field;
+			this.action_done = true;
+			this.isOnField = true;
 		}
-		return field;
 	}
 	
 	isPlayable(field) {
@@ -26,6 +26,11 @@ class Card {
 	
 	activate(pos, game) {
 		return;
+	}
+	
+	endTurn()
+	{
+		this.action_done = false;
 	}
 }
 

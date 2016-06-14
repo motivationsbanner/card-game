@@ -1,10 +1,5 @@
-/**
- * card game
- * client: https://github.com/cravay/card-game
- * server: https://github.com/ceoy/Nodejs
- */
-
 "use strict";
+
 var Player = require('../js_module/Player.js');
 var commandInterpreter = require('../js_module/Command.js');
 
@@ -20,6 +15,8 @@ class Game {
 	
 	changeTurn()
 	{
+		this.on_turn.endTurn();
+		
 		var temp = this.on_turn;
 		this.on_turn = this.not_turn;
 		this.not_turn = temp;
@@ -30,6 +27,7 @@ class Game {
 		this.p1.sendSystemMessage(message);
 		this.p2.sendSystemMessage(message);
 	}
+	
 	
 	start()
 	{

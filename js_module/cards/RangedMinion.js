@@ -15,13 +15,22 @@ class RangedMinion extends Minion {
 	
 	getPlayableFields(field)
 	{
-		var f = field.getField().range;
-		var playable = new Array();
-		for (var i = 0; i < f.length; i++)
+		var playable = [];
+		if (!this.action_done)
 		{
-			if (f[i] == -1)
-				playable.push( {row: 'PlayerRange', index: i} );
-		}	
+			if (this.isOnField) 
+			{// Card is on field already-> Check what i can attack
+
+				
+			} else {
+				var f = field.getField().range;
+				for (var i = 0; i < f.length; i++)
+				{
+					if (f[i] == -1)
+						playable.push( {row: 'PlayerRange', index: i} );
+				}
+			}
+		}
 		return playable;
 	}
 }

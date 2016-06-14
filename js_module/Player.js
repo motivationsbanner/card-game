@@ -59,7 +59,7 @@ var player = class Player {
 				var card = new cards[this.field.getHandCard(i)];
 				if (card.isPlayable(this.field))
 					if (card.getPlayableFields(this.field).length > 0)
-						playable.push( {row: 'PlayerHand', index: i} );
+						playable.push( { pos: {row: 'PlayerHand', index: i} , color: "white" } );
 			}
 			
 			// Check cards on the field
@@ -68,7 +68,7 @@ var player = class Player {
 				var card = this.field.getCard(fieldWithCard[i2]);
 				if (card.isPlayable(this.field))
 					if (card.getPlayableFields(this.field).length > 0)
-						playable.push( fieldWithCard[i2] );
+						playable.push( { pos: fieldWithCard[i2], color: "white" } );
 			}
 			
 			return playable;

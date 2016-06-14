@@ -11,8 +11,7 @@ var http = require('http'),
 var path = "./js_module/";
 
 // Load Modules 
-var functions = require(path + 'functions.js'),
-	games = require(path + 'GamesArray.js'),
+var games = require(path + 'GamesArray.js'),
 	players = require(path + 'PlayersArray.js');
 
 // Create Server

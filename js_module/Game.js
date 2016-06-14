@@ -12,7 +12,7 @@ class Game {
 		this.on_turn = this.p1;
 		this.not_turn = this.p2;
 		this.rounds = 0;
-		this.manipulator = new FieldManipulator(game);
+		this.manipulator = new FieldManipulator(this);
 	}
 	
 	changeTurn()

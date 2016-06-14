@@ -129,7 +129,6 @@ var player = class Player {
 	// used if the enemy plays a card
 	setCard(info)
 	{
-		console.log(info.pos);
 		var card = new cards[info.cardid];
 		this.field.setCardPos(info.pos, card);
 		card.play();

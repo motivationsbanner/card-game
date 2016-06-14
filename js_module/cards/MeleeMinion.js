@@ -21,10 +21,9 @@ class MeleeMinion extends Minion {
 			if (this.isOnField) 
 			{
 				// Card is on field already-> Check what i can attack
-				
 				// Melee -> get all enemy Cards
+				
 				var m = field.getField().enemyMelee;
-				console.log(m);
 				for ( var i = 0; i < m.length; i++)
 				{
 					if (m[i] != -1)
@@ -49,7 +48,7 @@ class MeleeMinion extends Minion {
 				for (var i = 0; i < f.length; i++)
 				{
 					if (f[i] == -1)
-						playable.push( {row: 'PlayerMelee', index: i} );
+						playable.push( {pos: {row: 'PlayerMelee', index: i}, color: "white"} );
 				}				
 			}
 		}

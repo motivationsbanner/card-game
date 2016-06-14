@@ -63,7 +63,8 @@ class Game {
 	{
 		var options = this.on_turn.getPlayOptions();
 		var abortPos = this.on_turn.getSelectedCard();
-		options.push( {pos: abortPos, color: "red"} );
+		if (abortPos != -1)
+			options.push( {pos: abortPos, color: "red"} );
 		var command = {command: "play_options", options: options};
 		this.on_turn.sendCommandMessage( command );
 	}

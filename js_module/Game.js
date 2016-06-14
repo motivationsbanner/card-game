@@ -22,6 +22,7 @@ class Game {
 		var temp = this.on_turn;
 		this.on_turn = this.not_turn;
 		this.not_turn = temp;
+		this.on_turn.sendCommandMessage({command: "start_turn"});
 	}
 	
 	sendMessage(message)

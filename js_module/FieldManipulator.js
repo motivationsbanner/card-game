@@ -13,7 +13,7 @@ class FieldManipulator
 		
 		if (defCard != -1)
 		{
-			
+			// 
 		}
 		
 	}

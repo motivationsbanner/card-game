@@ -9,6 +9,10 @@ class Minion extends Card {
 		super();
 	}
 	
+	getHealth() { return this.health; }
+	
+	getAttack() { return this.attack; }
+	
 } 
 
 module.exports = Minion;

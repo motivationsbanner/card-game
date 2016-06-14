@@ -28,7 +28,7 @@ class MeleeMinion extends Minion {
 				for ( var i = 0; i < m.length; i++)
 				{
 					if (m[i] != -1)
-						playable.push( {row: 'EnemyMelee', index: i} );
+						playable.push( {pos: {row: 'EnemyMelee', index: i}, color: "white"} );
 				}
 				
 				if (playable.length == 0) // There are no Enemy Melees
@@ -38,9 +38,9 @@ class MeleeMinion extends Minion {
 					for ( var j = 0; j < r.length; j++)
 					{
 						if (r[j] != -1)
-							playable.push( {row: 'EnemyRange', index: j} );
+							playable.push( {pos: {row: 'EnemyRange', index: j}, color: "white" } );
 					}
-					playable.push( {row: 'Player', index: 0} );
+					playable.push( {pos: {row: 'Players', index: 0}, color: "white" } );
 				}
 				
 			} else {

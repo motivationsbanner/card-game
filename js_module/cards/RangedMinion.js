@@ -27,7 +27,7 @@ class RangedMinion extends Minion {
 				for (var i = 0; i < f.length; i++)
 				{
 					if (f[i] == -1)
-						playable.push( {row: 'PlayerRange', index: i} );
+						playable.push( { pos: {row: 'PlayerRange', index: i}, color: "white" } );
 				}
 			}
 		}

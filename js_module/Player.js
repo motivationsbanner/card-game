@@ -4,6 +4,7 @@ var Field = require('../js_module/Field.js');
 var Deck = require('../js_module/Deck.js');
 var Card = require('../js_module/cards/cards.js');
 
+
 var player = class Player {
 	constructor ()
 	{
@@ -82,7 +83,8 @@ var player = class Player {
 			this.playCard(pos, game);
 			return;
 		}
-		this.field.getCardOnPos(this.selected_card).activate(pos, game);
+		this.manipulator.updateField(this.field);
+		this.field.getCardOnPos(this.selected_card).activate(pos, manipulator);
 	}
 
 	playCard(pos, game)

@@ -2,6 +2,7 @@
 
 var Player = require('../js_module/Player.js');
 var commandInterpreter = require('../js_module/Command.js');
+var FieldManipulator = require('../js_module/FieldManipulator.js');
 
 class Game {
 	constructor ()
@@ -11,6 +12,7 @@ class Game {
 		this.on_turn = this.p1;
 		this.not_turn = this.p2;
 		this.rounds = 0;
+		this.manipulator = new FieldManipulator(game);
 	}
 	
 	changeTurn()
@@ -43,6 +45,7 @@ class Game {
 		this.p2.enemyDraw(1);
 		
 		this.p1.sendSystemMessage('It is your turn!');
+		this.p1.sendCommandMessage({command: "start_turn"});
 		this.p2.sendSystemMessage('It is not your turn, please wait.');
 		
 		this.playOptions();

@@ -7,17 +7,10 @@ class Card {
 		this.action_done = false;
 	}
 	
-	play(pos, field)
+	play()
 	{
-		var row = pos.row,
-			index = pos.index;
-		
-		if (field.getCardOnPos(pos) == -1)
-		{
-			field.setCardPos(pos, this);
 			this.action_done = true;
 			this.isOnField = true;
-		}
 	}
 	
 	isPlayable(field) {

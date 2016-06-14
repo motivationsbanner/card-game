@@ -92,7 +92,8 @@ var player = class Player {
 		var card = new cards[cardname];
 		
 		// Play Card on your field
-		card.play(pos, this.field);
+		card.play();
+		this.field.setCardPos(pos, card);
 		
 		var senderPos = this.getSelectedCard(),
 			toPos = pos,
@@ -128,8 +129,10 @@ var player = class Player {
 	// used if the enemy plays a card
 	setCard(info)
 	{
+		console.log(info.pos);
 		var card = new cards[info.cardid];
-		card.play(info.pos, this.field);
+		this.field.setCardPos(info.pos, card);
+		card.play();
 	}
 	
 	removeHandCard(pos)

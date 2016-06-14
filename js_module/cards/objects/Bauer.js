@@ -18,5 +18,4 @@ Bauer.text = text;
 Bauer.health = health;
 Bauer.attack = attack;
 
-
 module.exports = Bauer;

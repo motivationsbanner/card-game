@@ -55,7 +55,7 @@ var commandInterpreter = function (data, player, game)
 			drawCommand(data, player, game);
 		}
 		
-		if (data.command == "change_turn")
+		if (data.command == "end_turn")
 		{
 			change_turnCommand(data, game);
 		}

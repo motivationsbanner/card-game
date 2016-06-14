@@ -10,6 +10,8 @@ class Hund extends MeleeMinion {
 	constructor ()
 	{
 		super();
+		this.attack = attack;
+		this.health = health;
 	}
 }
 

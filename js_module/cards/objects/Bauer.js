@@ -10,6 +10,8 @@ class Bauer extends MeleeMinion {
 	constructor (cardType, id)
 	{
 		super();
+		this.attack = attack;
+		this.health = health;
 	}
 }
 

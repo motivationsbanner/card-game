@@ -8,6 +8,7 @@ class Minion extends Card {
 	{
 		super();
 	}
+	
 } 
 
 module.exports = Minion;

@@ -6,7 +6,6 @@ class FieldManipulator
 		this.game = game;
 	}
 	
-	/*
 	attack(attackerCard, defenderPos)
 	{
 		var field = this.game.on_turn.field;
@@ -18,7 +17,6 @@ class FieldManipulator
 		}
 		
 	}
-	*/
 	
 	
 }

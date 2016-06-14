@@ -10,6 +10,8 @@ class Schildwand extends spell {
 	constructor ()
 	{
 		super();
+		this.attack = attack;
+		this.health = health;
 	}
 }
 

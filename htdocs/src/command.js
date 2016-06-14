@@ -43,7 +43,7 @@ function runCommand() {
 			break;
 
 		case "play_options":
-			setPlayOptions(data.options, data.abort);
+			setPlayOptions(data.options);
 			commandQueue.shift();
 			runCommand();
 			break;

@@ -51,21 +51,11 @@ function enemyDrawCard() {
 
 
 
-function setPlayOptions(positions, abort) {
-	if(abort instanceof Object) {
-		positions.push(abort);
-		abort = getField(abort);
-	}
+function setPlayOptions(options) {
 
-	// TODO: two loops
-	for(var i = 0; i < positions.length; i ++) {
-		var field = getField(positions[i]);
-
-		if(field === abort) {
-			field.showBorder("red");
-		} else {
-			field.showBorder("white");
-		}
+	for(var position of positions) {
+		var field = getField(position.pos);
+		field.showBorder(position.color);
 
 		field.container.on("click", (function(row, index) {
 			removeAllActionOptions();

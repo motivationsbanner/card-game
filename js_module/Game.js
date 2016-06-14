@@ -44,6 +44,9 @@ class Game {
 		this.p1.draw(1);
 		this.p2.enemyDraw(1);
 		
+		this.p1.sendSystemMessage('It is your turn!');
+		this.p2.sendSystemMessage('It is not your turn, please wait.');
+		
 		this.playOptions();
 	}
 	

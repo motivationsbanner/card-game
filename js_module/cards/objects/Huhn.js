@@ -12,9 +12,9 @@ class Huhn extends MeleeMinion {
 	}
 }
 
-Soldat.nom = "Huhn"
-Soldat.text = text;
-Soldat.health = health;
-Soldat.attack = attack;
+Huhn.nom = "Huhn"
+Huhn.text = text;
+Huhn.health = health;
+Huhn.attack = attack;
 
 module.exports = Huhn;

@@ -59,6 +59,7 @@ var player = class Player {
 			var hand = this.field.getHand();
 			var fieldWithCard = this.field.getFieldsWithCards(true);
 			
+			// Check cards on your hand
 			for ( var i = 0; i < hand.length; i++)
 			{
 				var card = new cards[this.field.getHandCard(i)];
@@ -67,6 +68,7 @@ var player = class Player {
 						playable.push( {row: 'PlayerHand', index: i} );
 			}
 			
+			// Check cards on the field
 			for ( var i2 = 0; i2 < fieldWithCard.length; i2++)
 			{
 				var card = this.field.getCard(fieldWithCard[i2]);

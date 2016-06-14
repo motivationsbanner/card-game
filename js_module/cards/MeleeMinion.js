@@ -15,6 +15,7 @@ class MeleeMinion extends Minion {
 	
 	getPlayableFields(field)
 	{
+	
 		var f = field.getField().melee;
 		var playable = [];
 		for (var i = 0; i < f.length; i++)

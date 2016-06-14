@@ -1,8 +1,8 @@
 "use strict";
 
 var text = "Der Hund ist geradzu versessen darauf dir in den Arsch zu beissen.";
-var health = 3;
-var attack = 1;
+var health = 1;
+var attack = 3;
 
 var MeleeMinion = require(__dirname + '/../MeleeMinion.js');
 

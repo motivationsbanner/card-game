@@ -78,9 +78,9 @@ var field = class Field {
 			this.field.range[index] = card;
 		
 		if (row == 'EnemyMelee')
-			this.field.melee[index] = card;
+			this.field.enemyMelee[index] = card;
 		if (row == 'EnemyRange')
-			this.field.range[index] = card;
+			this.field.enemyRange[index] = card;
 	}
 	
 	getCard(pos)

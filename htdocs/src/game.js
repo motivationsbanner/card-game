@@ -7,7 +7,8 @@
 "use strict";
 
 var previewCard = null;
-var boardCenterX = largeCardDimensions.width + (640 - largeCardDimensions.width) / 2 + containerBorder.left + containerBorder.right;
+var boardCenterX = (640 - largeCardDimensions.width - containerBorder.left - containerBorder.right) / 2 +
+	largeCardDimensions.width + containerBorder.left + containerBorder.right;
 
 function playerDrawCards(cards) {
 	cards.forEach(function(card) {
@@ -170,4 +171,17 @@ function glow(target, color, callback) {
 	target = getField(target);
 
 	target.glow(color, callback);
+}
+
+function startTurn() {
+	changeTurnButton.container.on("click", endTurn, this, true);
+	changeTurnButton.container.getChildByName("player_turn").visible = true;
+	changeTurnButton.container.getChildByName("enemy_turn").visible = false;
+}
+
+function endTurn() {
+	removeAllActionOptions();
+	changeTurnButton.container.getChildByName("enemy_turn").visible = true;
+	changeTurnButton.container.getChildByName("player_turn").visible = false;
+	sendCommand({command: "end_turn"});
 }

@@ -87,6 +87,12 @@ function runCommand() {
 			});
 			break;
 
+		case "start_turn":
+			startTurn();
+			commandQueue.shift();
+			runCommand();
+			break;
+
 		default:
 			console.warn(data.command + " command not (yet) implemented");
 			commandQueue.shift();

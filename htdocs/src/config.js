@@ -8,13 +8,14 @@
 
 var width = 5; // width of the board (in cards)
 var gap = 6; // gap between fields
-var containerBorder = {left: 4, right: 12}; // Border of the container on the left
+var containerBorder = {left: 0, right: 8}; // Border of the container on the left
 var artworkDimensions = {width: 250, height: 350};
 var largeCardDimensions = {width: 160, height: 300};
 var smallCardDimensions = {width: 50, height: 70};
-var playerDimensions = {width: 105, height: 70}
+var playerDimensions = {width: 105, height: 70};
+var endTurnButtonDimensions = {width: 70, height: 30 * 0.7};
 var borderSizes = [smallCardDimensions, playerDimensions];
-var borderColors = ["white", "red", "green", "blue"];
+var borderColors = ["white", "red"];
 
 var rowNames = [
 	"EnemyHand",

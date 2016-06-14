@@ -14,6 +14,7 @@ var cardBack;
 var rows = {};
 var socket;
 var cardTypesByName = {};
+var changeTurnButton;
 
 document.addEventListener("DOMContentLoaded", function() {
 		showInfo("Connecting to the server ...");
@@ -67,6 +68,8 @@ function prepare(callback) {
 		queue.loadFile(cardTypesByName[key].imageName);
 	}
 
+	queue.loadFile("btn_enemyturn.png");
+	queue.loadFile("btn_myturn.png");
 	queue.loadFile("schwert.png");
 	queue.loadFile("overlay.png");
 	queue.loadFile("kleines_overlay.png");
@@ -105,10 +108,27 @@ function prepareFields() {
 		}
 	}
 
-	// Players and
+	// Players
 	var playerLeftBorder = containerBorder.left + largeCardDimensions.width / 2 - playerDimensions.width / 2;
 	rows.Players[0] = new PlayerField(playerLeftBorder, 5);
 	rows.Players[1] = new PlayerField(playerLeftBorder, 480 - playerDimensions.height - 5);	
+
+	// Change Turn
+	changeTurnButton = new Field(640 - endTurnButtonDimensions.width - 6, 
+		(480 - endTurnButtonDimensions.height) / 2, endTurnButtonDimensions.width,
+		endTurnButtonDimensions.height);
+	changeTurnButton.container.set({scaleX: 0.7, scaleY: 0.7});
+
+
+	var enemyTurn = new createjs.Bitmap(queue.getResult("btn_enemyturn.png"));
+	enemyTurn.name = "enemy_turn";
+
+	var myTurn = new createjs.Bitmap(queue.getResult("btn_myturn.png"));
+	myTurn.name = "player_turn";
+	myTurn.visible = false;
+
+	changeTurnButton.container.addChild(enemyTurn);
+	changeTurnButton.container.addChild(myTurn);
 }
 
 function prepareCardback() {
@@ -198,8 +218,6 @@ function prepareCardImages() {
 	}
 }
 
-// TODO: fix
-// TODO: different sizes
 function prepareBorderImages() {
 	borderSizes.forEach(function(borderSize) {
 		borderImages[borderSize.width + "x" + borderSize.height] = {};

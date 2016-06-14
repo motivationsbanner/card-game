@@ -16,7 +16,6 @@ class Armbrustschütze extends RangeMinion {
 	{
 		var enemyField = game.getNotOnTurn().field;
 		var friendlyField = game.getOnTurn().field;
-	
 	}
 }
 

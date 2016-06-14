@@ -53,9 +53,9 @@ function enemyDrawCard() {
 
 function setPlayOptions(options) {
 
-	for(var position of positions) {
-		var field = getField(position.pos);
-		field.showBorder(position.color);
+	for(var option of options) {
+		var field = getField(option.pos);
+		field.showBorder(option.color);
 
 		field.container.on("click", (function(row, index) {
 			removeAllActionOptions();
@@ -64,7 +64,7 @@ function setPlayOptions(options) {
 				command: "select_option",
 				pos: {row: row, index: index}
 			});
-		}).bind(this, positions[i].row, positions[i].index));
+		}).bind(this, option.pos.row, option.pos.index));
 	}
 }
 

@@ -3,6 +3,7 @@
 var Player = require('../js_module/Player.js');
 var commandInterpreter = require('../js_module/Command.js');
 var FieldManipulator = require('../js_module/ThisNameWillTriggerCravay.js');
+var Conditions = require('../js_module/Conditions.js');
 
 class Game {
 	constructor ()
@@ -14,6 +15,7 @@ class Game {
 		this.rounds = 0;
 		this.finished = false;
 		this.manipulator = new FieldManipulator(this);
+		this.conditions = new Conditions(this);
 	}
 	
 	changeTurn()
@@ -75,7 +77,7 @@ class Game {
 	
 	playOptions()
 	{
-		var options = this.on_turn.getPlayOptions();
+		var options = this.on_turn.getPlayOptions(this.conditions);
 		var abortPos = this.on_turn.getSelectedCard();
 		if (abortPos != -1)
 			options.push( {pos: abortPos, color: "red"} );

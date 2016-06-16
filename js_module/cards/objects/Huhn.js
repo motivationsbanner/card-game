@@ -12,6 +12,16 @@ class Huhn extends MeleeMinion {
 		this.attack = attack;
 		this.health = health;
 	}
+	
+	isPlayable(c)
+	{
+		if (super.isPlayable(c))
+		{
+			// YOUR CONDITIONS
+			return c.minionsMaxAttack(5);
+		}
+		return false;
+	}
 }
 
 Huhn.nom = "Huhn"

@@ -12,10 +12,14 @@ class Armbrustschütze extends RangeMinion {
 		super();
 	}
 	
-	activate(target, game)
+	isPlayable(c)
 	{
-		var enemyField = game.getNotOnTurn().field;
-		var friendlyField = game.getOnTurn().field;
+		if (super.isPlayable(c))
+		{
+			// YOUR CONDITIONS
+			return c.minAmountPlayerMeleeMinions(2);
+		}
+		return false;
 	}
 }
 

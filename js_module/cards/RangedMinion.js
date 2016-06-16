@@ -9,7 +9,7 @@ class RangedMinion extends Minion {
 		this.type = "Range";
 	}
 	
-	isPlayable(field)
+	isPlayable(condition)
 	{
 		if (this.isOnField)
 		{

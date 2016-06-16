@@ -13,6 +13,16 @@ class Nashornreiter extends MeleeMinion {
 		this.attack = attack;
 		this.health = health;
 	}
+	
+	isPlayable(c)
+	{
+		if (super.isPlayable(c))
+		{
+			// YOUR CONDITIONS
+			return true;
+		}
+		return false;
+	}
 }
 
 Nashornreiter.nom = "Nashornreiter"

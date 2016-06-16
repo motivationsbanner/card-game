@@ -9,7 +9,7 @@ class MeleeMinion extends Minion {
 		this.type = "Melee";
 	}
 	
-	isPlayable(field)
+	isPlayable(condition)
 	{
 		if (this.isOnField)
 		{

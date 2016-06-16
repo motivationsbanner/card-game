@@ -13,6 +13,16 @@ class Schwertkämpfer extends MeleeMinion {
 		this.attack = attack;
 		this.health = health;
 	}
+	
+	isPlayable(c)
+	{
+		if (super.isPlayable(c))
+		{
+			// YOUR CONDITIONS
+			return c.maxAmountRangeMinions(0);
+		}
+		return false;
+	}
 }
 
 Schwertkämpfer.nom = "Schwertkämpfer"

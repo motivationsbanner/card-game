@@ -12,6 +12,16 @@ class Krieger extends MeleeMinion {
 		this.attack = attack;
 		this.health = health;
 	}
+
+	isPlayable(c)
+	{
+		if (super.isPlayable(c))
+		{
+			// YOUR CONDITIONS
+			return c.minAmountEnemyMeleeMinions(1);
+		}
+		return false;
+	}
 }
 
 Krieger.nom = "Krieger"

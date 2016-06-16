@@ -246,6 +246,31 @@ var field = class Field {
 			return this.field.enemyHand;
 	}
 	
+	getCardAmountInRow(row)
+	{
+		var r = null;
+		var x = 0;
+		if (row == 'PlayerHand')
+			r = this.field.hand;
+		if (row == 'PlayerMelee')
+			r = this.field.melee;
+		if (row == 'PlayerRange')
+			r = this.field.range;
+		if (row == 'EnemyMelee')
+			r = this.field.enemyMelee;
+		if (row == 'EnemyRange')
+			r = this.field.enemyRange;
+		if (row == 'EnemyHand')
+			r = this.field.enemyHand;
+		
+		for (var i = 0; i < r.length; i++)
+		{
+			if (r[i] != -1)
+				x++;
+		}
+		
+		return x;
+	}
 	
 	removeCard(pos)
 	{
@@ -278,6 +303,10 @@ var field = class Field {
 		return this.field.hand;
 	}
 	
+	getEnemyHand()	{
+		return this.field.enemyHand;
+	}
+	
 	getHandCard(index) {
 		return this.field.hand[index];
 	}
@@ -288,46 +317,46 @@ var field = class Field {
 	
 	getFriendlyMinions()
 	{
-		var melee = this.getRow('PlayerMelee').length;
-		var range = this.getRow('PlayerRange').length;
+		var melee = this.getCardAmountInRow('PlayerMelee');
+		var range = this.getCardAmountInRow('PlayerRange');
 		return melee + range;
 	}
 	
 	getEnemyMinions()
 	{
-		var melee = this.getRow('EnemyMelee').length;
-		var range = this.getRow('EnemyRange').length;
+		var melee = this.getCardAmountInRow('EnemyMelee');
+		var range = this.getCardAmountInRow('EnemyRange');
 		return melee + range;
 	}
 	
 	getMelee()
 	{
-		var friend = this.getRow('PlayerMelee').length;
-		var enemy = this.getRow('EnemyMelee').length;
+		var friend = this.getCardAmountInRow('PlayerMelee');
+		var enemy = this.getCardAmountInRow('EnemyMelee');
 		return friend + enemy;
 	}
 	
 	getRange()
 	{
-		var friend = this.getRow('PlayerRange').length;
-		var enemy = this.getRow('EnemyRange').length;
+		var friend = this.getCardAmountInRow('PlayerRange');
+		var enemy = this.getCardAmountInRow('EnemyRange');
 		return friend + enemy;
 	}
 	
 	getFriendlyMelee() {
-		return this.getRow('PlayerMelee').length;
+		return this.getCardAmountInRow('PlayerMelee');
 	}
 	
 	getEnemyMelee() {
-		return this.getRow('EnemyMelee').length;
+		return this.getCardAmountInRow('EnemyMelee');
 	}
 	
 	getFriendlyRange() {
-		return this.getRow('PlayerRange').length;
+		return this.getCardAmountInRow('PlayerRange');
 	}
 	
 	getEnemyRange() {
-		return this.getRow('EnemyRange').length;
+		return this.getCardAmountInRow('EnemyRange');
 	}
 
 }

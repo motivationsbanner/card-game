@@ -13,6 +13,15 @@ class Soldat extends MeleeMinion {
 		this.attack = attack;
 		this.health = health;
 	}
+	isPlayable(c)
+	{
+		if (super.isPlayable(c))
+		{
+			// YOUR CONDITIONS
+			return c.minAmountPlayerMinions(1);
+		}
+		return false;
+	}
 }
 
 Soldat.nom = "Soldat"

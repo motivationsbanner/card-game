@@ -13,6 +13,16 @@ class Hund extends MeleeMinion {
 		this.attack = attack;
 		this.health = health;
 	}
+	
+	isPlayable(c)
+	{
+		if (super.isPlayable(c))
+		{
+			// YOUR CONDITIONS
+			return c.minAmountEnemyMinions(1);
+		}
+		return false;
+	}
 }
 
 Hund.nom = "Hund"

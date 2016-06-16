@@ -12,6 +12,16 @@ class Kavallerist extends MeleeMinion {
 		this.attack = attack;
 		this.health = health;
 	}
+	
+	isPlayable(c)
+	{
+		if (super.isPlayable(c))
+		{
+			// YOUR CONDITIONS
+			return c.heroMaxHealth(10);
+		}
+		return false;
+	}
 }
 
 Kavallerist.nom = "Kavallerist"

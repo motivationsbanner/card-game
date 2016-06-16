@@ -13,6 +13,16 @@ class Hofnarr extends RangeMinion {
 		this.attack = attack;
 		this.health = health;
 	}
+	
+	isPlayable(c)
+	{
+		if (super.isPlayable(c))
+		{
+			// YOUR CONDITIONS
+			return c.minAmountMinions(4);
+		}
+		return false;
+	}
 }
 
 Hofnarr.nom = "Hofnarr"

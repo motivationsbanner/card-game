@@ -5,14 +5,13 @@ var Deck = require('../js_module/Deck.js');
 var Card = require('../js_module/cards/cards.js');
 
 var player = class Player {
-	constructor (game)
+	constructor (	)
 	{
 		this.client;
 		this.hp = 15;
 		this.field = new Field();
 		this.deck = new Deck();
 		this.selected_card = -1;
-		this.game
 	}
 	
 	draw(amount)
@@ -26,7 +25,7 @@ var player = class Player {
 		this.sendCommandMessage( {command: "draw", cards} );
 	}
 	
-	getPlayOptions()
+	getPlayOptions(conditions)
 	{
 		// Check if there is a selected Card
 		if (this.selected_card != -1)
@@ -35,7 +34,7 @@ var player = class Player {
 			if (this.selected_card.row == 'PlayerHand')
 			{
 				var card = new cards[ this.field.getHandCard(this.selected_card.index) ];  // CHANGE_NAME
-				if (card.isPlayable(this.field))
+				if (card.isPlayable(conditions))
 					return card.getPlayableFields(this.field);
 				return;
 			}
@@ -44,7 +43,7 @@ var player = class Player {
 			if (this.selected_card.row != 'PlayerHand')
 			{
 				var card = this.field.getCard(this.selected_card);
-				if (card.isPlayable(this.field))
+				if (card.isPlayable(conditions))
 					return card.getPlayableFields(this.field);
 			}
 			
@@ -58,7 +57,7 @@ var player = class Player {
 			for ( var i = 0; i < hand.length; i++)
 			{
 				var card = new cards[this.field.getHandCard(i)];
-				if (card.isPlayable(this.field))
+				if (card.isPlayable(conditions))
 					if (card.getPlayableFields(this.field).length > 0)
 						playable.push( { pos: {row: 'PlayerHand', index: i} , color: "white" } );
 			}
@@ -67,7 +66,7 @@ var player = class Player {
 			for ( var i2 = 0; i2 < fieldWithCard.length; i2++)
 			{
 				var card = this.field.getCard(fieldWithCard[i2]);
-				if (card.isPlayable(this.field))
+				if (card.isPlayable(conditions))
 					if (card.getPlayableFields(this.field).length > 0)
 						playable.push( { pos: fieldWithCard[i2], color: "white" } );
 			}

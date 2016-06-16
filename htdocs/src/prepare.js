@@ -37,7 +37,6 @@ document.addEventListener("DOMContentLoaded", function() {
 				cardTypesByName[card.name] = card;
 				card.imageName = card.name.toLocaleLowerCase() + ".png"
 
-				// TODO: change
 				if(card.health === 0) {
 					card.type = "spell";
 					delete card.health;
@@ -117,15 +116,16 @@ function prepareFields() {
 	changeTurnButton = new Field(640 - endTurnButtonDimensions.width - 6, 
 		(480 - endTurnButtonDimensions.height) / 2, endTurnButtonDimensions.width,
 		endTurnButtonDimensions.height);
-	changeTurnButton.container.set({scaleX: 0.7, scaleY: 0.7});
 
 
 	var enemyTurn = new createjs.Bitmap(queue.getResult("btn_enemyturn.png"));
 	enemyTurn.name = "enemy_turn";
+	enemyTurn.set({scaleX: 0.7, scaleY: 0.7});
 
 	var myTurn = new createjs.Bitmap(queue.getResult("btn_myturn.png"));
 	myTurn.name = "player_turn";
 	myTurn.visible = false;
+	myTurn.set({scaleX: 0.7, scaleY: 0.7});
 
 	changeTurnButton.container.addChild(enemyTurn);
 	changeTurnButton.container.addChild(myTurn);

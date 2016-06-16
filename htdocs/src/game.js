@@ -205,6 +205,7 @@ function castSpell(sender, cardName, callback) {
 		.to({alpha: 0}, 300)
 		.call(function() {
 			stage.removeChild(largeCardBitmap);
+			callback();
 		});
 }
 

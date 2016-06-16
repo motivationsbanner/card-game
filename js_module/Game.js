@@ -12,6 +12,7 @@ class Game {
 		this.on_turn = this.p1;
 		this.not_turn = this.p2;
 		this.rounds = 0;
+		this.finished = false;
 		this.manipulator = new FieldManipulator(this);
 	}
 	
@@ -86,6 +87,16 @@ class Game {
 	{
 		this.on_turn.draw(amount);
 		this.not_turn.enemyDraw(amount);	
+	}
+	
+	end()
+	{
+		this.sendMessage('The Game has ended, please reload to start a new one!');
+		this.finished = true;
+		this.p1.client.disconnect();
+		this.p2.client.disconnect();
+		delete this.p1;
+		delete this.p2;
 	}
 	
 	getP1()	{

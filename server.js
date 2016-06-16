@@ -74,6 +74,9 @@ io.sockets.on('connection', function(client)
 		} else {
 			try 
 			{
+				if (client.game.finished == true){
+					return;
+				}
 				var p1 = client.game.getP1().getClient();
 				var p2 = client.game.getP2().getClient();
 				

@@ -118,7 +118,6 @@ class FieldManipulator
 	}
 	
 	
-	
 }
 
 module.exports = FieldManipulator;

@@ -24,8 +24,8 @@ class Game {
 		this.not_turn = temp;
 		this.on_turn.sendCommandMessage({command: "start_turn"});
 		
-		this.on_turn.sendSystemMessage('It is not your turn, please wait.');
-		this.not_turn.sendSystemMessage('It is your turn!');
+		this.on_turn.sendMessage('It is not your turn, please wait.');
+		this.not_turn.sendMessage('It is your turn!');
 		
 		this.manipulator.changeTurn();
 	}

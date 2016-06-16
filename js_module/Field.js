@@ -101,6 +101,7 @@ var field = class Field {
 		var card = -1;
 		var row = pos.row,
 			index = pos.index;
+			
 		if (row == 'PlayerMelee') 
 		{
 			card = this.field.melee[index];

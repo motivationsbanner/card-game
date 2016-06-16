@@ -87,6 +87,7 @@ var player = class Player {
 		// Attack or do whatever
 		var card = this.field.getCardOnPos(pos);
 		this.field.getCardOnPos(this.selected_card).activate(card, manipulator);
+		this.field.getCardOnPos(this.selected_card).setActionDone(true);
 	}
 
 	playCard(pos, game)

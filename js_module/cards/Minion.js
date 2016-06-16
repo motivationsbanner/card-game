@@ -26,6 +26,10 @@ class Minion extends Card {
 	setPos(pos) { this.pos = pos; }
 	
 	getType() { return this.type; }
+	
+	setActionDone(bool) {
+		this.action_done = bool;	
+	}
 } 
 
 module.exports = Minion;

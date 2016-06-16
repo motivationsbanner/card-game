@@ -45,25 +45,38 @@ var field = class Field {
 			newPos.row = 'PlayerMelee';
 		if (pos.row === 'EnemyRange')
 			newPos.row = 'PlayerRange';
-			
+		
 		newPos.index = maxIndex - pos.index;
-
+			
+		if (pos.row === 'Players')
+		{
+			newPos.row = 'Players';
+			if (pos.index == 0)
+				newPos.index = 1;
+			if (pos.index == 1)
+				newPos.index = 0;
+		}
+		
 		return newPos;
 	}
 	
 	getCardOnPos(pos)
 	{
 		var row = pos.row,
-			index = pos.index;
+			i = pos.index;
 			
 		if (row == 'PlayerMelee')
-			return this.field.melee[index];
+			return this.field.melee[i];
 		if (row == 'PlayerRange')
-			return this.field.range[index];
+			return this.field.range[i];
 		if (row == 'EnemyMelee')
-			return this.field.enemyMelee[index];
+			return this.field.enemyMelee[i];
 		if (row == 'EnemyRange')
-			return this.field.enemyRange[index];
+			return this.field.enemyRange[i];
+		
+		if (row == 'Players') {
+			return {row: "Players", index: i, type: "Player"};
+		}
 	}
 
 	

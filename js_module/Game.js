@@ -2,7 +2,7 @@
 
 var Player = require('../js_module/Player.js');
 var commandInterpreter = require('../js_module/Command.js');
-var FieldManipulator = require('../js_module/FieldManipulator.js');
+var FieldManipulator = require('../js_module/ThisNameWillTriggerCravay.js');
 
 class Game {
 	constructor ()
@@ -23,8 +23,11 @@ class Game {
 		this.on_turn = this.not_turn;
 		this.not_turn = temp;
 		this.on_turn.sendCommandMessage({command: "start_turn"});
+		
 		this.on_turn.sendSystemMessage('It is not your turn, please wait.');
 		this.not_turn.sendSystemMessage('It is your turn!');
+		
+		this.manipulator.changeTurn();
 	}
 	
 	sendMessage(message)
@@ -52,6 +55,10 @@ class Game {
 		this.p2.sendSystemMessage('It is not your turn, please wait.');
 		
 		this.playOptions();
+	}
+	
+	currentCardActivate(pos) {
+		this.on_turn.currentCardActivate(pos, this, this.manipulator);
 	}
 	
 	getPlayerByClient(client)

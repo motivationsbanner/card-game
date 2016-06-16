@@ -45,25 +45,38 @@ var field = class Field {
 			newPos.row = 'PlayerMelee';
 		if (pos.row === 'EnemyRange')
 			newPos.row = 'PlayerRange';
-			
+		
 		newPos.index = maxIndex - pos.index;
-
+			
+		if (pos.row === 'Players')
+		{
+			newPos.row = 'Players';
+			if (pos.index == 0)
+				newPos.index = 1;
+			if (pos.index == 1)
+				newPos.index = 0;
+		}
+		
 		return newPos;
 	}
 	
 	getCardOnPos(pos)
 	{
 		var row = pos.row,
-			index = pos.index;
+			i = pos.index;
 			
 		if (row == 'PlayerMelee')
-			return this.field.melee[index];
+			return this.field.melee[i];
 		if (row == 'PlayerRange')
-			return this.field.range[index];
+			return this.field.range[i];
 		if (row == 'EnemyMelee')
-			return this.field.enemyMelee[index];
+			return this.field.enemyMelee[i];
 		if (row == 'EnemyRange')
-			return this.field.enemyRange[index];
+			return this.field.enemyRange[i];
+		
+		if (row == 'Players') {
+			return {row: "Players", index: i, type: "Player"};
+		}
 	}
 
 	
@@ -88,6 +101,7 @@ var field = class Field {
 		var card = -1;
 		var row = pos.row,
 			index = pos.index;
+			
 		if (row == 'PlayerMelee') 
 		{
 			card = this.field.melee[index];
@@ -146,6 +160,76 @@ var field = class Field {
 		}
 	}	
 	
+	getFieldCards(smt)
+	{
+		var fields = [];
+		
+		if (smt == "Player")
+		{
+			for ( var i = 0; i < this.field.melee.length; i++)
+			{
+				if (this.field.melee[i] != -1)
+					fields.push(this.field.melee[i]);
+			}
+			
+			for ( var i2 = 0; i2 < this.field.range.length; i2++)
+			{
+				if (this.field.range[i2] != -1)
+					fields.push( this.field.range[i2] );
+			}
+			
+			return fields;
+		}
+		
+		if (smt == "Enemy")
+		{
+			
+			for ( var i = 0; i < this.field.melee.length; i++)
+			{
+				if (this.field.melee[i] != -1)
+					fields.push( this.field.melee[i] );
+			}
+			
+			for ( var i2 = 0; i2 < this.field.range.length; i2++)
+			{
+				if (this.field.range[i2] != -1)
+					fields.push( his.field.range[i2] );
+			}
+			
+			return fields;
+		}
+		
+		if (smt == "All")
+		{
+			for ( var i = 0; i < this.field.melee.length; i++)
+			{
+				if (this.field.melee[i] != -1)
+					fields.push( this.field.melee[i] );
+			}
+			
+			for ( var i2 = 0; i2 < this.field.range.length; i2++)
+			{
+				if (this.field.range[i2] != -1)
+					fields.push( his.field.range[i2] );
+			}
+			
+			for ( var a = 0; a < this.field.melee.length; a++)
+			{
+				if (this.field.melee[a] != -1)
+					fields.push(this.field.melee[a]);
+			}
+			
+			for ( var a2 = 0; a < this.field.range.length; a2++)
+			{
+				if (this.field.range[a2] != -1)
+					fields.push( this.field.range[a2] );
+			}
+			
+			return fields;
+		}
+	}
+	
+	
 	getRow(row)
 	{
 		if (row == 'PlayerHand')
@@ -161,6 +245,7 @@ var field = class Field {
 		if (row == 'EnemyHand')
 			return this.field.enemyHand;
 	}
+	
 	
 	removeCard(pos)
 	{
@@ -244,7 +329,7 @@ var field = class Field {
 	getEnemyRange() {
 		return this.getRow('EnemyRange').length;
 	}
-	
+
 }
 
 module.exports = field;

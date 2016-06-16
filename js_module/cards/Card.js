@@ -25,6 +25,7 @@ class Card {
 	{
 		this.action_done = false;
 	}
+	
 }
 
 module.exports = Card;

@@ -13,6 +13,7 @@ game_command:
 		{command: "play_card", sender: position, to: position, card_name: string}
 		{command: "start_turn"}
 		{command: "cast_spell", sender: position, card_name: string}
+		{command: "end_game", winner: true/false}
 
 	client->server
 		{command: "end_turn"}

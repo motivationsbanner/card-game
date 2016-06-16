@@ -2,7 +2,7 @@
 
 var Player = require('../js_module/Player.js');
 var commandInterpreter = require('../js_module/Command.js');
-var FieldManipulator = require('../js_module/FieldManipulator.js');
+var FieldManipulator = require('../js_module/ThisNameWillTriggerCravay.js');
 
 class Game {
 	constructor ()
@@ -12,6 +12,7 @@ class Game {
 		this.on_turn = this.p1;
 		this.not_turn = this.p2;
 		this.rounds = 0;
+		this.finished = false;
 		this.manipulator = new FieldManipulator(this);
 	}
 	
@@ -23,8 +24,11 @@ class Game {
 		this.on_turn = this.not_turn;
 		this.not_turn = temp;
 		this.on_turn.sendCommandMessage({command: "start_turn"});
-		this.on_turn.sendSystemMessage('It is not your turn, please wait.');
-		this.not_turn.sendSystemMessage('It is your turn!');
+		
+		this.not_turn.sendSystemMessage('It is not your turn, please wait.');
+		this.on_turn.sendSystemMessage('It is your turn!');
+		
+		this.manipulator.changeTurn();
 	}
 	
 	sendMessage(message)
@@ -54,6 +58,10 @@ class Game {
 		this.playOptions();
 	}
 	
+	currentCardActivate(pos) {
+		this.on_turn.currentCardActivate(pos, this, this.manipulator);
+	}
+	
 	getPlayerByClient(client)
 	{
 		if ( this.getP1Client() == client ) return this.p1;
@@ -79,6 +87,16 @@ class Game {
 	{
 		this.on_turn.draw(amount);
 		this.not_turn.enemyDraw(amount);	
+	}
+	
+	end()
+	{
+		this.sendMessage('The Game has ended, please reload to start a new one!');
+		this.finished = true;
+		this.p1.client.disconnect();
+		this.p2.client.disconnect();
+		delete this.p1;
+		delete this.p2;
 	}
 	
 	getP1()	{

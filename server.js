@@ -11,8 +11,7 @@ var http = require('http'),
 var path = "./js_module/";
 
 // Load Modules 
-var games = require(path + 'GamesArray.js'),
-	players = require(path + 'PlayersArray.js');
+var players = require(path + 'PlayersArray.js');
 
 // Create Server
 var app = express();
@@ -59,7 +58,8 @@ io.sockets.on('connection', function(client)
 		players.add(client);
 		
 		var game = players.rdy();
-		if (game != false)
+		
+		if (game != null)
 			startGame(game);
 		else
 			client.emit('system', 'Waiting for another Player.  ¯\\_(ツ)_/¯  We are sorry.');
@@ -72,15 +72,25 @@ io.sockets.on('connection', function(client)
 		{
 			players.remove(client);	
 		} else {
-			var lp = games.clean (client);
-			if (lp != -1)
-				lp.emit('system', 'Your Opponent disconnected. ¯\\_(ツ)_/¯ Please Reload to start a new Game');
+			try 
+			{
+				var p1 = client.game.getP1().getClient();
+				var p2 = client.game.getP2().getClient();
+				
+				// Return the Player that did not leave 
+				if ( p1 == client )
+					p2.emit('system', 'Your Opponent disconnected. ¯\\_(ツ)_/¯ Please Reload to start a new Game');
+				if ( p2 == client )
+					p1.emit('system', 'Your Opponent disconnected. ¯\\_(ツ)_/¯ Please Reload to start a new Game');
+			} catch (err) {
+				console.log(err);
+			};
 		}
 	});
 	
 	client.on('command', function (data)
 	{
-		games.getGameByClient(client).doCommand(data, client);	
+		client.game.doCommand(data, client);	
 	});
 	
 	client.on('make_deck', function (data) {
@@ -93,11 +103,9 @@ io.sockets.on('connection', function(client)
 // -> Sends 3 Cards to each Player and tells Player am_zug that it is his turn
 function startGame(game)
 {
-	// Add the Game to the Games Array
-	games.add(game);
-	
+
 	// Send a message to the Players of the Game
-	var message = "Start Game: Game NR. " + ( games.getLength());
+	var message = "Start Game";
 	game.sendMessage(message);
 	game.start();
 }	

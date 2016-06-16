@@ -17,14 +17,14 @@ class FieldManipulator
 		{
 			var def_pos = {row: "Players", index: defender.index },
 				enemy_def_pos = this.field.translate(def_pos, 2);
-				
-			this.dmgHero(defender, attacker.getAttack());
+			
 			var enemy_command = {command: "attack", attacker: enemy_att_pos, target: enemy_def_pos},
 				player_command = {command: "attack", attacker: attacker.getPos(), target: def_pos};
 				
 			this.game.on_turn.sendCommandMessage(player_command);
 			this.game.not_turn.sendCommandMessage(enemy_command);
 			
+			this.dmgHero(defender, attacker.getAttack());
 			return;
 			
 		}
@@ -40,7 +40,7 @@ class FieldManipulator
 		
 		this.doDmg(defender, attacker.getAttack());
 		
-		if (defender.type == "Melee") // Recoil
+		if (attacker.type == "Melee") // Recoil
 			this.doDmg(attacker, defender.getAttack());
 	
 	}
@@ -56,6 +56,8 @@ class FieldManipulator
 		var enemy_command = {command: "set_health", target: enemy_pos, health: new_health};
 		this.game.on_turn.sendCommandMessage(player_command);
 		this.game.not_turn.sendCommandMessage(enemy_command);
+		
+		target.setHealth(new_health);
 		
 		if (new_health <= 0)
 		{
@@ -93,7 +95,7 @@ class FieldManipulator
 	
 	endGame(deadPlayer)
 	{
-		Console.log("kek u ded");
+		console.log("kek u ded");
 	}
 	
 	kill(target)

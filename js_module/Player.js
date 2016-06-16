@@ -5,14 +5,14 @@ var Deck = require('../js_module/Deck.js');
 var Card = require('../js_module/cards/cards.js');
 
 var player = class Player {
-	constructor ()
+	constructor (game)
 	{
 		this.client;
 		this.hp = 15;
 		this.field = new Field();
 		this.deck = new Deck();
 		this.selected_card = -1;
-
+		this.game
 	}
 	
 	draw(amount)

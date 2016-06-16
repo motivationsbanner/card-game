@@ -95,7 +95,18 @@ class FieldManipulator
 	
 	endGame(deadPlayer)
 	{
-		console.log("kek u ded");
+		var won = {command: "end_game", winner: true},
+			lost = {command: "end_game", winner: false};
+			
+		if (tar.index == 0) // Enemy Lost
+		{
+			this.game.on_turn.sendCommandMessage(win);
+			this.game.not_turn.sendCommandMessage(lost);
+		} else if (tar.index == 1) // Player Lost
+		{
+			this.game.on_turn.sendCommandMessage(lost);
+			this.game.not_turn.sendCommandMessage(win);
+		}
 	}
 	
 	kill(target)

@@ -4,7 +4,6 @@ var Field = require('../js_module/Field.js');
 var Deck = require('../js_module/Deck.js');
 var Card = require('../js_module/cards/cards.js');
 
-
 var player = class Player {
 	constructor ()
 	{
@@ -13,6 +12,7 @@ var player = class Player {
 		this.field = new Field();
 		this.deck = new Deck();
 		this.selected_card = -1;
+
 	}
 	
 	draw(amount)
@@ -76,15 +76,17 @@ var player = class Player {
 		}
 	}
 	
-	currentCardActivate(pos, game)
+	currentCardActivate(pos, game, manipulator)
 	{
 		if (this.selected_card.row == 'PlayerHand')
 		{
 			this.playCard(pos, game);
 			return;
 		}
-		this.manipulator.updateField(this.field);
-		this.field.getCardOnPos(this.selected_card).activate(pos, manipulator);
+		
+		// Attack or do whatever
+		var card = this.field.getCardOnPos(pos);
+		this.field.getCardOnPos(this.selected_card).activate(card, manipulator);
 	}
 
 	playCard(pos, game)
@@ -96,6 +98,7 @@ var player = class Player {
 		// Play Card on your field
 		card.play();
 		this.field.setCardPos(pos, card);
+		card.setPos(pos);
 		
 		var senderPos = this.getSelectedCard(),
 			toPos = pos,
@@ -126,6 +129,7 @@ var player = class Player {
 		{
 			this.field.getCard(all_cards[i]).endTurn();
 		}
+		this.selected_card = -1;
 	}
 	
 	// used if the enemy plays a card
@@ -133,6 +137,7 @@ var player = class Player {
 	{
 		var card = new cards[info.cardid];
 		this.field.setCardPos(info.pos, card);
+		card.setPos(info.pos);
 		card.play();
 	}
 	
@@ -168,6 +173,14 @@ var player = class Player {
 	
 	sendCommandMessage(data) {
 		this.client.emit('command', data);
+	}
+	
+	setHealth(health) {
+		this.hp = health;
+	}
+	
+	getPos() {
+		return {row: "Players", index: 0};
 	}
 	
 }

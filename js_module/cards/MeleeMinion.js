@@ -6,6 +6,7 @@ class MeleeMinion extends Minion {
 	constructor ()
 	{
 		super();
+		this.type = "Melee";
 	}
 	
 	isPlayable(field)
@@ -55,9 +56,9 @@ class MeleeMinion extends Minion {
 		return playable;
 	}
 	
-	activate (target, game)
+	activate (target, manipulator)
 	{
-		// Check if there are 
+		manipulator.attack(this, target);
 	}
 	
 }

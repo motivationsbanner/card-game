@@ -35,7 +35,7 @@ function select_optionCommand(data, game)
 		}
 	
 		// Activate selected Card
-		game.getOnTurn().currentCardActivate(data.pos, game);
+		game.currentCardActivate(data.pos);
 		game.getOnTurn().setSelectedCard(-1);
 		game.playOptions();
 	} else {

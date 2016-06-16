@@ -6,6 +6,7 @@ class RangedMinion extends Minion {
 	constructor ()
 	{
 		super()
+		this.type = "Range";
 	}
 	
 	isPlayable(field)
@@ -50,9 +51,9 @@ class RangedMinion extends Minion {
 		return playable;
 	}
 	
-	activate (target, game)
+	activate (target, manipulator)
 	{
-		// Check if there are 
+		manipulator.attack(this, target);
 	}
 }
 

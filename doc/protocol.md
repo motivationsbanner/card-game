@@ -12,6 +12,7 @@ game_command:
 		{command: "glow", target: position, color: string}
 		{command: "play_card", sender: pos: position, to: position, card_name: string}
 		{command: "start_turn"}
+		{command: "end_game", winner: true/false}
 
 	client->server
 		{command: "end_turn"}

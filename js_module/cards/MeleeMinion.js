@@ -11,6 +11,11 @@ class MeleeMinion extends Minion {
 	
 	isPlayable(field)
 	{
+		if (this.isOnField)
+		{
+			if (this.attack == 0)
+				return false;
+		}
 		return true;
 	}
 	

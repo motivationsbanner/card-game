@@ -93,6 +93,13 @@ function runCommand() {
 			runCommand();
 			break;
 
+		case "cast_spell":
+			castSpell(data.sender, data.card_name, function() {
+				commandQueue.shift();
+				runCommand();
+			});
+			break;
+
 		default:
 			console.warn(data.command + " command not (yet) implemented");
 			commandQueue.shift();

@@ -23,6 +23,8 @@ class Game {
 		this.on_turn = this.not_turn;
 		this.not_turn = temp;
 		this.on_turn.sendCommandMessage({command: "start_turn"});
+		this.on_turn.sendSystemMessage('It is not your turn, please wait.');
+		this.not_turn.sendSystemMessage('It is your turn!');
 	}
 	
 	sendMessage(message)

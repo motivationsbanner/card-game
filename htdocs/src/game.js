@@ -80,22 +80,15 @@ function playCard(from, to, cardName, callback) {
 
 	if(from.row === "EnemyHand") {
 		from.field.setCard(cardName);
-
 	}
-	
-	rows[from.row].splice(from.index, 1);
+
+
 	from.field.backup = to.field;
 	rows[to.row][to.index] = from.field;
 
 	from.field.goToField(to.field, function() {		
-		for(var i = 0; i < from.index; i ++) {
-			rows[from.row][i].x += (smallCardDimensions.width + gap) / 2;
-		}
-		
-		for(var i = from.index; i < rows[from.row].length; i ++) {
-			rows[from.row][i].x -= (smallCardDimensions.width + gap) / 2;
-		}
-
+		updateHand(rows[from.row], from.index);
+		rows[from.row].splice(from.index, 1);
 		callback();
 	});
 }
@@ -150,6 +143,7 @@ function attack(attacker, target, callback) {
 	stage.addChild(sword);
 
 	// TODO: redo
+	// TODO: put on top
 	sword.rotation = Math.atan((target.x - attacker.x) / (attacker.y - target.y)) / Math.PI * 180;
 
 	if(target.y - attacker.y > 0) {
@@ -184,4 +178,42 @@ function endTurn() {
 	changeTurnButton.container.getChildByName("enemy_turn").visible = true;
 	changeTurnButton.container.getChildByName("player_turn").visible = false;
 	sendCommand({command: "end_turn"});
+}
+
+
+function castSpell(sender, cardName, callback) {
+	stage.removeChild(getField(sender).container);
+	updateHand(rows[sender.row], sender.index);
+
+
+	if(sender.row === "EnemyHand") {
+		getField(sender).setCard(cardName);
+	}
+
+	var largeCardBitmap = new createjs.Bitmap(getField(sender).card.cardType.largeCardDataURL);
+	largeCardBitmap.set({x: boardCenterX - largeCardDimensions.width / 2,
+		y: (480 - largeCardDimensions.height) / 2, alpha: 0});
+
+
+
+	stage.addChild(largeCardBitmap);
+
+	rows[sender.row].splice(sender.index, 1);
+
+	createjs.Tween.get(largeCardBitmap)
+		.to({alpha: 1}, 300).wait(2000)
+		.to({alpha: 0}, 300)
+		.call(function() {
+			stage.removeChild(largeCardBitmap);
+		});
+}
+
+function updateHand(row, index) {
+	for(var i = 0; i < index; i ++) {
+		row[i].x += (smallCardDimensions.width + gap) / 2;
+	}
+		
+	for(var i = index + 1; i < row.length; i ++) {
+		row[i].x -= (smallCardDimensions.width + gap) / 2;
+	}
 }

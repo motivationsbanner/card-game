@@ -10,8 +10,9 @@ game_command:
 		{command: "set_attack", target: position, attack: int}
 		{command: "kill", target: position}
 		{command: "glow", target: position, color: string}
-		{command: "play_card", sender: pos: position, to: position, card_name: string}
+		{command: "play_card", sender: position, to: position, card_name: string}
 		{command: "start_turn"}
+		{command: "cast_spell", sender: position, card_name: string}
 
 	client->server
 		{command: "end_turn"}

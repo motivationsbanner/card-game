@@ -160,6 +160,76 @@ var field = class Field {
 		}
 	}	
 	
+	getFieldCards(smt)
+	{
+		var fields = [];
+		
+		if (smt == "Player")
+		{
+			for ( var i = 0; i < this.field.melee.length; i++)
+			{
+				if (this.field.melee[i] != -1)
+					fields.push(this.field.melee[i]);
+			}
+			
+			for ( var i2 = 0; i2 < this.field.range.length; i2++)
+			{
+				if (this.field.range[i2] != -1)
+					fields.push( this.field.range[i2] );
+			}
+			
+			return fields;
+		}
+		
+		if (smt == "Enemy")
+		{
+			
+			for ( var i = 0; i < this.field.melee.length; i++)
+			{
+				if (this.field.melee[i] != -1)
+					fields.push( this.field.melee[i] );
+			}
+			
+			for ( var i2 = 0; i2 < this.field.range.length; i2++)
+			{
+				if (this.field.range[i2] != -1)
+					fields.push( his.field.range[i2] );
+			}
+			
+			return fields;
+		}
+		
+		if (smt == "All")
+		{
+			for ( var i = 0; i < this.field.melee.length; i++)
+			{
+				if (this.field.melee[i] != -1)
+					fields.push( this.field.melee[i] );
+			}
+			
+			for ( var i2 = 0; i2 < this.field.range.length; i2++)
+			{
+				if (this.field.range[i2] != -1)
+					fields.push( his.field.range[i2] );
+			}
+			
+			for ( var a = 0; a < this.field.melee.length; a++)
+			{
+				if (this.field.melee[a] != -1)
+					fields.push(this.field.melee[a]);
+			}
+			
+			for ( var a2 = 0; a < this.field.range.length; a2++)
+			{
+				if (this.field.range[a2] != -1)
+					fields.push( this.field.range[a2] );
+			}
+			
+			return fields;
+		}
+	}
+	
+	
 	getRow(row)
 	{
 		if (row == 'PlayerHand')
@@ -175,6 +245,7 @@ var field = class Field {
 		if (row == 'EnemyHand')
 			return this.field.enemyHand;
 	}
+	
 	
 	removeCard(pos)
 	{
@@ -258,7 +329,7 @@ var field = class Field {
 	getEnemyRange() {
 		return this.getRow('EnemyRange').length;
 	}
-	
+
 }
 
 module.exports = field;

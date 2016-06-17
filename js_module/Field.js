@@ -210,7 +210,7 @@ var field = class Field {
 			for ( var i2 = 0; i2 < this.field.range.length; i2++)
 			{
 				if (this.field.range[i2] != -1)
-					fields.push( his.field.range[i2] );
+					fields.push( this.field.range[i2] );
 			}
 			
 			for ( var a = 0; a < this.field.melee.length; a++)

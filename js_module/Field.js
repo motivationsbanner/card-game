@@ -184,16 +184,16 @@ var field = class Field {
 		if (smt == "Enemy")
 		{
 			
-			for ( var i = 0; i < this.field.melee.length; i++)
+			for ( var i = 0; i < this.field.enemyMelee.length; i++)
 			{
-				if (this.field.melee[i] != -1)
-					fields.push( this.field.melee[i] );
+				if (this.field.enemyMelee[i] != -1)
+					fields.push( this.field.enemyMelee[i] );
 			}
 			
-			for ( var i2 = 0; i2 < this.field.range.length; i2++)
+			for ( var i2 = 0; i2 < this.field.enemyRange.length; i2++)
 			{
-				if (this.field.range[i2] != -1)
-					fields.push( his.field.range[i2] );
+				if (this.field.enemyRange[i2] != -1)
+					fields.push( his.field.enemyRange[i2] );
 			}
 			
 			return fields;
@@ -213,16 +213,16 @@ var field = class Field {
 					fields.push( this.field.range[i2] );
 			}
 			
-			for ( var a = 0; a < this.field.melee.length; a++)
+			for ( var a = 0; a < this.field.enemyMelee.length; a++)
 			{
-				if (this.field.melee[a] != -1)
-					fields.push(this.field.melee[a]);
+				if (this.field.enemyMelee[a] != -1)
+					fields.push(this.field.enemyMelee[a]);
 			}
 			
-			for ( var a2 = 0; a < this.field.range.length; a2++)
+			for ( var a2 = 0; a < this.field.enemyRange.length; a2++)
 			{
-				if (this.field.range[a2] != -1)
-					fields.push( this.field.range[a2] );
+				if (this.field.enemyRange[a2] != -1)
+					fields.push( this.field.enemyRange[a2] );
 			}
 			
 			return fields;

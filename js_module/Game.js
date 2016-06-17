@@ -31,6 +31,7 @@ class Game {
 		this.on_turn.sendSystemMessage('It is your turn!');
 		
 		this.manipulator.changeTurn();
+		this.conditions.changeTurn();
 	}
 	
 	sendMessage(message)

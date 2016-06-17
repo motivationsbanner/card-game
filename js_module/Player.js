@@ -43,8 +43,7 @@ var player = class Player {
 			if (this.selected_card.row != 'PlayerHand')
 			{
 				var card = this.field.getCard(this.selected_card);
-				if (card.isPlayable(conditions))
-					return card.getPlayableFields(this.field);
+				return card.getPlayableFields(this.field);
 			}
 			
 		} else {
@@ -66,9 +65,8 @@ var player = class Player {
 			for ( var i2 = 0; i2 < fieldWithCard.length; i2++)
 			{
 				var card = this.field.getCard(fieldWithCard[i2]);
-				if (card.isPlayable(conditions))
-					if (card.getPlayableFields(this.field).length > 0)
-						playable.push( { pos: fieldWithCard[i2], color: "white" } );
+				if (card.getPlayableFields(this.field).length > 0)
+					playable.push( { pos: fieldWithCard[i2], color: "white" } );
 			}
 			
 			return playable;

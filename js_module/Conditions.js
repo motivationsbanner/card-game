@@ -10,6 +10,11 @@ class Conditions
 		this.game = game;
 		this.field = this.game.on_turn.field;
 	}
+	
+	changeTurn()
+	{
+		this.field = this.game.on_turn.field;
+	}
 
 	heroMaxHealth(maxHealth) {
 		return (this.game.on_turn.hp <= maxHealth);

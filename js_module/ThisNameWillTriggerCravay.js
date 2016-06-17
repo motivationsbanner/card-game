@@ -47,13 +47,13 @@ class FieldManipulator
 	
 	doDmg(target, damage)
 	{
-		
 		var new_health = target.getHealth() - damage;
 		var target_pos = target.getPos(),
 			enemy_pos = this.field.translate(target_pos, this.field.getRow(target_pos.row).length -1);
 		
 		var player_command = {command: "set_health", target: target_pos , health: new_health};
 		var enemy_command = {command: "set_health", target: enemy_pos, health: new_health};
+		
 		this.game.on_turn.sendCommandMessage(player_command);
 		this.game.not_turn.sendCommandMessage(enemy_command);
 		

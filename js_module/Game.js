@@ -2,7 +2,7 @@
 
 var Player = require('../js_module/Player.js');
 var commandInterpreter = require('../js_module/Command.js');
-var FieldManipulator = require('../js_module/FieldManipulator.js.js');
+var FieldManipulator = require('../js_module/FieldManipulator.js');
 var Conditions = require('../js_module/Conditions.js');
 
 class Game {

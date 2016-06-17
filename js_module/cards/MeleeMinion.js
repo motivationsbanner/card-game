@@ -18,7 +18,7 @@ class MeleeMinion extends Minion {
 	{
 		var playable = [];
 		
-		if (this.attack == 0)
+		if (this.attack == 0 && this.isOnField)
 			return playable;
 		
 		if (!this.action_done)

@@ -26,6 +26,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
 		socket.on("system", function(data) {
 			showInfo(data);
+
+			// 5/7 code quality
+			if(data == "Your Opponent disconnected. ¯\\_(ツ)_/¯ Please Reload to start a new Game") {
+				changeTurnButton.container.getChildByName("enemy_turn").visible = true;
+				changeTurnButton.container.getChildByName("player_turn").visible = false;
+				changeTurnButton.container.removeAllEventListeners ();
+				removeAllActionOptions();
+			}
 		});
 
 		socket.on("reconnect_attempt", function(data) {

@@ -67,15 +67,14 @@ function prepare(callback) {
 		queue.loadFile(cardTypesByName[key].imageName);
 	}
 
-	queue.loadFile("btn_enemyturn.png");
-	queue.loadFile("btn_myturn.png");
-	queue.loadFile("schwert.png");
-	queue.loadFile("pfeil.png");
-	queue.loadFile("overlay.png");
-	queue.loadFile("kleines_overlay.png");
-	queue.loadFile("overlay_spell.png");
-	queue.loadFile("kleines_overlay_spell.png");
-	queue.loadFile("held_platzhalter.png");
+	var names = ["btn_enemyturn", "btn_myturn", "schwert", "pfeil", 
+		"overlay", "kleines_overlay", "overlay_spell",
+		"kleines_overlay_spell", "held_platzhalter", 
+		"totenkopf"];
+
+	for(var name of names) {
+		queue.loadFile(name + ".png");
+	}
 
 	queue.on("complete", function(event) {
 		prepareCardImages();

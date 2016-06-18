@@ -119,9 +119,26 @@ function setHealth(field, health) {
 	getField(field).health = health;
 }
 
-function kill(field) {
-	stage.removeChild(getField(field).container);
-	rows[field.row][field.index] = getField(field).backup;
+function kill(field, callback) {
+	var skull = new createjs.Bitmap(queue.getResult("totenkopf.png"));
+
+	skull.x = getField(field).x
+	skull.y = getField(field).y + 10;
+	skull.alpha = 0;
+	stage.addChild(skull);
+
+	console.dir(skull);
+
+	createjs.Tween.get(skull)
+		.to({alpha: 1}, 100).wait(1000)
+		.to({alpha: 0}, 100)
+		.call(function() {
+			stage.removeChild(skull);
+			stage.removeChild(getField(field).container);
+			rows[field.row][field.index] = getField(field).backup;
+			callback();
+		});
+
 }
 
 function attack(attacker, target, callback) {

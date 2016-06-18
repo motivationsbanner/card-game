@@ -68,9 +68,10 @@ function runCommand() {
 			break;
 
 		case "kill":
-			kill(data.target);
-			commandQueue.shift();
-			runCommand();
+			kill(data.target, function() {
+				commandQueue.shift();
+				runCommand();
+			});
 			break;
 
 		case "attack":

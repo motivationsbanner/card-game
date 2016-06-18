@@ -125,25 +125,28 @@ function kill(field) {
 }
 
 function attack(attacker, target, callback) {
+	var sword;
+
+	if(attacker.row === "PlayerMelee" || attacker.row === "EnemyMelee") {
+		sword = new createjs.Bitmap(queue.getResult("schwert.png"));
+	} else {
+		// should be named arrow, but who cares
+		sword = new createjs.Bitmap(queue.getResult("pfeil.png"));
+	}
+
 	attacker = getField(attacker);
 	target = getField(target);
 
-	var sword = new createjs.Bitmap(queue.getResult("schwert.png"));
 
-	sword.scaleX = 2;
-	sword.scaleY = 2;
 
 	sword.regX = sword.getBounds().height / 2;
 	sword.regY = sword.getBounds().width / 2;
 
-
-	sword.x = attacker.x + smallCardDimensions.width / 2;
-	sword.y = attacker.y + smallCardDimensions.height / 2;
+	sword.x = attacker.x + attacker.width / 2;
+	sword.y = attacker.y + attacker.height / 2;
 
 	stage.addChild(sword);
 
-	// TODO: redo
-	// TODO: put on top
 	sword.rotation = Math.atan((target.x - attacker.x) / (attacker.y - target.y)) / Math.PI * 180;
 
 	if(target.y - attacker.y > 0) {
@@ -152,8 +155,8 @@ function attack(attacker, target, callback) {
 
 	createjs.Tween.get(sword)
 		.to({
-			x: target.x + smallCardDimensions.width / 2, 
-			y: target.y + smallCardDimensions.height / 2
+			x: target.x + target.width / 2, 
+			y: target.y + target.height / 2
 		}, 1000)
 		.call(function() {
 			stage.removeChild(sword);

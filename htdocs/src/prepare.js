@@ -70,6 +70,7 @@ function prepare(callback) {
 	queue.loadFile("btn_enemyturn.png");
 	queue.loadFile("btn_myturn.png");
 	queue.loadFile("schwert.png");
+	queue.loadFile("pfeil.png");
 	queue.loadFile("overlay.png");
 	queue.loadFile("kleines_overlay.png");
 	queue.loadFile("overlay_spell.png");

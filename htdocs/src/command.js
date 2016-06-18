@@ -31,6 +31,8 @@ function runCommand() {
 
 	var data = commandQueue[0];
 
+	// TODO: asyncCommands = [{command: ..., function : ...}], syncCommands = ..., loop
+
 	switch(data.command) {
 		case "draw":
 			if(data.cards) {
@@ -99,6 +101,10 @@ function runCommand() {
 				commandQueue.shift();
 				runCommand();
 			});
+			break;
+
+		case "end_game":
+			endGame(data.winner);
 			break;
 
 		default:

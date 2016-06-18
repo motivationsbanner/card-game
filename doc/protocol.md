@@ -1,7 +1,6 @@
 ```
 game_command:
 	server->client
-		// Start Turn
 		{command: "draw", cards: [string]} -> player
 		{command: "draw", amount: int} -> enemy
 		{command: "play_options", options: [{pos: position, color: string}]}

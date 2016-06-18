@@ -238,3 +238,16 @@ function updateHand(row, index) {
 		row[i].x -= (smallCardDimensions.width + gap) / 2;
 	}
 }
+
+function endGame(winner) {
+	var message = new createjs.Bitmap(queue.getResult("btn_" + (winner ? "victory" : "defeat") + ".png"));
+
+	message.alpha = 0;
+
+	message.x = (640 - message.getBounds().width) / 2;
+	message.y = (480 - message.getBounds().height) / 2;
+
+	stage.addChild(message);
+
+	createjs.Tween.get(message).to({alpha: 1}, 300);
+}

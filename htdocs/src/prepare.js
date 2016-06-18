@@ -70,7 +70,7 @@ function prepare(callback) {
 	var names = ["btn_enemyturn", "btn_myturn", "schwert", "pfeil", 
 		"overlay", "kleines_overlay", "overlay_spell",
 		"kleines_overlay_spell", "held_platzhalter", 
-		"totenkopf"];
+		"totenkopf", "btn_victory", "btn_defeat"];
 
 	for(var name of names) {
 		queue.loadFile(name + ".png");

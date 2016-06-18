@@ -249,5 +249,9 @@ function endGame(winner) {
 
 	stage.addChild(message);
 
+	changeTurnButton.container.getChildByName("enemy_turn").visible = true;
+	changeTurnButton.container.getChildByName("player_turn").visible = false;
+	changeTurnButton.container.removeAllEventListeners ();
+
 	createjs.Tween.get(message).to({alpha: 1}, 300);
 }

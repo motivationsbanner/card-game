@@ -45,12 +45,11 @@ document.addEventListener("DOMContentLoaded", function() {
 					card.type = "minion";
 				}
 			}
-
-			prepare(start);
+			prepare();
 		});
 });
 
-function prepare(callback) {
+function prepare() {
 	canvas = document.getElementById("stage");
 	stage = new createjs.Stage("stage");
 	stage.enableMouseOver();
@@ -81,8 +80,14 @@ function prepare(callback) {
 		prepareBorderImages();
 		prepareFields();
 		prepareCardback();
+
 		hideInfo();
-		callback();
+
+		socket.on("command", function(data) {
+			recieveCommand(data);
+		});
+
+		socket.emit("start");
 	});
 }
 

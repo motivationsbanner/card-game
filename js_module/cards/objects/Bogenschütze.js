@@ -2,7 +2,7 @@
 var voraussetzung = "Keine Voraussetzungen";
 var text = "Der feige Bogenschütze versteckt sich nur auf den Bäumen.";
 var health = 1;
-var attack = 2;
+var attack = 1;
 
 var RangeMinion = require(__dirname + '/../RangedMinion.js');
 

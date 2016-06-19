@@ -57,6 +57,9 @@ var field = class Field {
 				newPos.index = 0;
 		}
 		
+		if (pos.row === "Row")
+			newPos.row = "Row";
+		
 		return newPos;
 	}
 	
@@ -296,23 +299,23 @@ var field = class Field {
 		}
 		return this;
 	}
-	
+		
 	getCardsInRow(row)
 	{
 		var cards = [], temp_cards = [];
 		switch (row)
 		{
 			case 0:
-				temp_cards = getRow('EnemyRange');
+				temp_cards = this.getRow('EnemyRange');
 				break;
 			case 1:
-				temp_cards = getRow('EnemyMelee');
+				temp_cards = this.getRow('EnemyMelee');
 				break;
 			case 2:
-				temp_cards = getRow('PlayerMelee');
+				temp_cards = this.getRow('PlayerMelee');
 				break;
 			case 3: 
-				temp_cards = getRow('PlayerRange');
+				temp_cards = this.getRow('PlayerRange');
 				break;
 		}
 		

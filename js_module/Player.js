@@ -23,7 +23,7 @@ var player = class Player {
 			{
 				m.endGame({index: 1});
 			}
-			if (this.field.getHand().length == 9)
+			if (this.field.getHand().length == 8)
 			{
 				var temp_card = this.deck.draw();
 				this.sendCommandMessage({command: "overdraw", card: temp_card });
@@ -115,8 +115,9 @@ var player = class Player {
 			
 			game.getOnTurn().sendCommandMessage(playerCommand);
 			game.getNotOnTurn().sendCommandMessage(enemyCommand);
+			
 			game.getOnTurn().removeHandCard(senderPos);
-					
+
 			card.activate(pos, game.manipulator);
 			return;
 		}

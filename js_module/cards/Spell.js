@@ -6,17 +6,20 @@ class Spell extends Card {
 	constructor ()
 	{
 		super();
+		this.type = "Spell";
 	}
 	
-	isPlayable(field)
+	isPlayable(conditions)
 	{
 		return true;
 	}
 	
 	getPlayableFields(field)
 	{
-		return new Array();
+		return [ {pos: {row: 'PlayerRange', index: 3}, color: "white"} ];
+		
 	}
+	
 }
 
 

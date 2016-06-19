@@ -25,6 +25,16 @@ class Card {
 	{
 		this.action_done = false;
 	}
+		
+	getPos() { return this.pos; }
+	
+	setPos(pos) { this.pos = pos; }
+	
+	setActionDone(bool) {
+		this.action_done = bool;	
+	}
+	
+	getType() { return this.type; }
 	
 }
 

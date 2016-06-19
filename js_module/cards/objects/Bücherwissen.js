@@ -11,6 +11,11 @@ class Bücherwissen extends spell {
 	{
 		super();
 	}
+	
+	activate (target, manipulator)
+	{
+		manipulator.draw(2);
+	}
 }
 
 Bücherwissen.nom = "Bücherwissen"

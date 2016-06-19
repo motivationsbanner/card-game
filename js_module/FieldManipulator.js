@@ -124,13 +124,100 @@ class FieldManipulator
 		this.game.not_turn.sendCommandMessage(enemy_command);
 	}
 	
-	changeTurn() {
-		this.field = this.game.on_turn.field;
-		this.enemyField = this.game.not_turn.field;
+	buffHP(targetRow, amount)
+	{
+		if (targetRow.row == 'Row')
+		{
+			var cards = this.field.getCardsInRow(targetRow.index);
+			for (var i = 0; i < cards.length; i++)
+			{
+				var new_health = amount + cards[i].getHealth();
+				cards[i].setHealth(new_health);
+				
+				var tar_pos = cards[i].getPos(),
+					enemy_pos = this.field.translate(tar_pos, this.field.getRow(tar_pos.row).length - 1);
+				
+				var enemy_command = {command: "set_health", target: enemy_pos, health: new_health};
+				var player_command = {command: "set_health", target: tar_pos, health: new_health};
+		
+				this.game.on_turn.sendCommandMessage(player_command);
+				this.game.not_turn.sendCommandMessage(enemy_command);
+			}
+		} else {
+			console.log('smt went wrong');
+		}
+	}
+	
+	buffAttack(targetRow, amount)
+	{	
+		if (targetRow.row == 'Row')
+		{
+			var cards = this.field.getCardsInRow(targetRow.index);
+			for (var i = 0; i < cards.length; i++)
+			{
+				var new_attack = amount + cards[i].getAttack();
+				cards[i].setAttack(new_attack);
+				
+				var tar_pos = cards[i].getPos(),
+					enemy_pos = this.field.translate(tar_pos, this.field.getRow(tar_pos.row).length - 1);
+				
+				var enemy_command = {command: "set_attack", target: enemy_pos, health: new_attack};
+				var player_command = {command: "set_attack", target: tar_pos, health: new_attack};
+		
+				this.game.on_turn.sendCommandMessage(player_command);
+				this.game.not_turn.sendCommandMessage(enemy_command);
+			}
+		} else {
+			console.log('smt went wrong');
+		}
+	}
+	
+	buffAttackFriendly(amount)
+	{
+		this.buffAttack({row: "Row", index: 2}, amount);
+		this.buffAttack({row: "Row", index: 3}, amount);
+	}
+	
+	buffHPFriendly(amount)
+	{
+		this.buffHP({row: "Row", index: 2}, amount);
+		this.buffHP({row: "Row", index: 3}, amount);
+	}
+	
+	dmgRow(targetRow, amount)
+	{
+		if (targetRow.row == 'Row')
+		{
+			var cards = this.field.getCardsInRow(targetRow.index);
+			for (var i = 0; i < cards.length; i++)
+			{
+				this.doDmg(cards[i], amount);
+			}
+		} else {
+			console.log('smt went wrong');
+		}
+	}
+	
+	dmgAll(amount)
+	{
+		var cards = this.field.getFieldCards("All");
+		for (var i = 0; i < card.length; i++)
+		{
+			doDmg(cards[i], amount);
+		}
+	}
+	
+	draw(amount)
+	{
+		this.game.on_turn.draw(2);
+		this.game.not_turn.enemyDraw(2);
 	}
 	
 	
-	
+	changeTurn() {
+		this.field = this.game.on_turn.field;
+		this.enemyField = this.game.not_turn.field;
+	}	
 }
 
 module.exports = FieldManipulator;

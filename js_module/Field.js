@@ -119,7 +119,6 @@ var field = class Field {
 		return card;
 	}
 	
-	// The Hardcore kek code.....:'(
 	getFieldsWithCards(friendly)
 	{
 		var fields = [];
@@ -298,6 +297,32 @@ var field = class Field {
 		return this;
 	}
 	
+	getCardsInRow(row)
+	{
+		var cards = [], temp_cards = [];
+		switch (row)
+		{
+			case 0:
+				temp_cards = getRow('EnemyRange');
+				break;
+			case 1:
+				temp_cards = getRow('EnemyMelee');
+				break;
+			case 2:
+				temp_cards = getRow('PlayerMelee');
+				break;
+			case 3: 
+				temp_cards = getRow('PlayerRange');
+				break;
+		}
+		
+		for (var i = 0; i < temp_cards.length; i++)
+		{
+			if (temp_cards[i] != -1)
+				cards.push(temp_cards[i]);
+		}
+		return cards;
+	}
 	
 	getHand() {
 		return this.field.hand;

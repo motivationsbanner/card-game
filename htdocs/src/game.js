@@ -160,8 +160,8 @@ function attack(attacker, target, callback) {
 
 
 
-	sword.regX = sword.getBounds().height / 2;
-	sword.regY = sword.getBounds().width / 2;
+	sword.regX = sword.getBounds().width / 2;
+	sword.regY = sword.getBounds().height / 2;
 
 	sword.x = attacker.x + attacker.width / 2;
 	sword.y = attacker.y + attacker.height / 2;

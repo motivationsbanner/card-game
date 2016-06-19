@@ -161,8 +161,8 @@ class FieldManipulator
 			
 			if (glow)
 			{
-				var enemyGlow = {command: "glow", target: targetRow, color: "blue"};
-				var playerGlow = {command: "glow", target: this.field.translate(targetRow, 3), color: "blue"};
+				var enemyGlow = {command: "glow", target: this.field.translate(targetRow, 3), color: "blue"};
+				var playerGlow = {command: "glow", target: targetRow, color: "blue"};
 		
 				this.game.on_turn.sendCommandMessage(playerGlow);
 				this.game.not_turn.sendCommandMessage(enemyGlow);
@@ -183,8 +183,8 @@ class FieldManipulator
 			
 			if (glow)
 			{
-				var enemyGlow = {command: "glow", target: targetRow, color: "blue"};
-				var playerGlow = {command: "glow", target: enemy_pos, color: "blue"};
+				var enemyGlow = {command: "glow", target: enemy_pos, color: "blue"};
+				var playerGlow = {command: "glow", target: targetRow, color: "blue"};
 		
 				this.game.on_turn.sendCommandMessage(playerGlow);
 				this.game.not_turn.sendCommandMessage(enemyGlow);
@@ -210,8 +210,8 @@ class FieldManipulator
 				var enemy_card = this.enemyField.getCardOnPos(enemy_pos);
 				enemy_card.setAttack(new_attack);
 				
-				var enemy_command = {command: "set_attack", target: enemy_pos, health: new_attack};
-				var player_command = {command: "set_attack", target: tar_pos, health: new_attack};
+				var enemy_command = {command: "set_attack", target: enemy_pos, attack: new_attack};
+				var player_command = {command: "set_attack", target: tar_pos, attack: new_attack};
 		
 				this.game.on_turn.sendCommandMessage(player_command);
 				this.game.not_turn.sendCommandMessage(enemy_command);
@@ -219,8 +219,8 @@ class FieldManipulator
 			
 			if (glow)
 			{
-				var enemyGlow = {command: "glow", target: targetRow, color: "blue"};
-				var playerGlow = {command: "glow", target: this.field.translate(targetRow, 3), color: "blue"};
+				var enemyGlow = {command: "glow", target: this.field.translate(targetRow, 3), color: "blue"};
+				var playerGlow = {command: "glow", target: targetRow, color: "blue"};
 				
 				this.game.on_turn.sendCommandMessage(playerGlow);
 				this.game.not_turn.sendCommandMessage(enemyGlow);
@@ -232,16 +232,16 @@ class FieldManipulator
 			var tar_pos = card.getPos(),
 				enemy_pos = this.field.translate(tar_pos, this.field.getRow(tar_pos.row).length - 1);
 			
-			var enemy_command = {command: "set_attack", target: enemy_pos, health: new_attack};
-			var player_command = {command: "set_attack", target: tar_pos, health: new_attack};
+			var enemy_command = {command: "set_attack", target: enemy_pos, attack: new_attack};
+			var player_command = {command: "set_attack", target: tar_pos, attack: new_attack};
 		
 			this.game.on_turn.sendCommandMessage(player_command);
 			this.game.not_turn.sendCommandMessage(enemy_command);	
 			
 			if (glow)
 			{
-				var enemyGlow = {command: "glow", target: targetRow, color: "blue"};
-				var playerGlow = {command: "glow", target: enemy_pos, color: "blue"};
+				var enemyGlow = {command: "glow", target: enemy_pos, color: "blue"};
+				var playerGlow = {command: "glow", target: targetRow, color: "blue"};
 		
 				this.game.on_turn.sendCommandMessage(playerGlow);
 				this.game.not_turn.sendCommandMessage(enemyGlow);

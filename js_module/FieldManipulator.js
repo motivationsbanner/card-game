@@ -42,7 +42,9 @@ class FieldManipulator
 		
 		if (attacker.type == "Melee") // Recoil
 			this.doDmg(attacker, defender.getAttack());
-	
+			
+		if (attacker.type == 'Range' && defender.type == 'Range')
+			this.doDmg(attacker, defender.getAttack());
 	}
 	
 	doDmg(target, damage)

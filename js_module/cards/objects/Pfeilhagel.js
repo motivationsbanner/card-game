@@ -11,6 +11,28 @@ class Pfeilhagel extends spell {
 	{
 		super();
 	}
+	
+	isPlayable(c)
+	{
+		if (super.isPlayable(c))
+		{
+			// YOUR CONDITIONS
+			return c.minAmountPlayerRangeMinions(2);
+		}
+		return false;
+	}
+	
+	getPlayableFields(field)
+	{
+		
+		return [ {pos: {row: 'Row', index: 2}, color: "white"} ];
+	}
+	
+	activate (targetRow, manipulator)
+	{
+		
+		manipulator.buffHP(targetRow, 2);
+	}
 }
 Pfeilhagel.voraussetzung = voraussetzung;
 Pfeilhagel.nom = "Pfeilhagel";

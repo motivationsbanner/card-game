@@ -93,14 +93,30 @@ var player = class Player {
 		var cardname = this.field.getHandCard(this.selected_card.index)
 		var card = new cards[cardname];
 		
+		var senderPos = this.getSelectedCard();
+		
+		if (card.getType() == 'Spell')
+		{
+			var enemySenderPos = this.field.translate(senderPos, this.field.getRow(senderPos.row).length -1);
+			
+			var playerCommand =  {command: "cast_spell", sender: senderPos, card_name: cardname},
+				enemyCommand = {command: "cast_spell", sender: enemySenderPos, card_name: cardname};
+			
+			game.getOnTurn().sendCommandMessage(playerCommand);
+			game.getNotOnTurn().sendCommandMessage(enemyCommand);
+			game.getOnTurn().removeHandCard(senderPos);
+					
+			card.activate(pos, game.manipulator);
+			return;
+		}
+		
 		// Play Card on your field
 		card.play();
 		this.field.setCardPos(pos, card);
 		card.setPos(pos);
 		
-		var senderPos = this.getSelectedCard(),
-			toPos = pos,
-			card_name = this.field.getCardOnPos(toPos).constructor.name;
+		var	toPos = pos,
+			card_name = cardname;
 		
 		// Send play_card command to player
 		var command1 = {command: 'play_card', sender: senderPos, to: toPos, card_name: card_name};
@@ -118,6 +134,8 @@ var player = class Player {
 		
 		// Remove card in player hand
 		game.getOnTurn().removeHandCard(senderPos);
+		
+		
 	}
 	
 	endTurn()

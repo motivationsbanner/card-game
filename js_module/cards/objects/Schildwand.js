@@ -13,6 +13,27 @@ class Schildwand extends spell {
 		this.attack = attack;
 		this.health = health;
 	}
+	
+	isPlayable(c)
+	{
+		if (super.isPlayable(c))
+		{
+			// YOUR CONDITIONS
+			return c.minAmountPlayerMeleeMinions(2);
+		}
+		return false;
+	}
+	
+	getPlayableFields(field)
+	{
+		return [ {pos: {row: 'Row', index: 2}, color: "white"} ];
+	}
+	
+	activate (targetRow, manipulator)
+	{
+		manipulator.buffHP(targetRow, 2);
+	}
+	
 }
 Schildwand.voraussetzung = voraussetzung;
 Schildwand.nom = "Schildwand"

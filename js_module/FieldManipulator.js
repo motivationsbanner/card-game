@@ -170,10 +170,16 @@ class FieldManipulator
 				
 		} else {
 			var card = this.field.getCardOnPos(targetRow);
+			
 			var new_health = card.getHealth() + amount;
 			
 			var tar_pos = card.getPos(),
 				enemy_pos = this.field.translate(tar_pos, this.field.getRow(tar_pos.row).length - 1);
+				
+			var enemyCard = this.enemyField.getCardOnPos(enemy_pos);
+			
+			card.setHealth(new_health);
+			enemyCard.setHealth(new_health);
 			
 			var enemy_command = {command: "set_health", target: enemy_pos, health: new_health};
 			var player_command = {command: "set_health", target: tar_pos, health: new_health};
@@ -231,6 +237,11 @@ class FieldManipulator
 			
 			var tar_pos = card.getPos(),
 				enemy_pos = this.field.translate(tar_pos, this.field.getRow(tar_pos.row).length - 1);
+				
+			var enemyCard = this.enemyField.getCardOnPos(enemy_pos);
+			
+			card.setAttack(new_attack);
+			enemyCard.setAttack(new_attack);
 			
 			var enemy_command = {command: "set_attack", target: enemy_pos, attack: new_attack};
 			var player_command = {command: "set_attack", target: tar_pos, attack: new_attack};

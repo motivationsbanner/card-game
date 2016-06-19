@@ -23,6 +23,8 @@ class Langschwert extends spell {
 		return false;
 	}
 	
+	
+	// Anpassen -> card pos
 	getPlayableFields(field)
 	{
 		return field.getFieldCards("Player");

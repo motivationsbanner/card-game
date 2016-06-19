@@ -22,6 +22,8 @@ class Gnadenstoss extends spell {
 		return false;
 	}
 	
+	
+	// Not useable on enemy
 	getPlayableFields(field)
 	{
 		var playable = field.getPosDmgCards();

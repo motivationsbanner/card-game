@@ -202,7 +202,6 @@ class Conditions
 		return true;
 	}
 	
-	// Should work
 	minionsMaxAttack(maxAttack)
 	{
 		var minions = this.field.getFieldCards('All');

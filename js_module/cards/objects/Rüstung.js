@@ -22,9 +22,17 @@ class Rüstung extends spell {
 		return false;
 	}
 	
+	// Anpassen -> card pos
 	getPlayableFields(field)
 	{
-		return field.getFieldCards("Player");
+		var cards = field.getFieldCards("Player"); 
+		var playable = [];
+		for (var i = 0; i < cards. length; i++)
+		{
+			var pos = cards[i].getPos();
+			playable.push({pos: pos, color: "white"});
+		}
+		return playable;
 	}
 	
 	activate (target, manipulator)

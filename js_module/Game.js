@@ -46,14 +46,14 @@ class Game {
 	start()
 	{
 		// Both Players get 3 Cards
-		this.p1.draw(3);
+		this.p1.draw(3, this.manipulator);
 		this.p2.enemyDraw(3);
 		
-		this.p2.draw(3);
+		this.p2.draw(3, this.manipulator);
 		this.p1.enemyDraw(3);
 				
 		// Player 1 gets 1 card, cus it's his turn
-		this.p1.draw(1);
+		this.p1.draw(1, this.manipulator);
 		this.p2.enemyDraw(1);
 		
 		this.p1.sendSystemMessage('It is your turn!');
@@ -95,7 +95,7 @@ class Game {
 		if (success) 
 			this.not_turn.enemyDraw(amount);
 		else
-			this.not_turn.sendCommandMessage({command: "overdraw", card: amount});
+			this.on_turn.sendCommandMessage({command: "overdraw", card: amount});
 	}
 	
 	end()

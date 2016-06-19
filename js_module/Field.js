@@ -221,7 +221,7 @@ var field = class Field {
 					fields.push(this.field.enemyMelee[a]);
 			}
 			
-			for ( var a2 = 0; a < this.field.enemyRange.length; a2++)
+			for ( var a2 = 0; a2 < this.field.enemyRange.length; a2++)
 			{
 				if (this.field.enemyRange[a2] != -1)
 					fields.push( this.field.enemyRange[a2] );

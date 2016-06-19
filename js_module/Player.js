@@ -21,7 +21,7 @@ var player = class Player {
 		{
 			if (this.deck.deck.length == 0)
 			{
-				m.endGame({index: 1});
+				m.endGame( {row: "Players", index: 1} );
 			}
 			if (this.field.getHand().length == 8)
 			{

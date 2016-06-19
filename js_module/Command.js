@@ -10,8 +10,7 @@ function change_turnCommand(data, game)
 	game.changeTurn();
 	
 	// Actions happening after turn change here:
-	game.getOnTurn().draw(1);
-	game.getNotOnTurn().enemyDraw(1);
+	game.drawCard(1);
 	
 	// send new possible cards.
 	game.playOptions();

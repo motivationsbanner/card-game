@@ -21,8 +21,12 @@ class Players {
 			var g = game();
 			g.setP1(this.players[0]);
 			g.setP2(this.players[1]);
+			g.p1.deck.createDeck(this.players[0].deck);
+			g.p2.deck.createDeck(this.players[1].deck);
+			
 			this.players[0].game = g;
 			this.players[1].game = g;
+			
 			this.players.splice( 0,2 );
 			return g;
 		}

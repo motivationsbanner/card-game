@@ -10,8 +10,20 @@ class Game {
 	{
 		this.p1 = new Player();
 		this.p2 = new Player();
-		this.on_turn = this.p1;
-		this.not_turn = this.p2;
+		
+		var rnd = Math.floor((Math.random() * 2) + 1);
+		if (rnd == 1)
+		{
+			this.on_turn = this.p1;
+			this.not_turn = this.p2;
+		}
+		
+		if (rnd == 2)
+		{
+			this.on_turn = this.p2;
+			this.not_turn = this.p1;
+		}
+		
 		this.rounds = 0;
 		this.finished = false;
 		this.manipulator = new FieldManipulator(this);
@@ -53,12 +65,12 @@ class Game {
 		this.p1.enemyDraw(3);
 				
 		// Player 1 gets 1 card, cus it's his turn
-		this.p1.draw(1, this.manipulator);
-		this.p2.enemyDraw(1);
+		this.on_turn.draw(1, this.manipulator);
+		this.not_turn.enemyDraw(1);
 		
-		this.p1.sendSystemMessage('It is your turn!');
-		this.p1.sendCommandMessage({command: "start_turn"});
-		this.p2.sendSystemMessage('It is not your turn, please wait.');
+		this.on_turn.sendSystemMessage('It is your turn!');
+		this.on_turn.sendCommandMessage({command: "start_turn"});
+		this.not_turn.sendSystemMessage('It is not your turn, please wait.');
 		
 		this.playOptions();
 	}

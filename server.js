@@ -55,8 +55,10 @@ io.sockets.on('connection', function(client)
 	client.emit('cards', all_cards);
 	// Add Client to Player Array
 	
-	client.on('start', function() 
+	client.on('start', function(deck) 
 	{
+		deck = deck || false;
+		client.deck = deck;
 		// Check if there are enough players waiting
 		players.add(client);
 		

@@ -5,8 +5,6 @@ var deck = class Deck {
 	constructor ()
 	{
 		this.deck = new Array();
-		this.createDeck();
-		this.shuffle();
 	}
 	
 	// http://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array-in-javascript
@@ -22,8 +20,14 @@ var deck = class Deck {
 		}
 	}
 	
-	createDeck() {
-		var arr = JSON.parse(fs.readFileSync(__dirname + '/deck/Deck.json', 'utf8'));
+	createDeck(deck) {
+		if (deck != false)
+		{
+			var arr = deck;
+		} else {
+			var arr = JSON.parse(fs.readFileSync(__dirname + '/deck/Deck.json', 'utf8'));
+		}
+		
 		for (var obj in arr)
 		{
 			var name = arr[obj].card_name;
@@ -32,6 +36,7 @@ var deck = class Deck {
 				this.deck.push(name);
 			}
 		}
+		this.shuffle();
 	}
 
 	draw()

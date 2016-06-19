@@ -38,10 +38,12 @@ class FieldManipulator
 		this.game.on_turn.sendCommandMessage(player_command);
 		this.game.not_turn.sendCommandMessage(enemy_command);
 		
+		var def_att = defender.getAttack();
+		
 		this.doDmg(defender, attacker.getAttack());
 		
 		if (attacker.type == "Melee") // Recoil
-			this.doDmg(attacker, defender.getAttack());
+			this.doDmg(attacker, def_att);
 			
 		if (attacker.type == 'Range' && defender.type == 'Range')
 			this.doDmg(attacker, defender.getAttack());
@@ -49,6 +51,7 @@ class FieldManipulator
 	
 	doDmg(target, damage)
 	{
+		console.log('old_health: ' + target.getHealth());
 		var new_health = target.getHealth() - damage;
 		var target_pos = target.getPos(),
 			enemy_pos = this.field.translate(target_pos, this.field.getRow(target_pos.row).length -1);
@@ -59,7 +62,14 @@ class FieldManipulator
 		this.game.on_turn.sendCommandMessage(player_command);
 		this.game.not_turn.sendCommandMessage(enemy_command);
 		
+		console.log('Health: ' + new_health);
+		
 		target.setHealth(new_health);
+		
+		var new_pos = this.field.translate(target.getPos(), this.field.getRow(target.getPos().row).length - 1);
+		var card = this.enemyField.getCardOnPos(new_pos);
+		card.setHealth(new_health);
+		
 		
 		if (new_health <= 0)
 		{
@@ -122,6 +132,7 @@ class FieldManipulator
 
 		var player_command = {command: "kill", target: target_pos};
 		var enemy_command = {command: "kill", target: enemy_pos};
+		
 		this.game.on_turn.sendCommandMessage(player_command);
 		this.game.not_turn.sendCommandMessage(enemy_command);
 	}
@@ -138,6 +149,9 @@ class FieldManipulator
 				
 				var tar_pos = cards[i].getPos(),
 					enemy_pos = this.field.translate(tar_pos, this.field.getRow(tar_pos.row).length - 1);
+				
+				var enemy_card = this.enemyField.getCardOnPos(enemy_pos);
+				enemy_card.setHealth(new_health);
 				
 				var enemy_command = {command: "set_health", target: enemy_pos, health: new_health};
 				var player_command = {command: "set_health", target: tar_pos, health: new_health};
@@ -162,6 +176,9 @@ class FieldManipulator
 				
 				var tar_pos = cards[i].getPos(),
 					enemy_pos = this.field.translate(tar_pos, this.field.getRow(tar_pos.row).length - 1);
+				
+				var enemy_card = this.enemyField.getCardOnPos(enemy_pos);
+				enemy_card.setAttack(new_attack);
 				
 				var enemy_command = {command: "set_attack", target: enemy_pos, health: new_attack};
 				var player_command = {command: "set_attack", target: tar_pos, health: new_attack};

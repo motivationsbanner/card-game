@@ -13,6 +13,7 @@ class Soldat extends MeleeMinion {
 		this.attack = attack;
 		this.health = health;
 	}
+	
 	isPlayable(c)
 	{
 		if (super.isPlayable(c))

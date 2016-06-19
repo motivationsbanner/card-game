@@ -49,6 +49,9 @@ startServer.on('cards_ready', function() {
 
 io.sockets.on('connection', function(client)
 {	
+	
+	var clients = io.engine.clientsCount;
+	
 	client.emit('cards', all_cards);
 	// Add Client to Player Array
 	
@@ -62,7 +65,7 @@ io.sockets.on('connection', function(client)
 		if (game != null)
 			startGame(game);
 		else
-			client.emit('system', 'Waiting for another Player.  ¯\\_(ツ)_/¯  We are sorry.');
+			client.emit('system', 'Waiting for another Player.  ¯\\_(ツ)_/¯  We are sorry. People online: ' + clients);
 		
 	});	
 	

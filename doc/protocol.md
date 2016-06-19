@@ -13,7 +13,12 @@ game_command:
 		{command: "start_turn"}
 		{command: "cast_spell", sender: position, card_name: string}
 		{command: "end_game", winner: true/false}
-
+		{command: "name", name: string }
+		{command: "game_id, id: string }
+		{command: "overdraw", card: cardname }
+		{command: "overdraw" }
+		{command: "change_turn}
+				
 	client->server
 		{command: "end_turn"}
 		{command: "select_option", pos: position}
@@ -23,5 +28,6 @@ preparation:
 		emit("cards", [{name: string, attack: int, health: int, text: string}]);
 
 	client->server:
-		emit("start");
+		emit("start", deck, name);
+		emit("spectate", id, name);
 ```

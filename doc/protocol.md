@@ -4,7 +4,7 @@ game_command:
 		{command: "draw", cards: [string]} -> player
 		{command: "draw", amount: int} -> enemy
 		{command: "play_options", options: [{pos: position, color: string}]}
-		{command: "attack", attacker: position, target: position, color: string}
+		{command: "attack", attacker: position, target: position}
 		{command: "set_health", target: position, health: int}
 		{command: "set_attack", target: position, attack: int}
 		{command: "kill", target: position}

@@ -1,5 +1,5 @@
 "use strict";
-var voraussetzung = "yea";
+var voraussetzung = "Es darf nur ein verbündetes Minion auf dem Spielfeld sein";
 var text = "Frisch aus der Eisenschmiede. +2 Health";
 var health = 0;
 var attack = 0;

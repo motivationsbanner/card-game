@@ -18,6 +18,10 @@ $(document).ready(function () {
 		$('#system_message').removeClass("alert-danger");
 		$('#system_message').addClass("alert-success");
 	});
+	
+	socket.on('get_deck', function(data) {
+		showJson(data);
+	});
 
 });
 
@@ -37,6 +41,11 @@ function fillCardList(cards)
 	});
 	
 	bindThis();
+}
+
+function showJson(str)
+{
+	$("#jsontext").val(str);
 }
 
 function bindThis() {
@@ -129,7 +138,7 @@ function bindThis() {
 			return;
 		}
 		
-		
+		object = [];
 		$('.decklist').each(function (index, element) {
 			var amount = parseInt($(element).val());
 			var card = $(element).text();
@@ -141,6 +150,11 @@ function bindThis() {
 			
 	
 		var str = JSON.stringify(object);
+		showJson(str);
 		socket.emit('make_deck', str);
+	});
+	
+	$("#open").on("click", function() {
+		socket.emit('get_deck');
 	});
 }

@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			showInfo(data);
 
 			// 5/7 code quality
-			if(data == "Your Opponent disconnected. ¯\\_(ツ)_/¯ Please Reload to start a new Game") {
+			if(data === "Your Opponent disconnected. ¯\\_(ツ)_/¯ Please Reload to start a new Game") {
 				changeTurnButton.container.getChildByName("enemy_turn").visible = true;
 				changeTurnButton.container.getChildByName("player_turn").visible = false;
 				changeTurnButton.container.removeAllEventListeners ();
@@ -106,19 +106,30 @@ function prepareFields() {
 		largeCardDimensions.width + containerBorder.left + containerBorder.right, 480);
 	stage.addChild(shape);
 
-	// Fields on the Board	
 	for(var i = 0; i < rowNames.length; i ++) {
 		rows[rowNames[i]] = [];
 	}
 
+	// Fields on the Board and Rows
 	for(var i = 0; i < 4;  i ++) {
+
+		rows.Row[i] = new Field(boardCenterX - (width * smallCardDimensions.width + (width - 1) * 
+			gap) / 2, 240 - (4 * 70 + 3 * gap) / 2 + i * (70 + gap), 274, 70);
+
 		for(var ii = 0; ii < width; ii ++) {
 			var x = boardCenterX - ((width * 50 + (width - 1) * gap) / 2) + ii * (50 + gap);
 			var y = 240 - (4 * 70 + 3 * gap) / 2 + i * (70 + gap);
 
-			rows[rowNames[i + 1]][ii] = new BoardField(x, y, null);
+			rows[rowNames[i + 1]][ii] = new BoardField(x, y);
 		}
 	}
+
+	// Enemy Rows
+	rows.Row[4] = new Field(rows.Row[0].x, rows.Row[0].y, twoRowsDimensions.width, twoRowsDimensions.height);
+
+	// Player Rows
+	rows.Row[5] = new Field(rows.Row[2].x, rows.Row[2].y, twoRowsDimensions.width, twoRowsDimensions.height);
+		
 
 	// Players
 	var playerLeftBorder = containerBorder.left + largeCardDimensions.width / 2 - playerDimensions.width / 2;

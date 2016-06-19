@@ -14,7 +14,9 @@ var largeCardDimensions = {width: 160, height: 300};
 var smallCardDimensions = {width: 50, height: 70};
 var playerDimensions = {width: 105, height: 70};
 var endTurnButtonDimensions = {width: 70, height: 30 * 0.7};
-var borderSizes = [smallCardDimensions, playerDimensions];
+var rowDimensions = {width: 274, height: 70};
+var twoRowsDimensions = {width: rowDimensions.width, height: 2 * rowDimensions.height + gap};
+var borderSizes = [smallCardDimensions, playerDimensions, rowDimensions, twoRowsDimensions];
 var borderColors = ["white", "red"];
 
 var rowNames = [
@@ -24,5 +26,6 @@ var rowNames = [
 	"PlayerMelee",
 	"PlayerRange",
 	"PlayerHand",
-	"Players" // Enemy: index = 0, Player: index = 1
+	"Players", // Enemy = 0, Player = 1
+	"Row" // Top to Bottom (0-3), All Enemy = 4, All Player = 5
 ];

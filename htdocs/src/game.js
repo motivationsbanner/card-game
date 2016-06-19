@@ -129,6 +129,8 @@ function kill(field, callback) {
 
 	console.dir(skull);
 
+	// TODO: remove largeCard
+
 	createjs.Tween.get(skull)
 		.to({alpha: 1}, 100).wait(1000)
 		.to({alpha: 0}, 100)
@@ -142,6 +144,8 @@ function kill(field, callback) {
 }
 
 function attack(attacker, target, callback) {
+	// TODO: adjust position (add bounds of sword/arrow)
+
 	var sword;
 
 	if(attacker.row === "PlayerMelee" || attacker.row === "EnemyMelee") {

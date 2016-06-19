@@ -1,6 +1,5 @@
 "use strict";
-var voraussetzung = "Es muss mindestens ein Verbündetes Minion auf dem Feld sein.";
-var text = "Vernichtet ein Verletztes Minion.";
+var text = "Vernichtet ein Verletztes Minion. Mindestens 1 Verbündetes Minion auf dem Feld.";
 var health = 0;
 var attack = 0;
 
@@ -17,7 +16,8 @@ class Gnadenstoss extends spell {
 		if (super.isPlayable(c))
 		{
 			// YOUR CONDITIONS
-			return c.maxAmountPlayerMinions(4);
+			return c.minAmountPlayerMinions(1);
+
 		}
 		return false;
 	}
@@ -30,11 +30,10 @@ class Gnadenstoss extends spell {
 	
 	activate (target, manipulator)
 	{
-		manipulator.kill(target);
+		manipulator.kill(manipulator.field.getCardOnPos(target));
 	}
 	
 }
-Gnadenstoss.voraussetzung = voraussetzung;
 Gnadenstoss.nom = "Gnadenstoss"
 Gnadenstoss.text = text;
 Gnadenstoss.health = health;

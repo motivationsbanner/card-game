@@ -1,6 +1,5 @@
 "use strict";
-var voraussetzung = "Es müssen mindestens 2 verbündete Minions in der Nahkampf Reihe sein.";
-var text = "Der Armbrustschütze verfügt über eine sehr starke Armbrust.";
+var text = "Der Armbrustschütze verfügt über eine sehr starke Armbrust. Mindestens 2 verbündete Minions in der Nahkampfreihe.";
 var health = 1;
 var attack = 3;
 
@@ -24,7 +23,6 @@ class Armbrustschütze extends RangeMinion {
 		return false;
 	}
 }
-Armbrustschütze.voraussetzung = voraussetzung;
 Armbrustschütze.nom = "Armbrustschütze";
 Armbrustschütze.text = text;
 Armbrustschütze.health = health;

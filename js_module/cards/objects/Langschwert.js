@@ -1,6 +1,5 @@
 "use strict";
-var voraussetzung = "Es darf nur ein verbündetes Minion auf dem Spielfeld sein";
-var text = "Das Langschwert gibt einem Minion 3 angriff";
+var text = "Das Langschwert gibt einem Minion 3 angriff. Maximal 1 verbündetes Minion auf dem Spielfeld.";
 var health = 0;
 var attack = 0;
 
@@ -35,7 +34,6 @@ class Langschwert extends spell {
 	}
 	
 }
-Langschwert.voraussetzung = voraussetzung;
 Langschwert.nom = "Langschwert"
 Langschwert.text = text;
 Langschwert.health = health;

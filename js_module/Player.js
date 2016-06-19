@@ -160,6 +160,14 @@ var player = class Player {
 		this.selected_card = -1;
 	}
 	
+	onTurn(manipulator)
+	{
+		var all_cards = this.field.getFieldsWithCards(true);
+		for (var i = 0; i < all_cards.length; i++)
+		{
+			this.field.getCard(all_cards[i]).onTurn(manipulator);
+		}
+	}
 	// used if the enemy plays a card
 	setCard(info)
 	{

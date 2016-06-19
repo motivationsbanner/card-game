@@ -1,6 +1,5 @@
 "use strict";
-var voraussetzung = "Es darf kein Fernkämpfer auf dem Spielfeld sein."
-var text = "Mit seinem langen Schwert tötet der Schwertkämpfer fast jeden.";
+var text = "Mit seinem langen Schwert tötet der Schwertkämpfer fast jeden. Kein Fernkämpfer auf dem Spielfeld.";
 var health = 2;
 var attack = 2;
 
@@ -24,7 +23,6 @@ class Schwertkämpfer extends MeleeMinion {
 		return false;
 	}
 }
-Schwertkämpfer.voraussetzung = voraussetzung;
 Schwertkämpfer.nom = "Schwertkämpfer";
 Schwertkämpfer.text = text;
 Schwertkämpfer.health = health;

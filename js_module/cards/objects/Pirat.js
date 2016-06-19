@@ -1,6 +1,5 @@
 "use strict";
-var voraussetzung = "Der Pirat ist ein gefürchteter Seefahrer";
-var text = "Der Pirat tritt nur auf wenn der Feind mindestens 4 Karten auf der Hand hat.";
+var text = "Der Pirat ist ein gefürchteter Seefahrer. Der Pirat tritt nur auf wenn der Feind mindestens 4 Karten auf der Hand hat.";
 var health = 5;
 var attack = 2;
 
@@ -24,7 +23,6 @@ class Pirat extends RangeMinion {
 		return false;
 	}
 }
-Pirat.voraussetzung = voraussetzung;
 Pirat.nom = "Pirat";
 Pirat.text = text;
 Pirat.health = health;

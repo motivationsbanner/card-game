@@ -1,6 +1,5 @@
 "use strict";
-var voraussetzung = "Es darf nur ein verbündetes Minion auf dem Spielfeld sein";
-var text = "Frisch aus der Eisenschmiede. +2 Health";
+var text = "Frisch aus der Eisenschmiede. +2 Health. Maximal 1 verbündetes Minion.";
 var health = 0;
 var attack = 0;
 
@@ -33,7 +32,6 @@ class Rüstung extends spell {
 		manipulator.buffHP(target, 3);
 	}
 }
-Rüstung.voraussetzung = voraussetzung;
 Rüstung.nom = "Rüstung";
 Rüstung.text = text;
 Rüstung.health = health;

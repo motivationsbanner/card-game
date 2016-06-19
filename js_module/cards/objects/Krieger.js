@@ -1,8 +1,7 @@
 "use strict";
-var voraussetzung = "Es muss mindestens ein Feindliches Nahkampf Minion auf dem Spielfeld sein.";
-var text = "Der Krieger ist ein stolzer Kämpfer, welcher jedoch über keine Ausdauer verfügt.";
+var text = "Der Krieger ist ein stolzer Kämpfer, welcher jedoch über keine Ausdauer verfügt. Mindestens 1 feindliches Melee Minion.";
 var health = 2;
-var attack = 2;
+var attack = 3;
 
 var MeleeMinion = require(__dirname + '/../MeleeMinion.js');
 
@@ -24,7 +23,6 @@ class Krieger extends MeleeMinion {
 		return false;
 	}
 }
-Krieger.voraussetzung = voraussetzung;
 Krieger.nom = "Krieger";
 Krieger.text = text;
 Krieger.health = health;

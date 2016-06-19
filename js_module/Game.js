@@ -32,6 +32,8 @@ class Game {
 		
 		this.manipulator.changeTurn();
 		this.conditions.changeTurn();
+		
+		this.on_turn.onTurn(this.manipulator);
 	}
 	
 	sendMessage(message)

@@ -1,6 +1,5 @@
 "use strict";
-var voraussetzung =  " Es müssen mindestens 2 verbündete Fernkämpfer auf dem Feld sein.";
-var text = "Fügt jedem Minion in der gewählten Reihe 1 Schaden für jedes verbündete Fernkampf Minion zu";
+var text = "Fügt jedem Minion in der gewählten Reihe 1 Schaden für jedes verbündete Fernkampf Minion zu. Mindestens 2 verbündete Fernkämpfer.";
 var health = 0;
 var attack = 0;
 
@@ -36,7 +35,6 @@ class Pfeilhagel extends spell {
 		manipulator.dmgRow(targetRow, manipulator.field.getFriendlyRange());
 	}
 }
-Pfeilhagel.voraussetzung = voraussetzung;
 Pfeilhagel.nom = "Pfeilhagel";
 Pfeilhagel.text = text;
 Pfeilhagel.health = health;

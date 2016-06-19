@@ -1,6 +1,5 @@
 "use strict";
-var voraussetzung = "Es muss mindestens 1 anderes befreundetes Minion auf dem Spielfeld sein.";
-var text = "Der Soldat benötigt nur seinen Speer und sein Schild, um seine Feinde gnadenlos zu töten.";
+var text = "Der Soldat benötigt nur seinen Speer und sein Schild, um seine Feinde gnadenlos zu töten. Mindestens 1 befreundetes Minion auf dem Spielfeld.";
 var health = 3;
 var attack = 2;
 
@@ -24,7 +23,6 @@ class Soldat extends MeleeMinion {
 		return false;
 	}
 }
-Soldat.voraussetzung = voraussetzung;
 Soldat.nom = "Soldat";
 Soldat.text = text;
 Soldat.health = health;

@@ -1,6 +1,5 @@
 "use strict";
-var voraussetzung = "Der Bauer darf keine Forderungen Stellen er kämpft wann man es ihm sagt."
-var text = "Eine jämmerliche Person";
+var text = "Der Bauer darf keine Forderungen stellen, er kämpft wann man es ihm sagt.";
 var health = 1;
 var attack = 1;
 
@@ -14,7 +13,6 @@ class Bauer extends MeleeMinion {
 		this.health = health;
 	}
 }
-Bauer.voraussetzung = voraussetzung;
 Bauer.nom = "Bauer"
 Bauer.text = text;
 Bauer.health = health;

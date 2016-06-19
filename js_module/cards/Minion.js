@@ -28,6 +28,7 @@ class Minion extends Card {
 	
 	getDmg() { return this.dmg;}
 	
+	onTurn(manipulator) {return;}
 } 
 
 module.exports = Minion;

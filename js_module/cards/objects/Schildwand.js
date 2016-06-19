@@ -1,6 +1,5 @@
 "use strict";
-var voraussetzung = "Es müssen mindestens 2 verbündete Nahkampf Minions auf dem Feld sein";
-var text = "Der Schildwand erhöht die Verteidigung von jedem Minion in der Nahkampf Reihe um 2 Leben";
+var text = "Der Schildwand erhöht die Verteidigung von jedem Minion in der Nahkampf Reihe um 2 Leben. Mindestens 2 verbündete Nahkampf Minions auf dem Spielfeld.";
 var health = 0;
 var attack = 0;
 
@@ -35,7 +34,6 @@ class Schildwand extends spell {
 	}
 	
 }
-Schildwand.voraussetzung = voraussetzung;
 Schildwand.nom = "Schildwand"
 Schildwand.text = text;
 Schildwand.health = health;

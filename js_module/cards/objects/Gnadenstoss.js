@@ -11,6 +11,28 @@ class Gnadenstoss extends spell {
 	{
 		super();
 	}
+	
+	isPlayable(c)
+	{
+		if (super.isPlayable(c))
+		{
+			// YOUR CONDITIONS
+			return c.maxAmountPlayerMinions(4);
+		}
+		return false;
+	}
+	
+	getPlayableFields(field)
+	{
+		var playable = field.getPosDmgCards();
+		return playable;
+	}
+	
+	activate (target, manipulator)
+	{
+		manipulator.kill(target);
+	}
+	
 }
 Gnadenstoss.voraussetzung = voraussetzung;
 Gnadenstoss.nom = "Gnadenstoss"

@@ -1,4 +1,5 @@
 ﻿"use strict";
+var voraussetzung = "Es dürfen keine Minions auf dem Feld sein mit 5 oder mehr Angriff.";
 var text = "Ein Huhn ist fett und bereit um geschlachtet zu werden.";
 var health = 2;
 var attack = 0;
@@ -23,8 +24,8 @@ class Huhn extends MeleeMinion {
 		return false;
 	}
 }
-
-Huhn.nom = "Huhn"
+Huhn.voraussetzung = voraussetzung;
+Huhn.nom = "Huhn";
 Huhn.text = text;
 Huhn.health = health;
 Huhn.attack = attack;

@@ -1,5 +1,5 @@
 "use strict";
-
+var voraussetzung = "Es dürfen maximal 4 Minions auf der eigenen Spielfeldseite sein.";
 var text = "Der Motivationsbanner erhöht die Motivation einer Reihe um +1 Angriff.";
 var health = 0;
 var attack = 0;
@@ -12,8 +12,8 @@ class Motivationsbanner extends spell {
 		super();
 	}
 }
-
-Motivationsbanner.nom = "Motivationsbanner"
+Motivationsbanner.voraussetzung = voraussetzung;
+Motivationsbanner.nom = "Motivationsbanner";
 Motivationsbanner.text = text;
 Motivationsbanner.health = health;
 Motivationsbanner.attack = attack;

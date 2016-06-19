@@ -1,4 +1,5 @@
 "use strict";
+var voraussetzung = "Es muss mindestens ein Feindliches Nahkampf Minion auf dem Spielfeld sein.";
 var text = "Der Krieger ist ein stolzer Kämpfer, welcher jedoch über keine Ausdauer verfügt.";
 var health = 2;
 var attack = 2;
@@ -23,8 +24,8 @@ class Krieger extends MeleeMinion {
 		return false;
 	}
 }
-
-Krieger.nom = "Krieger"
+Krieger.voraussetzung = voraussetzung;
+Krieger.nom = "Krieger";
 Krieger.text = text;
 Krieger.health = health;
 Krieger.attack = attack;

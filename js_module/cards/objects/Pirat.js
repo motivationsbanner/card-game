@@ -19,7 +19,7 @@ class Pirat extends RangeMinion {
 		if (super.isPlayable(c))
 		{
 			// YOUR CONDITIONS
-			return c.minAmountMinions(4);
+			return c.enemyHandMinAmount(4);
 		}
 		return false;
 	}

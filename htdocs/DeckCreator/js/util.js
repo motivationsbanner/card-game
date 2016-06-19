@@ -12,16 +12,6 @@ $(document).ready(function () {
 	socket.on('cards', function(data) {
 		fillCardList(data);
 	});
-	
-	socket.on('success', function() {
-		$('#system_message').text("Erfolgreich gespeichert!");
-		$('#system_message').removeClass("alert-danger");
-		$('#system_message').addClass("alert-success");
-	});
-	
-	socket.on('get_deck', function(data) {
-		showJson(data);
-	});
 
 });
 
@@ -41,11 +31,6 @@ function fillCardList(cards)
 	});
 	
 	bindThis();
-}
-
-function showJson(str)
-{
-	$("#jsontext").val(str);
 }
 
 function bindThis() {
@@ -147,14 +132,11 @@ function bindThis() {
 			var temp = {card_name: card, card_amount: amount};
 			object.push(temp);
 		});
-			
-	
+					
 		var str = JSON.stringify(object);
-		showJson(str);
-		socket.emit('make_deck', str);
-	});
-	
-	$("#open").on("click", function() {
-		socket.emit('get_deck');
+		localStorage.setItem('deck', str);
+		$('#system_message').text("Erfolgreich gespeichert!");
+		$('#system_message').removeClass("alert-danger");
+		$('#system_message').addClass("alert-success");
 	});
 }

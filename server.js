@@ -101,15 +101,6 @@ io.sockets.on('connection', function(client)
 		client.game.doCommand(data, client);	
 	});
 	
-	client.on('make_deck', function (data) {
-		makeDeck(data, "Deck", client);
-	});
-	
-	client.on('get_deck', function()
-	{
-		get_deck(client);
-	});
-	
 });
 
 // Starts the new Game
@@ -142,22 +133,4 @@ function htmlspecialchar(string)
 	var result = body.replace(regex, "");
 	return result;
 };
-
-function makeDeck(data, filename, client)
-{
-	var outputFile = __dirname + "/js_module/deck/" + filename + ".json";	
-	fs.writeFile(outputFile, data, function (err) {
-		if (err) {
-			console.log("MakeDeck Error: " + err);
-		} else {
-			client.emit('success');
-		}
-	});
-}
-
-function get_deck(client)
-{
-	var arr = JSON.parse(fs.readFileSync(__dirname + '/js_module/deck/Deck.json', 'utf8'));
-	client.emit('get_deck', JSON.stringify(arr));
-}
 

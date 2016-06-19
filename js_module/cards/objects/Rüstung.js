@@ -30,7 +30,7 @@ class Rüstung extends spell {
 	
 	activate (target, manipulator)
 	{
-		manipulator.buffHP(target, 2);
+		manipulator.buffHP(target, 3);
 	}
 }
 Rüstung.voraussetzung = voraussetzung;

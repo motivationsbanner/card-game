@@ -24,14 +24,16 @@ class Pfeilhagel extends spell {
 	
 	getPlayableFields(field)
 	{
-		
-		return [ {pos: {row: 'Row', index: 2}, color: "white"} ];
+		var playable = [];
+		playable.push( {pos: {row: 'Row', index: 0}, color: "white"} );
+		playable.push( {pos: {row: 'Row', index: 1}, color: "white"} );
+		return playable;
 	}
 	
 	activate (targetRow, manipulator)
 	{
 		
-		manipulator.buffHP(targetRow, 2);
+		manipulator.dmgRow(targetRow, manipulator.field.getFriendlyRange());
 	}
 }
 Pfeilhagel.voraussetzung = voraussetzung;

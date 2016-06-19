@@ -12,6 +12,21 @@ class Bücherwissen extends spell {
 		super();
 	}
 	
+	isPlayable(c)
+	{
+		if (super.isPlayable(c))
+		{
+			// YOUR CONDITIONS
+			return c.playerHandMaxAmount(4);
+		}
+		return false;
+	}
+	
+	getPlayableFields(field)
+	{
+		return [ {pos: {row: 'Players', index: 1}, color: "white"} ];
+	}
+	
 	activate (target, manipulator)
 	{
 		manipulator.draw(2);

@@ -11,6 +11,29 @@ class Motivationsbanner extends spell {
 	{
 		super();
 	}
+	
+	isPlayable(c)
+	{
+		if (super.isPlayable(c))
+		{
+			// YOUR CONDITIONS
+			return c.maxAmountPlayerMinions(4);
+		}
+		return false;
+	}
+	
+	getPlayableFields(field)
+	{
+		var playable = [];
+		playable.push( {pos: {row: 'Row', index: 2}, color: "white"} );
+		playable.push( {pos: {row: 'Row', index: 3}, color: "white"} );
+		return playable;
+	}
+	
+	activate (targetRow, manipulator)
+	{
+		manipulator.buffAttack(targetRow, 1);
+	}
 }
 Motivationsbanner.voraussetzung = voraussetzung;
 Motivationsbanner.nom = "Motivationsbanner";

@@ -324,6 +324,20 @@ var field = class Field {
 		return cards;
 	}
 	
+	getPosDmgCards()
+	{
+		var cards = this.getFieldCards("All");
+		var dmgCards = [];
+		for (var i = 0; i < cards.length; i++)
+		{
+			if (cards[i].getDmg() == true)
+			{
+				var pos = {pos: cards[i].getPos(), color: "white"};
+				dmgCards.push(pos);
+			}			
+		}
+		return dmgCards;		
+	}
 	getHand() {
 		return this.field.hand;
 	}

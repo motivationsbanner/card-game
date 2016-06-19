@@ -16,8 +16,7 @@ class Spell extends Card {
 	
 	getPlayableFields(field)
 	{
-		return [ {pos: {row: 'PlayerRange', index: 3}, color: "white"} ];
-		
+		return new Array();		
 	}
 	
 }

@@ -28,6 +28,6 @@ preparation:
 		emit("cards", [{name: string, attack: int, health: int, text: string}]);
 
 	client->server:
-		emit("start", deck, name);
-		emit("spectate", id, name);
+		emit("start", {deck: deckString, name: String});
+		emit("spectate", {id: String, name: String});
 ```

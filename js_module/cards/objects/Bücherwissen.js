@@ -1,5 +1,5 @@
 "use strict";
-
+var voraussetzung = "Es dürfen maximal 4 Karten auf der Hand sein.";
 var text = "Durch das wissen welches in Büchern gespeichert  ist werden zwei neue Karten gezogen.";
 var health = 0;
 var attack = 0;
@@ -17,8 +17,8 @@ class Bücherwissen extends spell {
 		manipulator.draw(2);
 	}
 }
-
-Bücherwissen.nom = "Bücherwissen"
+Bücherwissen.voraussetzung = voraussetzung;
+Bücherwissen.nom = "Bücherwissen";
 Bücherwissen.text = text;
 Bücherwissen.health = health;
 Bücherwissen.attack = attack;

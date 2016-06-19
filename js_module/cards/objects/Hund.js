@@ -1,5 +1,5 @@
 "use strict";
-
+var voraussetzung = "Es muss mindestens 1 feindliches Minion auf dem Feld sein.";
 var text = "Der Hund ist geradzu versessen darauf dir in den Arsch zu beissen.";
 var health = 1;
 var attack = 3;
@@ -24,8 +24,8 @@ class Hund extends MeleeMinion {
 		return false;
 	}
 }
-
-Hund.nom = "Hund"
+Hund.voraussetzung = voraussetzung;
+Hund.nom = "Hund";
 Hund.text = text;
 Hund.health = health;
 Hund.attack = attack;

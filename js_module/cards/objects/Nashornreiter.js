@@ -1,5 +1,5 @@
 "use strict";
-
+var voraussetzung = "Es muss in diesem Zug mindestens 1 verbündetes Minion gestorben sein.";
 var text = "Diese Soldaten kommen aus dem Fernen Osten und piksen nicht nur gerne mit ihrem Speer sondern spiessen dich auch gern mit dem Horn auf.";
 var health = 2;
 var attack = 5;
@@ -24,7 +24,7 @@ class Nashornreiter extends MeleeMinion {
 		return false;
 	}
 }
-
+Nashornreiter.voraussetzung = voraussetzung;
 Nashornreiter.nom = "Nashornreiter"
 Nashornreiter.text = text;
 Nashornreiter.health = health;

@@ -1,4 +1,5 @@
 "use strict";
+var voraussetzung = "Der eigene Held darf maximal 10 Lifepoints haben.";
 var text = "Der Kavallerist ist eine sehr starke Person.";
 var health = 5;
 var attack = 5;
@@ -23,7 +24,7 @@ class Kavallerist extends MeleeMinion {
 		return false;
 	}
 }
-
+Kavallerist.voraussetzung = voraussetzung;
 Kavallerist.nom = "Kavallerist"
 Kavallerist.text = text;
 Kavallerist.health = health;

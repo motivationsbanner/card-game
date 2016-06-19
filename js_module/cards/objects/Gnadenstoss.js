@@ -1,5 +1,5 @@
 "use strict";
-
+var voraussetzung = "Es muss mindestens ein Verbündetes Minion auf dem Feld sein.";
 var text = "Vernichtet ein Verletztes Minion.";
 var health = 0;
 var attack = 0;
@@ -12,7 +12,7 @@ class Gnadenstoss extends spell {
 		super();
 	}
 }
-
+Gnadenstoss.voraussetzung = voraussetzung;
 Gnadenstoss.nom = "Gnadenstoss"
 Gnadenstoss.text = text;
 Gnadenstoss.health = health;

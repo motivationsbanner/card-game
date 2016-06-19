@@ -1,5 +1,5 @@
 "use strict";
-
+var voraussetzung = "Der Hofnarr tritt nicht ohne Publikum auf es müssen mindestens 4 Minions auf dem Spielfeld sein.";
 var text = "Lach den Hofnarr nicht aus sonst bewirft er dich mit seinen Bällen.";
 var health = 3;
 var attack = 2;
@@ -24,8 +24,8 @@ class Hofnarr extends RangeMinion {
 		return false;
 	}
 }
-
-Hofnarr.nom = "Hofnarr"
+Hofnarr.voraussetzung = voraussetzung;
+Hofnarr.nom = "Hofnarr";
 Hofnarr.text = text;
 Hofnarr.health = health;
 Hofnarr.attack = attack;

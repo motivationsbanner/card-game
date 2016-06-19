@@ -5,7 +5,7 @@ var Deck = require('../js_module/Deck.js');
 var Card = require('../js_module/cards/cards.js');
 
 var player = class Player {
-	constructor (	)
+	constructor ()
 	{
 		this.client;
 		this.hp = 15;
@@ -14,15 +14,26 @@ var player = class Player {
 		this.selected_card = -1;
 	}
 	
-	draw(amount)
+	draw(amount, m)
 	{
 		var cards = new Array();
-		for (var i = 1; i <= amount; i++)
+		for (var i = 0; i < amount; i++)
 		{
+			if (this.deck.deck.length == 0)
+			{
+				m.endGame({index: 1});
+			}
+			if (this.field.getHand().length == 9)
+			{
+				var temp_card = this.deck.draw();
+				this.sendCommandMessage({command: "overdraw", card: temp_card });
+				return false;
+			}
 			cards.push(this.deck.draw());
 		}
 		this.field.addHand(cards);
 		this.sendCommandMessage( {command: "draw", cards} );
+		return true;
 	}
 	
 	getPlayOptions(conditions)

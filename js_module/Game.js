@@ -88,8 +88,12 @@ class Game {
 	
 	drawCard(amount)
 	{
-		this.on_turn.draw(amount);
-		this.not_turn.enemyDraw(amount);	
+		var success = this.on_turn.draw(amount, this.manipulator);
+		
+		if (success) 
+			this.not_turn.enemyDraw(amount);
+		else
+			this.not_turn.sendCommandMessage({command: "overdraw", card: amount});
 	}
 	
 	end()

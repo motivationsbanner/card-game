@@ -1,9 +1,3 @@
-/**
- * card game
- * client: https://github.com/cravay/card-game
- * server: https://github.com/ceoy/Nodejs
- */
- 
 "use strict";
 var fs = require('fs');
 	
@@ -39,8 +33,7 @@ var deck = class Deck {
 			}
 		}
 	}
-	// draw a card from the deck
-	// return id
+
 	draw()
 	{
 		var l = this.deck.length - 1;

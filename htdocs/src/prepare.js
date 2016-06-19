@@ -95,7 +95,11 @@ function prepare() {
 			recieveCommand(data);
 		});
 
-		socket.emit("start");
+		if(localStorage.getItem("deck")) {
+			socket.emit("start", JSON.parse(localStorage.getItem("deck")));
+		} else {
+			socket.emit("start");
+		}
 	});
 }
 

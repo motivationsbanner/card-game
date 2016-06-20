@@ -1,7 +1,7 @@
 "use strict";
 var text = "Der Dieb taucht nur auch wenn der Gegner mehr Karten auf der hand hat als du. Er zieht dir am Ende jedes Zuges eine Karte";
-var health = 0;
-var attack = 2;
+var health = 2;
+var attack = 0;
 
 var RangeMinion = require(__dirname + '/../RangedMinion.js');
 

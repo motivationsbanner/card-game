@@ -1,5 +1,5 @@
 "use strict";
-var text = "Der Dieb taucht nur auch wenn der Gegner mehr Karten auf der Hand hat als du. Er zieht dir am Ende jedes Zuges eine Karte";
+var text = "Der Dieb taucht nur auf wenn der Gegner mehr Karten auf der Hand hat als du. Er zieht dir am Ende jedes Zuges eine Karte";
 var health = 2;
 var attack = 0;
 
@@ -23,7 +23,7 @@ class Dieb extends RangeMinion {
 		return false;
 	}
 	
-	onTurn(manipulator)
+	onTurnEnd(manipulator)
 	{
 		manipulator.draw(1);
 	}

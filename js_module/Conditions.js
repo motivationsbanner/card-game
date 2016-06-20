@@ -480,6 +480,26 @@ class Conditions
 			return false;
 		return true;
 	}
+	
+	enemyMoreCards()
+	{
+		var hand = this.field.getHand();
+		var enemy_hand = this.field.getEnemyHand();
+		if (enemyHand.length < hand.length)
+			return false;
+		return true;
+		
+	}
+	
+	playerMoreCards()
+	{
+		var hand = this.field.getHand();
+		var enemy_hand = this.field.getEnemyHand();
+		if (enemyHand.length > hand.length)
+			return false;
+		return true;
+		
+	}
 }
 
 module.exports = Conditions;

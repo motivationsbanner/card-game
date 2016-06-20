@@ -13,7 +13,7 @@ class Dieb extends RangeMinion {
 		this.health = health;
 	}
 	
-/*	isPlayable(c)
+	isPlayable(c)
 	{
 		if (super.isPlayable(c))
 		{
@@ -22,7 +22,7 @@ class Dieb extends RangeMinion {
 		}
 		return false;
 	}
-*/	
+	
 	onTurn(manipulator)
 	{
 		manipulator.draw(1);

@@ -82,7 +82,6 @@ function playCard(from, to, cardName, callback) {
 		from.field.setCard(cardName);
 	}
 
-
 	from.field.backup = to.field;
 	rows[to.row][to.index] = from.field;
 
@@ -127,10 +126,6 @@ function kill(field, callback) {
 	skull.alpha = 0;
 	stage.addChild(skull);
 
-	console.dir(skull);
-
-	// TODO: remove largeCard
-
 	createjs.Tween.get(skull)
 		.to({alpha: 1}, 100).wait(1000)
 		.to({alpha: 0}, 100)
@@ -144,8 +139,6 @@ function kill(field, callback) {
 }
 
 function attack(attacker, target, callback) {
-	// TODO: adjust position (add bounds of sword/arrow)
-
 	var sword;
 
 	if(attacker.row === "PlayerMelee" || attacker.row === "EnemyMelee") {
@@ -157,8 +150,6 @@ function attack(attacker, target, callback) {
 
 	attacker = getField(attacker);
 	target = getField(target);
-
-
 
 	sword.regX = sword.getBounds().width / 2;
 	sword.regY = sword.getBounds().height / 2;
@@ -259,3 +250,4 @@ function endGame(winner) {
 
 	createjs.Tween.get(message).to({alpha: 1}, 300);
 }
+

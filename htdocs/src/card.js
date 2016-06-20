@@ -9,21 +9,33 @@
 class Card {
 	constructor(cardType) {
 		this.cardType = cardType;
-		
-		this.smallCard = new createjs.Container();
-		this.largeCard = new createjs.Container();
+		var self = this;
 
+		// largeCard		
+		this.largeCard = new createjs.Container();
 		this.largeCard.setTransform(containerBorder.left, 
 			(480 - largeCardDimensions.height) / 2
 		);
 
-		var largeCardBitmap = new createjs.Bitmap(this.cardType.largeCardDataURL);
-		this.largeCard.addChild(largeCardBitmap);
+		var largeCardImage = new Image();
 
-		var smallCardBitmap = new createjs.Bitmap(this.cardType.smallCardDataURL);
-		this.smallCard.addChild(smallCardBitmap);
+		largeCardImage.addEventListener("load", function() {
+			var largeCardBitmap = new createjs.Bitmap(largeCardImage);
+			self.largeCard.addChildAt(largeCardBitmap, 0);
+		});
 
-		stage.addChildAt(this.smallCard, 0);
+		largeCardImage.src = this.cardType.largeCardDataURL;
+
+		// smallCard
+		this.smallCard = new createjs.Container();
+		var smallCardImage = new Image();
+
+		smallCardImage.addEventListener("load", function() {
+			var smallCardBitmap = new createjs.Bitmap(smallCardImage);
+			self.smallCard.addChildAt(smallCardBitmap, 0);
+		});
+
+		smallCardImage.src = this.cardType.smallCardDataURL;
 	}
 }
 
@@ -39,7 +51,6 @@ class Minion extends Card {
 		smallCardHealth.set({name: "health", x: 39, y: 48, textAlign: "center"});
 
 		this.smallCard.addChild(smallCardAttack, smallCardHealth);
-		this.smallCard.cache(0, 0, smallCardDimensions.width, smallCardDimensions.height);
 
 		// largeCard
 		var largeCardAttack = new createjs.Text(cardType.attack, "bold 15px monospace", "red");
@@ -49,24 +60,16 @@ class Minion extends Card {
 		largeCardHealth.set({name: "health", x: 147, y: 272, textAlign: "center"});
 
 		this.largeCard.addChild(largeCardAttack, largeCardHealth);
-		this.largeCard.cache(0, 0, largeCardDimensions.width, largeCardDimensions.height);
 	}
 
 	set attack(attack) {
 		this.smallCard.getChildByName("attack").text = attack;
 		this.largeCard.getChildByName("attack").text = attack;
-		this.updateCache();
 	}
 
 	set health(health) {
 		this.smallCard.getChildByName("health").text = health;
 		this.largeCard.getChildByName("health").text = health;
-		this.updateCache();
-	}
-
-	updateCache() {
-		this.smallCard.updateCache();
-		this.largeCard.updateCache();
 	}
 }
 

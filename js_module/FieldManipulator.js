@@ -132,11 +132,13 @@ class FieldManipulator
 		
 		this.game.on_turn.sendCommandMessage(player_command);
 		this.game.not_turn.sendCommandMessage(enemy_command);
+		
+		target.onDeath(this);
 	}
 	
 	buffHP(targetRow, amount, glow)
 	{
-		glow = glow || true;
+		glow = glow || false;
 		if (targetRow.row == 'Row')
 		{
 			var cards = this.field.getCardsInRow(targetRow.index);
@@ -159,7 +161,7 @@ class FieldManipulator
 			}
 			
 			
-			if (glow)
+			if (!glow)
 			{
 				var enemyGlow = {command: "glow", target: this.field.translate(targetRow, 3), color: "blue"};
 				var playerGlow = {command: "glow", target: targetRow, color: "blue"};
@@ -187,7 +189,7 @@ class FieldManipulator
 			this.game.on_turn.sendCommandMessage(player_command);
 			this.game.not_turn.sendCommandMessage(enemy_command);	
 			
-			if (glow)
+			if (!glow)
 			{
 				var enemyGlow = {command: "glow", target: enemy_pos, color: "blue"};
 				var playerGlow = {command: "glow", target: targetRow, color: "blue"};
@@ -201,7 +203,7 @@ class FieldManipulator
 
 	buffAttack(targetRow, amount, glow)
 	{	
-		glow = glow || true;
+		glow = glow || false;
 		if (targetRow.row == 'Row')
 		{
 			var cards = this.field.getCardsInRow(targetRow.index);
@@ -223,7 +225,7 @@ class FieldManipulator
 				this.game.not_turn.sendCommandMessage(enemy_command);
 			}
 			
-			if (glow)
+			if (!glow)
 			{
 				var enemyGlow = {command: "glow", target: this.field.translate(targetRow, 3), color: "blue"};
 				var playerGlow = {command: "glow", target: targetRow, color: "blue"};
@@ -249,7 +251,7 @@ class FieldManipulator
 			this.game.on_turn.sendCommandMessage(player_command);
 			this.game.not_turn.sendCommandMessage(enemy_command);	
 			
-			if (glow)
+			if (!glow)
 			{
 				var enemyGlow = {command: "glow", target: enemy_pos, color: "blue"};
 				var playerGlow = {command: "glow", target: targetRow, color: "blue"};
@@ -260,25 +262,50 @@ class FieldManipulator
 		}
 	}
 	
-	buffAttackFriendly(amount)
+	buffAttackFriendly(amount, pos)
 	{
-		this.buffAttack({row: "Row", index: 2}, amount, false);
-		this.buffAttack({row: "Row", index: 3}, amount, false);
+		if (pos.row == 'PlayerRange' || pos.row == 'PlayerMelee')
+		{
+			this.buffAttack({row: "Row", index: 2}, amount, true);
+			this.buffAttack({row: "Row", index: 3}, amount, true);
 		
-		var enemyGlow = {command: "glow", target: {row: "Row", index: 5}, color: "blue"};
-		var playerGlow = {command: "glow", target: {row: "Row", index: 4}, color: "blue"};
+			var enemyGlow = {command: "glow", target: {row: "Row", index: 4}, color: "blue"};
+			var playerGlow = {command: "glow", target: {row: "Row", index: 5}, color: "blue"};
+		}
+		
+		if (pos.row == 'EnemyRange' || pos.row == 'EnemyMelee')
+		{
+			this.buffAttack({row: "Row", index: 0}, amount, true);
+			this.buffAttack({row: "Row", index: 1}, amount, true);
+			
+			var enemyGlow = {command: "glow", target: {row: "Row", index: 5}, color: "blue"};
+			var playerGlow = {command: "glow", target: {row: "Row", index: 4}, color: "blue"};
+		}
 		
 		this.game.on_turn.sendCommandMessage(playerGlow);
 		this.game.not_turn.sendCommandMessage(enemyGlow);
 	}
 	
-	buffHPFriendly(amount)
+	buffHPFriendly(amount, pos)
 	{
-		this.buffHP({row: "Row", index: 2}, amount, false);
-		this.buffHP({row: "Row", index: 3}, amount, false);
 		
-		var enemyGlow = {command: "glow", target: {row: "Row", index: 5}, color: "blue"};
-		var playerGlow = {command: "glow", target: {row: "Row", index: 4}, color: "blue"};
+		if (pos.row == 'PlayerRange' || pos.row == 'PlayerMelee')
+		{		
+			this.buffHP({row: "Row", index: 2}, amount, true);
+			this.buffHP({row: "Row", index: 3}, amount, true);
+			
+			var enemyGlow = {command: "glow", target: {row: "Row", index: 4}, color: "blue"};
+			var playerGlow = {command: "glow", target: {row: "Row", index: 5}, color: "blue"};
+		}
+		
+		if (pos.row == 'EnemyRange' || pos.row == 'EnemyMelee')
+		{
+			this.buffHP({row: "Row", index: 0}, amount, true);
+			this.buffHP({row: "Row", index: 1}, amount, true);
+			
+			var enemyGlow = {command: "glow", target: {row: "Row", index: 5}, color: "blue"};
+			var playerGlow = {command: "glow", target: {row: "Row", index: 4}, color: "blue"};
+		}
 		
 		this.game.on_turn.sendCommandMessage(playerGlow);
 		this.game.not_turn.sendCommandMessage(enemyGlow);
@@ -307,16 +334,33 @@ class FieldManipulator
 		}
 	}
 	
-	draw(amount)
+	draw(amount, player)
 	{
-		this.game.on_turn.draw(2);
-		this.game.not_turn.enemyDraw(2);
+		player = player || 1;
 		
-		var enemyGlow = {command: "glow", target: {row: "Players", index: 0}, color: "blue"};
-		var playerGlow = {command: "glow", target: {row: "Players", index: 1}, color: "blue"};
+		if (player ==  1)
+		{
+			this.game.on_turn.draw(2);
+			this.game.not_turn.enemyDraw(2);
+			
+			var enemyGlow = {command: "glow", target: {row: "Players", index: 0}, color: "blue"};
+			var playerGlow = {command: "glow", target: {row: "Players", index: 1}, color: "blue"};
+			
+			this.game.on_turn.sendCommandMessage(playerGlow);
+			this.game.not_turn.sendCommandMessage(enemyGlow);
+		}
 		
-		this.game.on_turn.sendCommandMessage(playerGlow);
-		this.game.not_turn.sendCommandMessage(enemyGlow);
+		if (player == 0)
+		{
+			this.game.on_turn.enemyDraw(2);
+			this.game.not_turn.draw(2);
+			
+			var playerGlow = {command: "glow", target: {row: "Players", index: 0}, color: "blue"};
+			var enemyGlow = {command: "glow", target: {row: "Players", index: 1}, color: "blue"};
+			
+			this.game.on_turn.sendCommandMessage(playerGlow);
+			this.game.not_turn.sendCommandMessage(enemyGlow);
+		}	
 		
 	}
 	

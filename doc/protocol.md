@@ -21,14 +21,16 @@ game_command:
 		
 		emit('field', field obj -> 
 {	
-	enemyHand: amount,
+	enemyHand: int,
 	enemyRange: [{name, health, attack}],
 	enemyMelee: [{name, health, attack}],
 	playerMelee: [{name, health, attack}],
 	playerRange: [{name, health, attack}}],
 	playerHand: [{name}],
 	enemyHero: {name, health},
-	playerHero: {name, health}
+	playerHero: {name, health},
+	enemyDeck: int,
+	playerDeck: int
 }
 
 

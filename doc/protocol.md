@@ -18,7 +18,19 @@ game_command:
 		{command: "overdraw", card: cardname }
 		{command: "overdraw" }
 		{command: "change_turn}
-				
+		
+		emit('field', field obj -> 
+{	
+	enemyHand: amount,
+	enemyRange: [{name, health, attack}],
+	enemyMelee: [{name, health, attack}],
+	playerMelee: [{name, health, attack}],
+	playerRange: [{name, health, attack}}],
+	playerHand: [{name}],
+	enemyHero: {name, health}
+}
+
+
 	client->server
 		{command: "end_turn"}
 		{command: "select_option", pos: position}
@@ -28,6 +40,6 @@ preparation:
 		emit("cards", [{name: string, attack: int, health: int, text: string}]);
 
 	client->server:
-		emit("start", {deck: deckString, name: String});
-		emit("spectate", {id: String, name: String});
+		emit("start", {deck: deckString, name: String} );
+		emit("spectate", {id: String, name: String} );
 ```

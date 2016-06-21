@@ -10,47 +10,61 @@ var previewCard = null;
 var boardCenterX = (640 - largeCardDimensions.width - containerBorder.left - containerBorder.right) / 2 +
 	largeCardDimensions.width + containerBorder.left + containerBorder.right;
 
-function playerDrawCards(cards) {
-	cards.forEach(function(card) {
-		playerDrawCard(card);
+function playerDrawCards(cards, callback) {
+	if(!cards.length) {
+		callback();
+		return;
+	}
+
+	playerDrawCard(cards.shift(), function() {
+		playerDrawCards(cards, callback);
 	});
 }
 
-function playerDrawCard(cardName) {
+function playerDrawCard(cardName, callback) {
+	playerDeck.getChildByName("amount").text --;
+
 	rows.PlayerHand.forEach (function(field) {
-		field.x -= (smallCardDimensions.width + gap) / 2;
+		createjs.Tween.get(field).to({x: field.x - (smallCardDimensions.width + gap) / 2}, 450)
 	});
 
 	var x =  boardCenterX + (rows.PlayerHand.length - 2 + 1) * (smallCardDimensions.width / 2)
 		+ (rows.PlayerHand.length - 1 + 1) * (gap / 2);
 	var y = 480 - smallCardDimensions.height;
 
-	var field = new CardField(x, y, cardName);
-
+	var field = new CardField(playerDeck.x, playerDeck.y, cardName);
 	rows.PlayerHand.push(field);
+
+	createjs.Tween.get(field).to({x: x, y: y}, 500).call(callback);
 }
 
-function enemyDrawCards(amount) {
-	for(var i = 0; i < amount; i ++) {
-		enemyDrawCard();
+function enemyDrawCards(amount, callback) {
+	if(amount === 0) {
+		callback();
+		return;
 	}
+
+	enemyDrawCard(function() {
+		enemyDrawCards(amount - 1, callback);
+	});
 }
 
-function enemyDrawCard() {
+function enemyDrawCard(callback) {
+	enemyDeck.getChildByName("amount").text --;
+
 	rows.EnemyHand.forEach (function(field) {
-		field.x -= (smallCardDimensions.width + gap) / 2;
+		createjs.Tween.get(field).to({x: field.x - (smallCardDimensions.width + gap) / 2}, 450)
 	});
 
 	var x =  boardCenterX + (rows.EnemyHand.length - 2 + 1) * (smallCardDimensions.width / 2)
 		+ (rows.EnemyHand.length - 1 + 1) * (gap / 2);
 	var y = 0;
 
-	var field = new CardField(x, y);
-
+	var field = new CardField(enemyDeck.x, enemyDeck.y);
 	rows.EnemyHand.push(field);
+
+	createjs.Tween.get(field).to({x: x, y: y}, 500).call(callback);
 }
-
-
 
 function setPlayOptions(options) {
 
@@ -61,7 +75,7 @@ function setPlayOptions(options) {
 		field.container.on("click", (function(row, index) {
 			removeAllActionOptions();
 
-			window.sendCommand({
+			sendCommand({
 				command: "select_option",
 				pos: {row: row, index: index}
 			});
@@ -85,11 +99,10 @@ function playCard(from, to, cardName, callback) {
 	from.field.backup = to.field;
 	rows[to.row][to.index] = from.field;
 
-	from.field.goToField(to.field, function() {		
-		updateHand(rows[from.row], from.index);
-		rows[from.row].splice(from.index, 1);
-		callback();
-	});
+	updateHand(rows[from.row], from.index);
+	rows[from.row].splice(from.index, 1);
+
+	from.field.goToField(to.field, callback);
 }
 
 function removeAllActionOptions() {
@@ -118,6 +131,7 @@ function setHealth(field, health) {
 	getField(field).health = health;
 }
 
+// TODO: improve animation
 function kill(field, callback) {
 	var skull = new createjs.Bitmap(queue.getResult("totenkopf.png"));
 
@@ -226,11 +240,11 @@ function castSpell(sender, cardName, callback) {
 
 function updateHand(row, index) {
 	for(var i = 0; i < index; i ++) {
-		row[i].x += (smallCardDimensions.width + gap) / 2;
+		createjs.Tween.get(row[i]).to({x: row[i].x + (smallCardDimensions.width + gap) / 2}, 450)
 	}
 		
 	for(var i = index + 1; i < row.length; i ++) {
-		row[i].x -= (smallCardDimensions.width + gap) / 2;
+		createjs.Tween.get(row[i]).to({x: row[i].x - (smallCardDimensions.width + gap) / 2}, 450)
 	}
 }
 
@@ -239,7 +253,7 @@ function endGame(winner) {
 
 	message.alpha = 0;
 
-	message.x = (640 - message.getBounds().width) / 2;
+	message.x = boardCenterX - message.getBounds().width / 2;
 	message.y = (480 - message.getBounds().height) / 2;
 
 	stage.addChild(message);
@@ -251,3 +265,4 @@ function endGame(winner) {
 	createjs.Tween.get(message).to({alpha: 1}, 300);
 }
 
+// TODO: overdraw

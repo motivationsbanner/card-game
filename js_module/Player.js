@@ -155,6 +155,7 @@ var player = class Player {
 		
 		// Remove card in player hand
 		game.getOnTurn().removeHandCard(senderPos);
+		game.not_turn.removeHandCard(enemySenderPos);
 		
 		card.onPlay(game.manipulator);
 	}
@@ -218,6 +219,10 @@ var player = class Player {
 	}
 	
 	enemyDraw(amount) {
+		for (var i = 0; i < amount; i++)
+		{
+			this.field.field.enemyHand.push("i suck");	
+		}
 		this.sendCommandMessage( {command: "draw", amount} );
 	}
 	

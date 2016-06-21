@@ -33,16 +33,19 @@ function runCommand() {
 	var data = commandQueue[0];
 
 	// TODO: asyncCommands = [{command: ..., function : ...}], syncCommands = ..., loop
-
 	switch(data.command) {
 		case "draw":
 			if(data.cards) {
-				playerDrawCards(data.cards);
+				playerDrawCards(data.cards, function() {
+					commandQueue.shift();
+					runCommand();					
+				});
 			} else {
-				enemyDrawCards(data.amount);
+				enemyDrawCards(data.amount, function() {
+					commandQueue.shift();
+					runCommand();
+				});
 			}
-			commandQueue.shift();
-			runCommand();
 			break;
 
 		case "play_options":

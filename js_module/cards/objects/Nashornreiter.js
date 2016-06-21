@@ -18,7 +18,7 @@ class Nashornreiter extends MeleeMinion {
 		if (super.isPlayable(c))
 		{
 			// YOUR CONDITIONS
-			return true;
+			return c.minAmountMinionsDiedTurn(1);
 		}
 		return false;
 	}

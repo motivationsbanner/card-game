@@ -295,7 +295,7 @@ var field = class Field {
 				break;
 			case 'EnemyRange':
 				this.field.enemyRange[pos.index] = -1;
-				break;			
+				break;
 		}
 		return this;
 	}

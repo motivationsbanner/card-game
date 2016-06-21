@@ -32,6 +32,7 @@ class Game {
 	
 	changeTurn()
 	{
+		this.on_turn.onTurnEnd(this.manipulator);
 		this.on_turn.endTurn();
 		
 		var temp = this.on_turn;

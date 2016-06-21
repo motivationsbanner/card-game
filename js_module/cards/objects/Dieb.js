@@ -23,7 +23,7 @@ class Dieb extends RangeMinion {
 		return false;
 	}
 	
-	onTurn(manipulator)
+	onTurnEnd(manipulator)
 	{
 		manipulator.draw(1);
 	}

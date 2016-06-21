@@ -16,6 +16,7 @@ var player = class Player {
 	
 	draw(amount, m)
 	{
+		var overdraw = true;
 		var cards = new Array();
 		for (var i = 0; i < amount; i++)
 		{
@@ -27,13 +28,21 @@ var player = class Player {
 			{
 				var temp_card = this.deck.draw();
 				this.sendCommandMessage({command: "overdraw", card: temp_card });
-				return false;
+				overdraw = false;
 			}
-			cards.push(this.deck.draw());
+			if (overdraw)
+			{
+				cards.push(this.deck.draw());
+			}
+			
 		}
-		this.field.addHand(cards);
-		this.sendCommandMessage( {command: "draw", cards} );
-		return true;
+		if (cards.length > 0)
+		{
+			this.field.addHand(cards);
+			this.sendCommandMessage( {command: "draw", cards} );
+		}
+		
+		return overdraw;
 	}
 	
 	getPlayOptions(conditions)
@@ -147,7 +156,7 @@ var player = class Player {
 		// Remove card in player hand
 		game.getOnTurn().removeHandCard(senderPos);
 		
-		
+		card.onPlay(game.manipulator);
 	}
 	
 	endTurn()
@@ -160,6 +169,15 @@ var player = class Player {
 		this.selected_card = -1;
 	}
 	
+	onTurnEnd(manipulator)
+	{
+		var all_cards = this.field.getFieldsWithCards(true);
+		for (var i = 0; i < all_cards.length; i++)
+		{
+			this.field.getCard(all_cards[i]).onTurnEnd(manipulator);
+		}
+		this.selected_card = -1;
+	}
 	onTurn(manipulator)
 	{
 		var all_cards = this.field.getFieldsWithCards(true);

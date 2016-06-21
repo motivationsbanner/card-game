@@ -103,6 +103,12 @@ function runCommand() {
 			});
 			break;
 
+		case "name":
+			rows.Players[0].name = data.neame;
+			commandQueue.shift();
+			runCommand();
+			break;
+
 		case "end_game":
 			endGame(data.winner);
 			break;

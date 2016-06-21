@@ -95,11 +95,10 @@ function prepare() {
 				recieveCommand(data);
 			});
 
-			if(localStorage.getItem("deck")) {
-				socket.emit("start", JSON.parse(localStorage.getItem("deck")));
-			} else {
-				socket.emit("start");
-			}
+			socket.emit("start", {
+				deck: JSON.parse(localStorage.getItem("deck")),
+				name: localStorage.getItem("name")
+			});
 		});
 	});
 }
@@ -140,6 +139,10 @@ function prepareFields() {
 	var playerLeftBorder = containerBorder.left + largeCardDimensions.width / 2 - playerDimensions.width / 2;
 	rows.Players[0] = new PlayerField(playerLeftBorder, 5);
 	rows.Players[1] = new PlayerField(playerLeftBorder, 480 - playerDimensions.height - 5);	
+
+	if(localStorage.getItem("name")) {
+		rows.Players[1].name = localStorage.getItem("name");
+	}
 
 	// Change Turn
 	changeTurnButton = new Field(640 - endTurnButtonDimensions.width - 6, 

@@ -9,6 +9,7 @@ class Conditions
 	{
 		this.game = game;
 		this.field = this.game.on_turn.field;
+		this.graveyard = this.game.manipulator.graveyard;
 	}
 	
 	changeTurn()
@@ -286,39 +287,39 @@ class Conditions
 	}
 	
 	
-	// I DONT SAVE DIED MINIONS YET
+
 	maxAmountMinonsDied(maxAmount)
 	{
+		var ded = this.graveyard.total;
+		if (ded > maxAmount)
+			return false;
 		return true;
 	}
 	
-	// NOT SAVED YET
 	maxAmountEnemyMinionsDied(maxAmount)
 	{
+		var ded = this.graveyard.not_turn;
+		if (ded > maxAmount)
+			return false;
 		return true;
 	}
 	
-	// NOT SAVED YET
+
 	maxAmountPlayerMinionsDied(maxAmount)
 	{
+		var ded = this.graveyard.on_turn;
+		if (ded > maxAmount)
+			return false;
+
 		return true;
 	}
 
-	// NOT SAVED YET
+
 	maxAmountMinionsDiedTurn(maxAmount)
 	{
-		return true;
-	}
-	
-	// NOT SAVED YET
-	maxAmountEnemyMinionsDiedTurn(maxAmount)
-	{
-		return true;
-	}
-	
-	// NOT SAVED YET
-	maxAmountPlayerMinionsDiedTurn(maxAmount)
-	{
+		var ded = this.graveyard.turn;
+		if (ded > maxAmount)
+			return false;
 		return true;
 	}
 	
@@ -394,40 +395,39 @@ class Conditions
 			return false;
 		return true;
 	}
+		
 	
-	// NOT SAVED YET
 	minAmountMinonsDied(minAmount)
 	{
+		var ded = this.graveyard.total;
+		if (ded < minAmount)
+			return false;
 		return true;
 	}
 	
-	// NOT SAVED YET
 	minAmountEnemyMinionsDied(minAmount)
 	{
+		var ded = this.graveyard.not_turn;
+		if (ded < minAmount)
+			return false;
 		return true;
 	}
 	
-	// NOT SAVED YET
+
 	minAmountPlayerMinionsDied(minAmount)
 	{
+		var ded = this.graveyard.on_turn;
+		if (ded < minAmount)
+			return false;
 		return true;
 	}
 
-	// NOT SAVED YET
+
 	minAmountMinionsDiedTurn(minAmount)
 	{
-		return true;
-	}
-	
-	// NOT SAVED YET
-	minAmountEnemyMinionsDiedTurn(minAmount)
-	{
-		return true;
-	}
-	
-	// NOT SAVED YET
-	minAmountPlayerMinionsDiedTurn(minAmount)
-	{
+		var ded = this.graveyard.turn;
+		if (ded < minAmount)
+			return false;
 		return true;
 	}
 	
@@ -485,10 +485,8 @@ class Conditions
 	{
 		var hand = this.field.getHand();
 		var enemy_hand = this.field.getEnemyHand();
-		if(enemy_hand.length < hand.length)
-		{
-		return false;
-		}
+		if (enemy_hand.length < hand.length)
+			return false;
 		return true;
 	}
 	
@@ -496,10 +494,8 @@ class Conditions
 	{
 		var hand = this.field.getHand();
 		var enemy_hand = this.field.getEnemyHand();
-		if(enemy_hand.length > hand.length)
-		{
-		return false;
-		}
+		if (enemy_hand.length > hand.length)
+			return false;
 		return true;
 	}
 }

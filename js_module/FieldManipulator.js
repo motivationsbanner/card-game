@@ -6,6 +6,12 @@ class FieldManipulator
 		this.game = game;
 		this.field = this.game.on_turn.field;
 		this.enemyField = this.game.not_turn.field;
+		this.graveyard = {
+			total: 0,
+			on_turn: 0,
+			not_turn: 0,
+			turn: 0
+		};
 	}
 	
 	attack(attacker, defender)
@@ -134,6 +140,12 @@ class FieldManipulator
 		this.game.not_turn.sendCommandMessage(enemy_command);
 		
 		target.onDeath(this);
+		this.graveyard.total++;
+		if (target_pos.row == 'EnemyMelee' || target_pos.row == 'EnemyRange')
+			this.graveyard.not_turn++;
+		else
+			this.graveyard.on_turn++;
+		this.graveyard.turn++;
 	}
 	
 	buffHP(targetRow, amount, glow)
@@ -337,11 +349,16 @@ class FieldManipulator
 	draw(amount, player)
 	{
 		player = player || 1;
+		amount = amount || 1;
 		
 		if (player ==  1)
 		{
-			this.game.on_turn.draw(2);
-			this.game.not_turn.enemyDraw(2);
+			var success = this.game.on_turn.draw(amount, this);
+			
+			if (success)
+				this.game.not_turn.enemyDraw(amount);
+			else
+				this.game.not_turn.sendCommandMessage({command: "overdraw", card: amount});
 			
 			var enemyGlow = {command: "glow", target: {row: "Players", index: 0}, color: "blue"};
 			var playerGlow = {command: "glow", target: {row: "Players", index: 1}, color: "blue"};
@@ -352,8 +369,12 @@ class FieldManipulator
 		
 		if (player == 0)
 		{
-			this.game.on_turn.enemyDraw(2);
-			this.game.not_turn.draw(2);
+			var success = this.game.not_turn.draw(amount);
+			
+			if (success)
+				this.game.on_turn.enemyDraw(amount);
+			else
+				this.game.on_turn.sendCommandMessage({command: "overdraw", card: amount});
 			
 			var playerGlow = {command: "glow", target: {row: "Players", index: 0}, color: "blue"};
 			var enemyGlow = {command: "glow", target: {row: "Players", index: 1}, color: "blue"};
@@ -368,6 +389,11 @@ class FieldManipulator
 	changeTurn() {
 		this.field = this.game.on_turn.field;
 		this.enemyField = this.game.not_turn.field;
+		
+		var temp = this.graveyard.on_turn;
+		this.graveyard.on_turn = this.graveyard.not_turn;
+		this.graveyard.not_turn = temp;
+		this.graveyard.turn = 0;
 	}	
 }
 

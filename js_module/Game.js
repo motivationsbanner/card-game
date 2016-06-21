@@ -108,7 +108,7 @@ class Game {
 		if (success) 
 			this.not_turn.enemyDraw(amount);
 		else
-			this.on_turn.sendCommandMessage({command: "overdraw", card: amount});
+			this.not_turn.sendCommandMessage({command: "overdraw", card: amount});
 	}
 	
 	end()

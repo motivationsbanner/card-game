@@ -1,7 +1,7 @@
 "use strict";
 var text = "Nashornreiter piksen gerne herum. Mindestens 1 verbündetes Minion in dieser Runde gestorben.";
-var health = 2;
-var attack = 5;
+var health = 5;
+var attack = 2;
 
 var MeleeMinion = require(__dirname + '/../MeleeMinion.js');
 

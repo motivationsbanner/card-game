@@ -78,13 +78,23 @@ class PlayerField extends Field {
 		this.player.setTransform(0, 0, 0.7, 0.7);
 		this.container.addChild(this.player);
 
+		// health
 		var health = new createjs.Text("15", "bold 15px monospace", "brown");
 		health.set({name: "health", x: 87, y: 36, textAlign: "center"});
+		this.container.addChild(health);
+
+		// name
+		var health = new createjs.Text("unknown", "bold 12px monospace", "white");
+		health.set({name: "name", x: 150 * 0.7 * 0.5, y: 55, textAlign: "center"});
 		this.container.addChild(health);
 	}
 
 	set health(health) {
 		this.container.getChildByName("health").text = health;
+	}
+
+	set name(name) {
+		this.container.getChildByName("name").text = name;
 	}
 }
 

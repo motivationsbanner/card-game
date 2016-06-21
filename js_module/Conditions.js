@@ -485,20 +485,22 @@ class Conditions
 	{
 		var hand = this.field.getHand();
 		var enemy_hand = this.field.getEnemyHand();
-		if (enemy_hand.length < hand.length)
-			return false;
+		if(enemy_hand.length < hand.length)
+		{
+		return false;
+		}
 		return true;
-		
 	}
 	
 	playerMoreCards()
 	{
 		var hand = this.field.getHand();
 		var enemy_hand = this.field.getEnemyHand();
-		if (enemy_hand.length > hand.length)
-			return false;
+		if(enemy_hand.length > hand.length)
+		{
+		return false;
+		}
 		return true;
-		
 	}
 }
 

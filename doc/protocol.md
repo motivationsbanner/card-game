@@ -27,7 +27,8 @@ game_command:
 	playerMelee: [{name, health, attack}],
 	playerRange: [{name, health, attack}}],
 	playerHand: [{name}],
-	enemyHero: {name, health}
+	enemyHero: {name, health},
+	playerHero: {name, health}
 }
 
 

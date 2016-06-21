@@ -15,6 +15,8 @@ var rows = {};
 var socket;
 var cardTypesByName = {};
 var changeTurnButton;
+var playerDeck;
+var enemyDeck;
 
 document.addEventListener("DOMContentLoaded", function() {
 		showInfo("Connecting to the server ...");
@@ -85,9 +87,9 @@ function prepare() {
 
 	queue.on("complete", function(event) {
 		prepareCardImages(function() {
+			prepareCardback();
 			prepareBorderImages();
 			prepareFields();
-			prepareCardback();
 
 			hideInfo();
 
@@ -116,7 +118,6 @@ function prepareFields() {
 
 	// Fields on the Board and Rows
 	for(var i = 0; i < 4;  i ++) {
-
 		rows.Row[i] = new Field(boardCenterX - (width * smallCardDimensions.width + (width - 1) * 
 			gap) / 2, 240 - (4 * 70 + 3 * gap) / 2 + i * (70 + gap), 274, 70);
 
@@ -145,10 +146,11 @@ function prepareFields() {
 	}
 
 	// Change Turn
-	changeTurnButton = new Field(640 - endTurnButtonDimensions.width - 6, 
+	changeTurnButton = new Field(rows.EnemyRange[4].x + smallCardDimensions.width + (640 - 
+		(rows.EnemyRange[4].x + smallCardDimensions.width)) / 2 - 
+		endTurnButtonDimensions.width / 2,
 		(480 - endTurnButtonDimensions.height) / 2, endTurnButtonDimensions.width,
 		endTurnButtonDimensions.height);
-
 
 	var enemyTurn = new createjs.Bitmap(queue.getResult("btn_enemyturn.png"));
 	enemyTurn.name = "enemy_turn";
@@ -161,6 +163,42 @@ function prepareFields() {
 
 	changeTurnButton.container.addChild(enemyTurn);
 	changeTurnButton.container.addChild(myTurn);
+
+	// Enemy Deck
+	enemyDeck = new createjs.Container();
+	var enemyDeckCardBack= new createjs.Bitmap(cardBack);
+	enemyDeck.addChild(enemyDeckCardBack);
+	enemyDeck.x = rows.EnemyRange[4].x + smallCardDimensions.width + (640 - 
+		(rows.EnemyRange[4].x + smallCardDimensions.width)) / 2 - 
+		smallCardDimensions.width / 2;
+	enemyDeck.y = rows.EnemyRange[0].y + (smallCardDimensions.height + gap) / 2; 
+	var enemyCardsLeft = new createjs.Text(30, "bold 20px monospace", "black");
+	enemyCardsLeft.set({
+		name: "amount",
+		x: smallCardDimensions.width / 2,
+		y: smallCardDimensions.height / 2,
+		textAlign: "center",
+		textBaseline: "middle"
+	});
+	enemyDeck.addChild(enemyCardsLeft);
+	stage.addChild(enemyDeck);
+
+	// Player Deck
+	playerDeck = new createjs.Container();
+	var playerDeckCardBack= new createjs.Bitmap(cardBack);
+	playerDeck.addChild(playerDeckCardBack);
+	playerDeck.x = enemyDeck.x;
+	playerDeck.y = rows.PlayerMelee[0].y + (smallCardDimensions.height + gap) / 2; 
+	var playerCardsLeft = new createjs.Text(30, "bold 20px monospace", "black");
+	playerCardsLeft.set({
+		name: "amount",
+		x: smallCardDimensions.width / 2,
+		y: smallCardDimensions.height / 2,
+		textAlign: "center",
+		textBaseline: "middle"
+	});
+	playerDeck.addChild(playerCardsLeft);
+	stage.addChild(playerDeck);
 }
 
 function prepareCardback() {

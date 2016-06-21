@@ -24,6 +24,7 @@ window.sendCommand = function(data) {
 }
 
 // I hope nobody ever sees this ...
+// Ceoy: I saw it:3
 function runCommand() {
 	if(commandQueue.length === 0) {
 		return;
@@ -104,7 +105,7 @@ function runCommand() {
 			break;
 
 		case "name":
-			rows.Players[0].name = data.neame;
+			rows.Players[0].name = data.name;
 			commandQueue.shift();
 			runCommand();
 			break;

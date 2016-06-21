@@ -115,8 +115,15 @@ function bindThis() {
 		
 	});
 	
-	$("#save").on("click", function() {
-		// check if there are 30 cards in the deck
+	$("#save").on("click", function() {		
+		var name = $('#name').val();
+		if (name !== "")
+		{
+			localStorage.setItem('name', name);
+			$('#name_message').addClass('alert-success');
+			$('#name_message').text('Name saved.');
+		}
+		
 		if (actual_cards != 30) {
 			$('#system_message').addClass("alert alert-danger");
 			$('#system_message').text("You dont have 30 cards in your deck.");
@@ -132,7 +139,7 @@ function bindThis() {
 			var temp = {card_name: card, card_amount: amount};
 			object.push(temp);
 		});
-					
+		
 		var str = JSON.stringify(object);
 		localStorage.setItem('deck', str);
 		$('#system_message').text("Erfolgreich gespeichert!");

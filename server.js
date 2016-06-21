@@ -55,10 +55,12 @@ io.sockets.on('connection', function(client)
 	client.emit('cards', all_cards);
 	// Add Client to Player Array
 	
-	client.on('start', function(deck) 
+	client.on('start', function(data) 
 	{
-		deck = deck || false;
+		var deck = data.deck || false;
+		var name = data.name || "Unknown";
 		client.deck = deck;
+		client.name = name;
 		// Check if there are enough players waiting
 		players.add(client);
 		
@@ -103,15 +105,18 @@ io.sockets.on('connection', function(client)
 	
 });
 
-// Starts the new Game
-// -> Sends 3 Cards to each Player and tells Player am_zug that it is his turn
 function startGame(game)
 {
-
 	// Send a message to the Players of the Game
 	var message = "Start Game";
 	game.sendMessage(message);
 	game.start();
+	
+	var name1 = game.p1.client.name;
+	var name2 = game.p2.client.name;
+	
+	game.p1.sendCommandMessage({command: "name", name: name2});
+	game.p2.sendCommandMessage({command: "name", name: name1});
 }	
 
 

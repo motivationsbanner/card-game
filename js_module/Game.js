@@ -167,6 +167,7 @@ class Game {
 			obj.name = this.p2.name;
 			obj.health = this.p2.hp;
 			obj.deckSize = this.p2.deck.deck.length;
+			obj.on_turn = this.on_turn;
 			this.p1.join(client, obj);
 		}
 			

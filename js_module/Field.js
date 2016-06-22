@@ -438,7 +438,7 @@ var field = class Field {
 		var enemyMelee = [];
 		for (var i = 0; i < this.field.enemyMelee.length; i++)
 		{
-			if (this.field.enemyRange[i] == -1)
+			if (this.field.enemyMelee[i] == -1)
 			{
 				enemyMelee.push(null);
 			} else {

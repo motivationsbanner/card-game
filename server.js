@@ -112,8 +112,9 @@ io.sockets.on('connection', function(client)
 	
 	client.on('command', function (data)
 	{
-		if (client.game !== "Spectator")
-			client.game.doCommand(data, client);
+		if (client.game === "Spectator")
+			return;
+		client.game.doCommand(data, client);
 	});
 	
 	client.on('chat', function (data)

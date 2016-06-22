@@ -232,7 +232,7 @@ var player = class Player {
 		this.client.emit('system', message);
 		for (var i = 0; i < this.spectators.length; i++)
 		{
-			this.spectators[i].emit('command', message);
+			this.spectators[i].emit('system', message);
 		}
 	}
 	

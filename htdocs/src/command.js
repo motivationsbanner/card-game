@@ -8,7 +8,7 @@
 
 var commandQueue = [];
 
-window.recieveCommand = function(data) {
+function recieveCommand(data) {
 	console.info("recieved command: " + JSON.stringify(data));
 
 	commandQueue.push(data);
@@ -18,7 +18,7 @@ window.recieveCommand = function(data) {
 	}
 }
 
-window.sendCommand = function(data) {
+function sendCommand(data) {
 	socket.emit("command", data);
 	console.info("sent command: " + JSON.stringify(data));
 }
@@ -94,12 +94,6 @@ function runCommand() {
 			});
 			break;
 
-		case "start_turn":
-			startTurn();
-			commandQueue.shift();
-			runCommand();
-			break;
-
 		case "cast_spell":
 			castSpell(data.sender, data.card_name, function() {
 				commandQueue.shift();
@@ -109,6 +103,18 @@ function runCommand() {
 
 		case "name":
 			rows.Players[0].name = data.name;
+			commandQueue.shift();
+			runCommand();
+			break;
+
+		case "start_turn":
+			startTurn();
+			commandQueue.shift();
+			runCommand();
+			break;
+
+		case "end_turn":
+			endTurn();
 			commandQueue.shift();
 			runCommand();
 			break;

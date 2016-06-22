@@ -95,13 +95,13 @@ io.sockets.on('connection', function(client)
 	
 	client.on('disconnect', function()
 	{
+		client.disconnect();
 		if ( players.getIndex(client) != -1 )
 		{
 			players.remove(client);	
 		} else {
 			try 
 			{
-				client.delete;
 				if (client.game == "Spectator")
 					return;
 					
@@ -113,9 +113,15 @@ io.sockets.on('connection', function(client)
 				
 				// Return the Player that did not leave 
 				if ( p1 == client )
+				{
 					p2.emit('system', 'Your Opponent disconnected. ¯\\_(ツ)_/¯ Please reload to start a new Game');
+					client.game.p2.sendCommandMessage({command: 'end_turn'});
+				}
 				if ( p2 == client )
+				{
 					p1.emit('system', 'Your Opponent disconnected. ¯\\_(ツ)_/¯ Please reload to start a new Game');
+					client.game.p1.sendCommandMessage({command: 'end_turn'});
+				}
 			} catch (err) {
 				console.log(err);
 			};

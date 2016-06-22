@@ -171,7 +171,7 @@ var player = class Player {
 		}
 		this.selected_card = -1;
 		
-		sendCommandMessage({command: "end_turn"});
+		this.sendCommandMessage({command: "end_turn"});
 	}
 	
 	onTurnEnd(manipulator)
@@ -185,7 +185,7 @@ var player = class Player {
 	}
 	onTurn(manipulator)
 	{
-		sendCommandMessage({command: "start_turn"});
+		this.sendCommandMessage({command: "start_turn"});
 		var all_cards = this.field.getFieldsWithCards(true);
 		for (var i = 0; i < all_cards.length; i++)
 		{

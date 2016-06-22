@@ -114,6 +114,7 @@ function removeAllActionOptions() {
 	}
 }
 
+// TODO: set index (mustn't be in front of the arrow/sword)
 function setPreviewCard(card) {
 	if(previewCard) {
 		stage.removeChild(previewCard.largeCard);
@@ -197,7 +198,10 @@ function glow(target, color, callback) {
 }
 
 function startTurn() {
-	changeTurnButton.container.on("click", endTurn, this, true);
+	if(!spectating) {
+		changeTurnButton.container.on("click", endTurn, this, true);
+	}
+
 	changeTurnButton.container.getChildByName("player_turn").visible = true;
 	changeTurnButton.container.getChildByName("enemy_turn").visible = false;
 }
@@ -206,7 +210,10 @@ function endTurn() {
 	removeAllActionOptions();
 	changeTurnButton.container.getChildByName("enemy_turn").visible = true;
 	changeTurnButton.container.getChildByName("player_turn").visible = false;
-	sendCommand({command: "end_turn"});
+
+	if(!spectating) {
+		sendCommand({command: "end_turn"});
+	}
 }
 
 

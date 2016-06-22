@@ -17,6 +17,7 @@ var cardTypesByName = {};
 var changeTurnButton;
 var playerDeck;
 var enemyDeck;
+var spectating;
 
 document.addEventListener("DOMContentLoaded", function() {
 		showInfo("Connecting to the server ...");
@@ -26,6 +27,21 @@ document.addEventListener("DOMContentLoaded", function() {
 			showInfo("Loading ...");
 		});
 
+		socket.on("chat", function(data) {
+			var item = document.createElement("li");
+			item.innerHTML = data.time + " " + data.sender + ": " + data.message;
+			document.getElementById("messages").appendChild(item);
+		});
+
+		document.getElementById("form").addEventListener("submit", function(event) {
+			event.preventDefault();
+
+			socket.emit("chat", {sender: localStorage.getItem("name") || "unkown",
+				message: document.getElementById("input").value});
+
+			 document.getElementById("input").value = "";
+		});
+
 		socket.on("system", function(data) {
 			showInfo(data);
 
@@ -33,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			if(data === "Your Opponent disconnected. ¯\\_(ツ)_/¯ Please Reload to start a new Game") {
 				changeTurnButton.container.getChildByName("enemy_turn").visible = true;
 				changeTurnButton.container.getChildByName("player_turn").visible = false;
-				changeTurnButton.container.removeAllEventListeners ();
+				changeTurnButton.container.removeAllEventListeners();
 				removeAllActionOptions();
 			}
 		});
@@ -97,10 +113,23 @@ function prepare() {
 				recieveCommand(data);
 			});
 
-			socket.emit("start", {
-				deck: JSON.parse(localStorage.getItem("deck")),
-				name: localStorage.getItem("name")
+			socket.on("field", function(data) {
+				load(data);
 			});
+
+			if(document.location.search.match(/^\?spectate=(.+)$/)) {
+				spectating = true;
+				socket.emit("spectate", {
+					id: document.location.search.match(/^\?spectate=(.+)$/)[1],
+					name: localStorage.getItem("name")
+				});
+			} else {
+				spectating = false;
+				socket.emit("start", {
+					deck: JSON.parse(localStorage.getItem("deck")),
+					name: localStorage.getItem("name")
+				});
+			}
 		});
 	});
 }

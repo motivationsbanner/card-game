@@ -9,8 +9,8 @@ class Card {
 	
 	play()
 	{
-			this.action_done = true;
-			this.isOnField = true;
+		this.action_done = true;
+		this.isOnField = true;
 	}
 	
 	isPlayable(field) {

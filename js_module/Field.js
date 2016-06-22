@@ -400,6 +400,111 @@ var field = class Field {
 	getEnemyRange() {
 		return this.getCardAmountInRow('EnemyRange');
 	}
+	
+	getSpectatorField(playerInfo)
+	{
+		// Create object
+		var spectatorField = {
+			EnemyHand: null,
+			EnemyRange: null,
+			EnemyMelee: null,
+			PlayerMelee: null,
+			PlayerRange: null,
+			EnemyHero: null,
+			EnemyDeck: null,
+			PlayerDeck: null,
+			PlayerHero: null
+		};
+		
+		// Get EnemyHand Length
+		spectatorField.EnemyHand = this.getEnemyHand().length;
+		
+		// Get all enemy ranges
+		var enemyRange = [];
+		for (var i = 0; i < this.field.enemyRange.length; i++)
+		{
+			if (this.field.enemyRange[i] == -1)
+			{
+				enemyRange.push(null);
+			} else {
+				var card = this.field.enemyRange[i];
+				var obj = {name: card.constructor.name, health: card.getHealth(), attack: card.getAttack()};
+				enemyRange.push(obj);
+			}
+		}
+		spectatorField.EnemyRange = enemyRange;
+		
+		// Get all enemy melees
+		var enemyMelee = [];
+		for (var i = 0; i < this.field.enemyMelee.length; i++)
+		{
+			if (this.field.enemyMelee[i] == -1)
+			{
+				enemyMelee.push(null);
+			} else {
+				var card = this.field.enemyMelee[i];
+				var obj = {name: card.constructor.name, health: card.getHealth(), attack: card.getAttack()};
+				enemyMelee.push(obj);
+			}
+		}
+		spectatorField.EnemyMelee = enemyMelee;
+		
+		// Get all player melees
+		var playerMelee = [];
+		for (var i = 0; i < this.field.melee.length; i++)
+		{
+			if (this.field.melee[i] == -1)
+			{
+				playerMelee.push(null);
+			} else {
+				var card = this.field.melee[i];
+				var obj = {name: card.constructor.name, health: card.getHealth(), attack: card.getAttack()};
+				playerMelee.push(obj);
+			}
+		}
+		spectatorField.PlayerMelee = playerMelee;
+		
+		// Get all player range
+		var playerRange = [];
+		for (var i = 0; i < this.field.range.length; i++)
+		{
+			if (this.field.range[i] == -1)
+			{
+				playerRange.push(null);
+			} else {
+				var card = this.field.range[i];
+				var obj = {name: card.constructor.name, health: card.getHealth(), attack: card.getAttack()};
+				playerRange.push(obj);
+			}
+		}
+		spectatorField.PlayerRange = playerRange;
+		
+		var playerHand = [];
+		for (var i = 0; i < this.field.hand.length; i++)
+		{
+				var card_name = this.field.hand[i];
+				playerHand.push( {name: card_name} );
+		}
+		
+		spectatorField.PlayerHand = playerHand;		
+		
+		var enemyHero = {};
+		enemyHero.name = playerInfo.name;
+		enemyHero.health = playerInfo.health;
+		
+		spectatorField.EnemyHero = enemyHero;
+		
+		var playerHero = {};
+		playerHero.name = playerInfo.playerName;
+		playerHero.health = playerInfo.playerHealth;
+		
+		spectatorField.PlayerHero = playerHero;
+		
+		spectatorField.EnemyDeck = playerInfo.deckSize;
+		spectatorField.PlayerDeck = playerInfo.playerDeckSize;
+		
+		return spectatorField;
+	}
 
 }
 

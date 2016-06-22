@@ -2,7 +2,7 @@
 
 under construction
 
-![Screenshot](http://i.imgur.com/l4cjwJw.png)
+![Screenshot](http://i.imgur.com/HAfYNwo.gif)
 
 Demo: http://card-game-dev.herokuapp.com/
 

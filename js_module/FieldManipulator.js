@@ -332,6 +332,13 @@ class FieldManipulator
 			{
 				this.doDmg(cards[i], amount);
 			}
+			
+			var enemyGlow = {command: "glow", target: {row: "Row", index: this.field.translate(targetRow, 3).index}, color: "blue"};
+			var playerGlow = {command: "glow", target: {row: "Row", index: targetRow.index}, color: "blue"};
+			
+			this.game.on_turn.sendCommandMessage(playerGlow);
+			this.game.not_turn.sendCommandMessage(enemyGlow);
+			
 		} else {
 			console.log('smt went wrong');
 		}

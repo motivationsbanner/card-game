@@ -17,6 +17,7 @@
 				margin: 0;
 				padding: 0;
 				font-size: 0;
+				font: 12px monospace;
 			}
 
 			body {
@@ -32,26 +33,53 @@
 			}
 
 			#info {
-				width: 640px;
-				margin: 40px auto;
-				font: 12px monospace;
-				padding: 6px;
 				background-color: lightblue;
 				border: 2px solid darkblue;
 			}
+
+			#info, #chat {
+				width: 640px;
+				margin: 10px auto;
+				padding: 6px;
+			}
+
+			#chat {
+				margin: 10px auto;
+				background-color: lightgray;
+				border: 2px solid darkgray;
+			}
+
+			ul > li, a {
+				color: black;
+				padding: 5px 0;
+				list-style: none;
+			}
+
+			button, input {
+				padding: 4px;
+				margin-right: 10px;
+				outline: none;
+			}
 		</style>
-		<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+		<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>		
 		<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 		<script src="src/config.js"></script>
 		<script src="src/utils.js"></script>
 		<script src="src/command.js"></script>
+		<script src="src/load.js"></script>
 		<script src="src/card.js"></script>
 		<script src="src/field.js"></script>
 		<script src="src/prepare.js"></script>
 		<script src="src/game.js"></script>
 	</head>
-	<body>
+	<body>		
 		<canvas id="stage" width="640" height="480"></canvas>
 		<div id="info" hidden></div>
+		<div id="chat">
+			<ul id="messages"></ul>
+			<form action="" id="form">
+				<input id="input" autocomplete="off"><button>Send</button>
+			</form>
+		</div>
 	</body>
 </html>

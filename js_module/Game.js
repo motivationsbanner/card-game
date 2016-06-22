@@ -115,8 +115,6 @@ class Game {
 	{
 		this.sendMessage('The Game has ended, please reload to start a new one!');
 		this.finished = true;
-		this.p1.client.disconnect();
-		this.p2.client.disconnect();
 		delete this.p1;
 		delete this.p2;
 	}

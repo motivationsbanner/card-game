@@ -87,7 +87,7 @@ io.sockets.on('connection', function(client)
 			game.join(data.id, client);
 		}
 		catch (err)	{
-			client.emit('system', 'Something went wrong: ' + err + ' ¯\\_(ツ)_/¯  Please reload to try again or contact an admin.');
+			client.emit('system', 'Could not find game.');
 		}
 		
 		

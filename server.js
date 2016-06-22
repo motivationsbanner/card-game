@@ -51,7 +51,7 @@ startServer.on('cards_ready', function() {
 io.sockets.on('connection', function(client)
 {	
 	connected_clients.push(client);
-	var clients = io.engine.clientsCount;
+	var clients = connected_clients.length;
 	client.game = false;
 	client.name = "Unknown";
 	
@@ -101,6 +101,7 @@ io.sockets.on('connection', function(client)
 		connected_clients.splice(index, 1);
 		if ( players.getIndex(client) != -1 )
 		{
+			// does that work?
 			players.remove(client);	
 		} else {
 			try 

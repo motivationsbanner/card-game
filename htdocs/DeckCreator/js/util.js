@@ -20,9 +20,14 @@ function fillCardList(cards)
 	cards.forEach(function (item, index) 
 	{
 		var name = item.name;
-		var string = '<a href="#" class="list-group-item cardlist" id="' + index + '">' + name + '</a>';
+		var health = item.health;
+		var text = item.text;
+		var attack = item.attack;
+		var string = '<a href="#" class="list-group-item cardlist" data-toggle="tooltip" id="' + index + '">' + name + '</a>';
+		var title = "<img src='/images/" + name.toLowerCase() + ".png' /> <br> Attack: " + attack + " Health: " + health + " <br>" + text; 
 		
 		$('#card-list').append(string);
+		$('#' + index).prop('title', title);
 		
 		if (index == 0)
 		{
@@ -31,6 +36,10 @@ function fillCardList(cards)
 	});
 	
 	bindThis();
+	$('[data-toggle="tooltip"]').tooltip({
+		html: true,
+		placement: 'auto'		
+	});
 }
 
 function bindThis() {

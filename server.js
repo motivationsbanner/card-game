@@ -4,6 +4,7 @@ var fs=require('fs'),
     startServer = new EventEmitter();
 GLOBAL.cards = [];
 var all_cards = [];
+var connected_clients = [];
 	
 var http = require('http'),
 	express = require('express');
@@ -49,7 +50,7 @@ startServer.on('cards_ready', function() {
 
 io.sockets.on('connection', function(client)
 {	
-	
+	connected_clients.push(client);
 	var clients = io.engine.clientsCount;
 	client.game = false;
 	client.name = "Unknown";
@@ -96,6 +97,8 @@ io.sockets.on('connection', function(client)
 	client.on('disconnect', function()
 	{
 		client.disconnect();
+		var index = connected_clients.indexOf(client);
+		connected_clients.splice(index, 1);
 		if ( players.getIndex(client) != -1 )
 		{
 			players.remove(client);	
@@ -175,13 +178,12 @@ function startGame(game)
 function getGame(playerID)
 {
 	var allClients = findClientsSocket();
-	console.log("all clients: " + allClients.length + "; all clients: " + allClients);
-	for (var i = 0; i < allClients.length; i++)
+	for (var i = 0; i < connected_clients.length; i++)
 	{
-		if (allClients[i].playerID = playerID)
+		if (connected_clients[i].playerID = playerID)
 		{
 
-			return allClients[i].game;
+			return connected_clients[i].game;
 		}
 	}
 }

@@ -23,6 +23,7 @@ function load(data) {
 
 	for(var i = 0; i < data.EnemyHand; i ++) {
 		var card = new CardField(minEnemyX + i * (smallCardDimensions.width + gap), 0);
+		rows.EnemyHand.push(card);
 	}
 
 	var minPlayerX = boardCenterX - data.PlayerHand.length * smallCardDimensions.width * 0.5 -
@@ -31,6 +32,7 @@ function load(data) {
 	for(var i = 0; i < data.PlayerHand.length; i ++) {
 		var card = new CardField(minPlayerX + i * (smallCardDimensions.width + gap),
 			480 - smallCardDimensions.height, data.PlayerHand[i].name);
+			rows.PlayerHand.push(card);
 	}
 
 	// Fields

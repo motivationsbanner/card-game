@@ -210,7 +210,10 @@ function endTurn() {
 	removeAllActionOptions();
 	changeTurnButton.container.getChildByName("enemy_turn").visible = true;
 	changeTurnButton.container.getChildByName("player_turn").visible = false;
-	sendCommand({command: "end_turn"});
+
+	if(!spectating) {
+		sendCommand({command: "end_turn"});
+	}
 }
 
 

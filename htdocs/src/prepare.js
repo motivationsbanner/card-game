@@ -38,6 +38,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 			socket.emit("chat", {sender: localStorage.getItem("name") || "unkown",
 				message: document.getElementById("input").value});
+
+			 document.getElementById("input").value = "";
 		});
 
 		socket.on("system", function(data) {

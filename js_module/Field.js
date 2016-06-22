@@ -503,7 +503,7 @@ var field = class Field {
 		spectatorField.EnemyDeck = playerInfo.deckSize;
 		spectatorField.PlayerDeck = playerInfo.playerDeckSize;
 		
-		return JSON.stringify(spectatorField);
+		return spectatorField;
 	}
 
 }

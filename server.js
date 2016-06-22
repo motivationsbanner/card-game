@@ -101,6 +101,7 @@ io.sockets.on('connection', function(client)
 		} else {
 			try 
 			{
+				client.delete;
 				if (client.game == "Spectator")
 					return;
 					

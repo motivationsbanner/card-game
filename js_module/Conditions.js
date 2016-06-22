@@ -485,7 +485,7 @@ class Conditions
 	{
 		var hand = this.field.getHand();
 		var enemy_hand = this.field.getEnemyHand();
-		if (enemy_hand.length =< hand.length)
+		if (enemy_hand.length <= hand.length)
 			return false;
 		return true;
 	}
@@ -494,7 +494,7 @@ class Conditions
 	{
 		var hand = this.field.getHand();
 		var enemy_hand = this.field.getEnemyHand();
-		if (enemy_hand.length => hand.length)
+		if (enemy_hand.length >= hand.length)
 			return false;
 		return true;
 	}

@@ -31,6 +31,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			var item = document.createElement("li");
 			item.innerHTML = data.time + " " + data.sender + ": " + data.message;
 			document.getElementById("messages").appendChild(item);
+			item.scrollIntoView();
 		});
 
 		document.getElementById("form").addEventListener("submit", function(event) {

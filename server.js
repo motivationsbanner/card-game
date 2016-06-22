@@ -175,10 +175,12 @@ function startGame(game)
 function getGame(playerID)
 {
 	var allClients = findClientsSocket();
+	console.log("all clients: " + allClients.length + "; all clients: " + allClients);
 	for (var i = 0; i < allClients.length; i++)
 	{
 		if (allClients[i].playerID = playerID)
 		{
+
 			return allClients[i].game;
 		}
 	}

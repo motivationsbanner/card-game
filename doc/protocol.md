@@ -18,25 +18,31 @@ game_command:
 		{command: "overdraw", card: cardname }
 		{command: "overdraw" }
 		{command: "change_turn}
-		
-		emit('field', field obj -> 
-{	
-	enemyHand: int,
-	enemyRange: [{name, health, attack}],
-	enemyMelee: [{name, health, attack}],
-	playerMelee: [{name, health, attack}],
-	playerRange: [{name, health, attack}}],
-	playerHand: [{name}],
-	enemyHero: {name, health},
-	playerHero: {name, health},
-	enemyDeck: int,
-	playerDeck: int
-}
-
-
+	
 	client->server
 		{command: "end_turn"}
 		{command: "select_option", pos: position}
+		
+	
+Spectate:
+	server->client:
+		emit("field", field obj -> 
+		{	
+			EnemyHand: int,
+			EnemyRange: [{name, health, attack}],
+			EnemyMelee: [{name, health, attack}],
+			PlayerMelee: [{name, health, attack}],
+			PlayerRange: [{name, health, attack}}],
+			PlayerHand: [{name}],
+			EnemyHero: {name, health},
+			PlayerHero: {name, health},
+			EnemyDeck: int,
+			PlayerDeck: int
+		});
+		emit('chat', {sender: "System", time: String, message: "Spectate PlayerName now: PlayerID"});
+		
+	client->server:
+		emit("spectate", {id: String, name: String} );
 
 preparation:
 	server->client:
@@ -44,5 +50,10 @@ preparation:
 
 	client->server:
 		emit("start", {deck: deckString, name: String} );
-		emit("spectate", {id: String, name: String} );
+	
+Chat:
+	server->client:
+		emit('chat', {sender: string, time: string, message: string });
+	client->server:
+		emit('chat', {sender: string, message: string });
 ```

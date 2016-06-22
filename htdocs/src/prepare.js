@@ -27,6 +27,19 @@ document.addEventListener("DOMContentLoaded", function() {
 			showInfo("Loading ...");
 		});
 
+		socket.on("chat", function(data) {
+			var item = document.createElement("li");
+			item.innerHTML = data.time + " " + data.sender + ": " + data.message;
+			document.getElementById("messages").appendChild(item);
+		});
+
+		document.getElementById("form").addEventListener("submit", function(event) {
+			event.preventDefault();
+
+			socket.emit("chat", {sender: localStorage.getItem("name") || "unkown",
+				message: document.getElementById("input").value});
+		});
+
 		socket.on("system", function(data) {
 			showInfo(data);
 

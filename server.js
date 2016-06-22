@@ -52,10 +52,11 @@ io.sockets.on('connection', function(client)
 	
 	var clients = io.engine.clientsCount;
 	client.game = false;
+	client.name = "Unknown";
 	
 	client.emit('cards', all_cards);
 	// Add Client to Player Array
-	
+
 	
 	client.on('start', function(data) 
 	{
@@ -63,6 +64,12 @@ io.sockets.on('connection', function(client)
 		var name = data.name || "Unknown";
 		client.deck = deck;
 		client.name = name;
+		
+		var nom = client.name;
+		var chat_msg = nom + " has connected.";
+		var timestamp = getTime();
+		var obj = {sender: 'System', time: timestamp, message: chat_msg};
+		chat_message(obj);
 	
 		players.add(client);
 		
@@ -79,14 +86,21 @@ io.sockets.on('connection', function(client)
 	client.on('spectate', function(data)
 	{
 		var game = getGame(data.id);
+		client.name = data.name;
 		client.game = "Spectator";
 		try	{
 			game.join(data.id, client);
+			var nom = client.name;
+			var chat_msg = nom + " has connected.";
+			var timestamp = getTime();
+			var obj = {sender: 'System', time: timestamp, message: chat_msg};
+			chat_message(obj);
 		}
 		catch (err)	{
 			client.emit('system', 'Something went wrong: ' + err + ' ¯\\_(ツ)_/¯  Please reload to try again or contact an admin.');
 		}
-			
+		
+		
 		
 	});
 	
@@ -98,8 +112,15 @@ io.sockets.on('connection', function(client)
 		} else {
 			try 
 			{
+				var nom = client.name;
+				var chat_msg = nom + " has disconnected.";
+				var timestamp = getTime();
+				var obj = {sender: 'System', time: timestamp, message: chat_msg};
+				chat_message(obj);
+				
 				if (client.game == "Spectator")
 					return;
+					
 				if (client.game.finished == true)
 					return;
 				

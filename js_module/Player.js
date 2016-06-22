@@ -238,7 +238,7 @@ var player = class Player {
 	
 	sendCommandMessage(data) {
 		this.client.emit('command', data);
-		if (data.command !== "play_options"){
+		if (data.command !== "play_options")
 		{
 			for (var i = 0; i < this.spectators.length; i++)
 				this.spectators[i].emit('command', data);

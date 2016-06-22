@@ -78,9 +78,9 @@ io.sockets.on('connection', function(client)
 	
 	client.on('spectate', function(data)
 	{
-		var game = getGame(data.playerID);
+		var game = getGame(data.id);
 		client.game = "Spectator";
-		game.join(playerID, client);
+		game.join(data.id, client);
 	});
 	
 	client.on('disconnect', function()

@@ -1,6 +1,6 @@
 "use strict";
-var text = "Ceoy broken af.";
-var health = 2;
+var text = "Ceoy kommt nur wenn schon ein verbündetes Minion auf dem Feld ist. Am ende jedes Zuges verleiht Ceoy allen verbündeten Minions +1 health wenn er stirbt + Attack bei allen verbündeten Minions";
+var health = 1;
 var attack = 0;
 
 var MeleeMinion = require(__dirname + '/../MeleeMinion.js');

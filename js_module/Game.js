@@ -157,7 +157,30 @@ class Game {
 		this.on_turn.sendCommandMessage(command);
 		this.not_turn.sendCommandMessage(command);
 	}
-	
+		
+	join(playerID, client)
+	{
+		if (this.p1.playerID === playerID)
+		{
+			// Need p2 informations
+			var obj = {};
+			obj.name = this.p2.name;
+			obj.health = this.p2.hp;
+			obj.deckSize = this.p2.deck.deck.length;
+			this.p1.join(client, obj);
+		}
+			
+		if (this.p2.playerID === playerID)
+		{
+			// Need p1 informations
+			var obj = {};
+			obj.name = this.p1.name;
+			obj.health = this.p1.hp;
+			obj.deckSize = this.p1.deck.deck.length;
+			obj.on_turn = this.on_turn;
+			this.p2.join(client, obj);
+		}
+	}
 }
 
 module.exports = function game()

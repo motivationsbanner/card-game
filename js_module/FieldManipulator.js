@@ -323,6 +323,8 @@ class FieldManipulator
 		this.game.not_turn.sendCommandMessage(enemyGlow);
 	}
 	
+	
+	// Glow
 	dmgRow(targetRow, amount)
 	{
 		if (targetRow.row == 'Row')

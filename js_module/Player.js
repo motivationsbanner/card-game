@@ -12,6 +12,8 @@ var player = class Player {
 		this.field = new Field();
 		this.deck = new Deck();
 		this.selected_card = -1;
+		this.spectators = [];
+		this.name = "Unknown";
 	}
 	
 	draw(amount, m)
@@ -228,10 +230,19 @@ var player = class Player {
 	
 	sendSystemMessage(message) {
 		this.client.emit('system', message);
+		for (var i = 0; i < this.spectators.length; i++)
+		{
+			this.spectators[i].emit('command', message);
+		}
 	}
 	
 	sendCommandMessage(data) {
 		this.client.emit('command', data);
+		if (data.command !== "play_options"){
+		{
+			for (var i = 0; i < this.spectators.length; i++)
+				this.spectators[i].emit('command', data);
+		}
 	}
 	
 	setHealth(health) {
@@ -240,6 +251,22 @@ var player = class Player {
 	
 	getPos() {
 		return {row: "Players", index: 0};
+	}
+	
+	join(spectator, data)
+	{
+		data.playerName = this.name;
+		data.playerHealth = this.hp;
+		data.playerDeckSize = this.deck.deck.length;
+		
+		this.spectators.push(spectator);
+		
+		spectator.emit('field', this.field.getSpectatorField(data));
+		
+		if (data.on_turn.client == this.client)
+			spectator.emit('command', {command: "start_turn"});
+		else
+			spectator.emit('command', {command: "end_turn"});
 	}
 	
 }

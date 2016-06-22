@@ -24,6 +24,12 @@ class Players {
 			g.p1.deck.createDeck(this.players[0].deck);
 			g.p2.deck.createDeck(this.players[1].deck);
 			
+			g.p1.playerID = this.players[0].playerID;
+			g.p2.playerID = this.players[1].playerID;
+			
+			g.p1.name = this.players[0].name;
+			g.p2.name = this.players[1].name;
+			
 			this.players[0].game = g;
 			this.players[1].game = g;
 			
@@ -42,8 +48,25 @@ class Players {
 	}
 	
 	add(client) {
+		var uuid = guid();
+		client.playerID = uuid;
 		this.players.push(client);
 	}
+	
+	
+
+}
+
+//http://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
+function guid() {
+	return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+    s4() + '-' + s4() + s4() + s4();
+}
+
+function s4() {
+  return Math.floor((1 + Math.random()) * 0x10000)
+    .toString(16)
+    .substring(1);
 }
 
 module.exports = new Players();

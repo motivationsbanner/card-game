@@ -104,9 +104,7 @@ io.sockets.on('connection', function(client)
 					p2.emit('system', 'Your Opponent disconnected. ¯\\_(ツ)_/¯ Please Reload to start a new Game');
 				if ( p2 == client )
 					p1.emit('system', 'Your Opponent disconnected. ¯\\_(ツ)_/¯ Please Reload to start a new Game');
-			} catch (err) {
-				console.log(err);
-			};
+			} catch (err) {};
 		}
 	});
 	
@@ -152,6 +150,7 @@ function startGame(game)
 	chat_message(obj2);
 }	
 
+// -- SPECTATER FUNCTIONS -- //
 
 function getGame(playerID)
 {
@@ -164,6 +163,7 @@ function getGame(playerID)
 		}
 	}
 }
+
 // http://stackoverflow.com/questions/6563885/socket-io-how-do-i-get-a-list-of-connected-sockets-clients
 function findClientsSocket(roomId, namespace) {
     var res = []
@@ -183,6 +183,8 @@ function findClientsSocket(roomId, namespace) {
     }
     return res;
 }
+
+// -- CHAT FUNCTIONS -- //
 
 function getTime()
 {

@@ -1,6 +1,6 @@
 "use strict";
 var text = "Ceoy broken af.";
-var health = 1;
+var health = 2;
 var attack = 0;
 
 var MeleeMinion = require(__dirname + '/../MeleeMinion.js');

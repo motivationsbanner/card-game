@@ -18,6 +18,7 @@ game_command:
 		{command: "overdraw", card: cardname }
 		{command: "overdraw" }
 		{command: "change_turn}
+		{command: "end_turn"}
 	
 	client->server
 		{command: "end_turn"}

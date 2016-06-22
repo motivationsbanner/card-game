@@ -65,12 +65,6 @@ io.sockets.on('connection', function(client)
 		client.deck = deck;
 		client.name = name;
 		
-		var nom = client.name;
-		var chat_msg = nom + " has connected.";
-		var timestamp = getTime();
-		var obj = {sender: 'System', time: timestamp, message: chat_msg};
-		chat_message(obj);
-	
 		players.add(client);
 		
 		// Check if there are enough players waiting
@@ -90,11 +84,6 @@ io.sockets.on('connection', function(client)
 		client.game = "Spectator";
 		try	{
 			game.join(data.id, client);
-			var nom = client.name;
-			var chat_msg = nom + " has connected.";
-			var timestamp = getTime();
-			var obj = {sender: 'System', time: timestamp, message: chat_msg};
-			chat_message(obj);
 		}
 		catch (err)	{
 			client.emit('system', 'Something went wrong: ' + err + ' ¯\\_(ツ)_/¯  Please reload to try again or contact an admin.');
@@ -112,12 +101,6 @@ io.sockets.on('connection', function(client)
 		} else {
 			try 
 			{
-				var nom = client.name;
-				var chat_msg = nom + " has disconnected.";
-				var timestamp = getTime();
-				var obj = {sender: 'System', time: timestamp, message: chat_msg};
-				chat_message(obj);
-				
 				if (client.game == "Spectator")
 					return;
 					
@@ -132,7 +115,9 @@ io.sockets.on('connection', function(client)
 					p2.emit('system', 'Your Opponent disconnected. ¯\\_(ツ)_/¯ Please reload to start a new Game');
 				if ( p2 == client )
 					p1.emit('system', 'Your Opponent disconnected. ¯\\_(ツ)_/¯ Please reload to start a new Game');
-			} catch (err) {};
+			} catch (err) {
+				console.log(err);
+			};
 		}
 	});
 	

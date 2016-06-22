@@ -80,7 +80,14 @@ io.sockets.on('connection', function(client)
 	{
 		var game = getGame(data.id);
 		client.game = "Spectator";
-		game.join(data.id, client);
+		try	{
+			game.join(data.id, client);
+		}
+		catch (err)	{
+			client.emit('system', 'Something went wrong: ' + err + ' ¯\\_(ツ)_/¯  Please reload to try again or contact an admin.');
+		}
+			
+		
 	});
 	
 	client.on('disconnect', function()
@@ -101,9 +108,9 @@ io.sockets.on('connection', function(client)
 				
 				// Return the Player that did not leave 
 				if ( p1 == client )
-					p2.emit('system', 'Your Opponent disconnected. ¯\\_(ツ)_/¯ Please Reload to start a new Game');
+					p2.emit('system', 'Your Opponent disconnected. ¯\\_(ツ)_/¯ Please reload to start a new Game');
 				if ( p2 == client )
-					p1.emit('system', 'Your Opponent disconnected. ¯\\_(ツ)_/¯ Please Reload to start a new Game');
+					p1.emit('system', 'Your Opponent disconnected. ¯\\_(ツ)_/¯ Please reload to start a new Game');
 			} catch (err) {};
 		}
 	});

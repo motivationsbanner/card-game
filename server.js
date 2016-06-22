@@ -96,39 +96,43 @@ io.sockets.on('connection', function(client)
 	
 	client.on('disconnect', function()
 	{
-		client.disconnect();
 		var index = connected_clients.indexOf(client);
 		connected_clients.splice(index, 1);
+		
 		if ( players.getIndex(client) != -1 )
 		{
-			// does that work?
-			players.remove(client);	
-		} else {
-			try 
+			players.remove(client);
+		}
+		
+		if (client.game == "Spectator")
+			return;
+		
+		try
+		{
+			if (client.game.finished == true)
+				return;
+		} catch (err) {
+			console.log(err);
+		}
+		
+		try 
+		{					
+			var p1 = client.game.getP1().getClient();
+			var p2 = client.game.getP2().getClient();
+			
+			// Return the Player that did not leave 
+			if ( p1 == client )
 			{
-				if (client.game == "Spectator")
-					return;
-					
-				if (client.game.finished == true)
-					return;
-				
-				var p1 = client.game.getP1().getClient();
-				var p2 = client.game.getP2().getClient();
-				
-				// Return the Player that did not leave 
-				if ( p1 == client )
-				{
-					p2.emit('system', 'Your Opponent disconnected. ¯\\_(ツ)_/¯ Please reload to start a new Game');
-					client.game.p2.sendCommandMessage({command: 'end_turn'});
-				}
-				if ( p2 == client )
-				{
-					p1.emit('system', 'Your Opponent disconnected. ¯\\_(ツ)_/¯ Please reload to start a new Game');
-					client.game.p1.sendCommandMessage({command: 'end_turn'});
-				}
-			} catch (err) {
-				console.log(err);
-			};
+				p2.emit('system', 'Your Opponent disconnected. ¯\\_(ツ)_/¯ Please reload to start a new Game');
+				client.game.p2.sendCommandMessage({command: 'end_turn'});
+			}
+			if ( p2 == client )
+			{
+				p1.emit('system', 'Your Opponent disconnected. ¯\\_(ツ)_/¯ Please reload to start a new Game');
+				client.game.p1.sendCommandMessage({command: 'end_turn'});
+			}
+		} catch (err) {
+			console.log(err);
 		}
 	});
 	

@@ -23,6 +23,10 @@ document.addEventListener("DOMContentLoaded", function() {
 		showInfo("Connecting to the server ...");
 		socket = io();
 
+		window.addEventListener("beforeunload", function() {
+			socket.disconnect();
+		});
+
 		socket.on("connect", function() {
 			showInfo("Loading ...");
 		});

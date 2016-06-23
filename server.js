@@ -97,7 +97,6 @@ io.sockets.on('connection', function(client)
 	client.on('disconnect', function()
 	{
 		var index = connected_clients.indexOf(client);
-		console.log(index);
 		connected_clients.splice(index, 1);
 		
 		if ( players.getIndex(client) != -1 )
@@ -132,9 +131,7 @@ io.sockets.on('connection', function(client)
 				p1.emit('system', 'Your Opponent disconnected. ¯\\_(ツ)_/¯ Please reload to start a new Game');
 				client.game.p1.sendCommandMessage({command: 'end_turn'});
 			}
-		} catch (err) {
-			console.log(err);
-		}
+		} catch (err) {}
 	});
 	
 	client.on('command', function (data)

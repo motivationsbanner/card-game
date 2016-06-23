@@ -97,6 +97,7 @@ io.sockets.on('connection', function(client)
 	client.on('disconnect', function()
 	{
 		var index = connected_clients.indexOf(client);
+		console.log(index);
 		connected_clients.splice(index, 1);
 		
 		if ( players.getIndex(client) != -1 )

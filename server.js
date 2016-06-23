@@ -185,7 +185,7 @@ function getGame(playerID)
 	var allClients = findClientsSocket();
 	for (var i = 0; i < connected_clients.length; i++)
 	{
-		if (connected_clients[i].playerID = playerID)
+		if (connected_clients[i].playerID == playerID)
 		{
 
 			return connected_clients[i].game;

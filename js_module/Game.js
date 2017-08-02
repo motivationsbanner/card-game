@@ -69,6 +69,11 @@ class Game {
 		this.on_turn.draw(1, this.manipulator);
 		this.not_turn.enemyDraw(1);
 		
+		//Player 2 draws 2 cards, cus for balancing reasons
+		this.not_turn.draw(2, this.manipulator);
+		this.on_turn.enemyDraw(2);
+		
+		
 		this.on_turn.sendSystemMessage('It is your turn!');
 		this.on_turn.sendCommandMessage({command: "start_turn"});
 		this.not_turn.sendSystemMessage('It is not your turn, please wait.');

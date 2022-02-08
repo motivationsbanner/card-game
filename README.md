@@ -5,6 +5,7 @@ under construction
 ![Screenshot](http://i.imgur.com/HAfYNwo.gif)
 
 Demo: http://card-game-dev.herokuapp.com/
+
 Edit your profile: https://card-game-dev.herokuapp.com/DeckCreator/
 
 Documentation:  

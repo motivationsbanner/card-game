@@ -2,7 +2,7 @@
 var fs=require('fs'),
     EventEmitter = require('events').EventEmitter,
     startServer = new EventEmitter();
-GLOBAL.cards = [];
+global.cards = [];
 var all_cards = [];
 var connected_clients = [];
 	
